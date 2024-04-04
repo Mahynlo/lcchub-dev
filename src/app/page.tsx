@@ -1,9 +1,21 @@
-import { Button } from "@/components/ui/button";
+import { HomeNavbar } from "@/components/ui/home/navbar";
+import { HeroSection } from "@/components/ui/home/heroSection";
+import { UpcomingEventsSection } from "@/components/ui/home/upcomingSection";
+import { NewsSection } from "@/components/ui/home/newsSection";
+import { GallerySection } from "@/components/ui/home/gallerySection";
+import { HomeFooter } from "@/components/ui/home/footer";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="container mx-auto py-6">
-      <Button>Our Cool Button</Button>
-    </main>
+    <div>
+      <HomeNavbar />
+      <HeroSection />
+      <main>
+        <UpcomingEventsSection />
+        {/* <NewsSection /> */}
+        {/* <GallerySection /> */}
+      </main>
+      <HomeFooter />
+    </div>
   );
 }
