@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-function MenuIcon(props) {
+function MenuIcon(props: any) {
   return (
     <svg
       {...props}
@@ -22,68 +23,35 @@ function MenuIcon(props) {
   );
 }
 
-function SchoolIcon(props) {
+function LCCIcon() {
   return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m4 6 8-4 8 4" />
-      <path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2" />
-      <path d="M14 22v-4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4" />
-      <path d="M18 5v17" />
-      <path d="M6 5v17" />
-      <circle cx="12" cy="9" r="2" />
-    </svg>
+    <Image
+      src="/logo-lcc.png"
+      width={80}
+      height={80}
+      alt="logo of the computer science unit lcc"
+    />
   );
 }
 
 export function HomeNavbar() {
+  const sections = ["Upcoming Events", "News"];
   return (
     <header className="flex items-center justify-between px-6 py-4 shadow-md">
       <div className="flex items-center space-x-4">
         <Link className="block" href="#">
-          <SchoolIcon className="h-8 w-8" />
+          <LCCIcon />
         </Link>
         <nav className="hidden md:flex items-center space-x-4">
-          <Link
-            className="text-gray-700 hover:text-gray-900 transition-colors"
-            href="#"
-          >
-            About
-          </Link>
-          <Link
-            className="text-gray-700 hover:text-gray-900 transition-colors"
-            href="#"
-          >
-            Events
-          </Link>
-          <Link
-            className="text-gray-700 hover:text-gray-900 transition-colors"
-            href="#"
-          >
-            News
-          </Link>
-          <Link
-            className="text-gray-700 hover:text-gray-900 transition-colors"
-            href="#"
-          >
-            Gallery
-          </Link>
-          <Link
-            className="text-gray-700 hover:text-gray-900 transition-colors"
-            href="#"
-          >
-            Contact
-          </Link>
+          {sections.map((nameOfSection, index) => (
+            <Link
+              className="text-gray-700 hover:text-purple-400 transition-colors"
+              key={index}
+              href="#"
+            >
+              {nameOfSection}
+            </Link>
+          ))}
         </nav>
       </div>
       <Button size="icon" variant="outline">
