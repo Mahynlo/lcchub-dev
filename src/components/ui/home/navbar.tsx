@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 function LCCIcon() {
   return (
@@ -15,7 +16,7 @@ function LCCIcon() {
 export function HomeNavbar() {
   const sections = ["Eventos", "Noticias"];
   return (
-    <header className="fixed top-0 w-full flex items-center px-6 py-1 bg-white bg-opacity-90">
+    <header className="fixed top-0 w-full flex items-center px-6 py-2 bg-white bg-opacity-90">
       <Link className="flex flex-row items-center" href="#">
         <LCCIcon />
         <span className="px-3 font-mono text-blue-950 text-xl font-semibold">
@@ -33,6 +34,9 @@ export function HomeNavbar() {
           </Link>
         ))}
       </nav>
+      <Button asChild>
+        <Link href="#">Mi Portal</Link>
+      </Button>
     </header>
   );
 }

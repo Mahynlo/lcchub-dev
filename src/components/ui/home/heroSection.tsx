@@ -15,7 +15,7 @@ export function HeroSection() {
           </p>
           <div className="flex space-x-4">
             <Button asChild>
-              <Link href="#">Login</Link>
+              <Link href="#">Mi Portal</Link>
             </Button>
             <Button variant="secondary" asChild>
               <Link
@@ -36,14 +36,6 @@ export function HeroSection() {
             alt="Edificio de computación"
             className="rounded-lg aspect-video"
           />
-          {/*   <img */}
-          {/*     alt="University campus" */}
-          {/*     className="rounded-lg aspect-video" */}
-          {/*     height={400} */}
-          {/*     src="/placeholder.svg" */}
-          {/*     width={600} */}
-          {/*   /> */}
-          {/* </div> */}
         </div>
       </div>
     </section>
