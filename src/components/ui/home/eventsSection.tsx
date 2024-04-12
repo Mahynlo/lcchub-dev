@@ -49,7 +49,11 @@ export function UpcomingEventsSection() {
     <section className="py-20" id="events">
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold">Eventos</h2>
+          <div className="">
+            <span className="bg-red-500 rounded-lg text-3xl font-bold text-slate-50">
+              Eventos
+            </span>
+          </div>
           <p className="text-gray-700">
             Enterate de los eventos organizados por la universidad y por la
             comunidad de ciencias de la computación.

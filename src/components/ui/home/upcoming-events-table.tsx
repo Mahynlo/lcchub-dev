@@ -3,23 +3,64 @@
 import { Event } from "./eventsSection";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
+import { Months } from "@/lib/utils";
 
 const columns: ColumnDef<Event>[] = [
   {
     accessorKey: "event",
-    header: () => <div className="text-left">Eventos próximos</div>,
+    header: () => {
+      return (
+        <div className="flex flex-row justify-between items-center">
+          <div> 🗓️ Eventos próximos</div>
+          <div className="flex flex-row space-x-2 items-center">
+            <div className="w-2 h-2 rounded-full bg-blue-400"></div>
+            <div>evento oficial</div>
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <div>evento comunitario</div>
+          </div>
+        </div>
+      );
+    },
     cell: ({ row }) => {
       const { title, shdesc, date, location, from_community } = row.original;
+      const day: number = date.getDate();
+      const month: string = Months[date.getMonth()].toUpperCase();
+      const start: string = date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const colorEvent: string = from_community ? "green" : "blue";
+
       return (
-        <div className="grid grid-cols-6 gap-4">
+        <div
+          className={
+            "grid grid-cols-6 gap-4 md:border-l-2 lg:border-l-2 xl:border-l-2" +
+            " " +
+            `md:border-l-${colorEvent}-400 lg:border-l-${colorEvent}-400 xl:border-l-${colorEvent}-400`
+          }
+        >
           <div className="col-start-1 col-end-2">
-            {date.toLocaleString("es-MX")}
+            <div className="font-mono grid grid-rows-2 gap-0 items-center justify-center">
+              <span className="row-span-1">{month}</span>
+              <span
+                className={
+                  "row-span-2 text-2xl font-bold content-center justify-center text-center border-b-2 md:border-b-0" +
+                  " " +
+                  `border-b-${colorEvent}-400`
+                }
+              >
+                {day}
+              </span>
+            </div>
           </div>
-          <div className="text-left col-start-2 col-end-6">
-            <div className="text-lg font-bold">{title}</div>
-            <div>{shdesc}</div>
+          <div className="text-left text-xs font-mono col-start-2 col-end-6">
+            <div>{start}</div>
+            <div className="text-lg font-semibold">{title}</div>
+            <div className={`text-purple-600`}>{shdesc}</div>
           </div>
-          <div className="col-start-6 col-end-7">{location}</div>
+          <div className="col-start-6 col-end-7 items-center justify-center">
+            📍{location}
+          </div>
         </div>
       );
     },
