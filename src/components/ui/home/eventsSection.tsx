@@ -1,108 +1,14 @@
 import { Calendar } from "@/components/ui/calendar";
 import UpcomingEventsTable from "@/components/ui/home/upcoming-events-table";
+import { Event } from "@/lib/types";
 
-export type Event = {
-  title: string;
-  shdesc: string;
-  desc: string;
-  location: string;
-  date: Date;
-  approved_by: string;
-  from_community: boolean;
-};
+interface UpcomingEventsSectionProps {
+  allEventsDates: Date[];
+  upcomingEvents: Event[];
+}
 
-const all_events: Event[] = [
-  {
-    title: "Introduction to Machine Learning",
-    shdesc: "Learn the basics of machine learning and its applications",
-    desc: "This event will cover the fundamentals of machine learning, including supervised and unsupervised learning, and provide an overview of the field's current state and future directions.",
-    location: "Engineering Building, Room 101",
-    date: new Date("2024-04-16"),
-    approved_by: "John Doe",
-    from_community: false,
-  },
-  {
-    title: "Community Service Day",
-    shdesc:
-      "Join us for a day of community service and give back to the local community",
-    desc: "This event will involve volunteering at a local soup kitchen or cleaning up a nearby park. Come make a difference and meet new people!",
-    location: "Local Park, Near Campus",
-    date: new Date("2024-04-11"),
-    approved_by: "Jane Smith",
-    from_community: true,
-  },
-  {
-    title: "Career Fair",
-    shdesc:
-      "Meet with representatives from top companies and learn about job opportunities",
-    desc: "This event will feature a variety of companies from different industries, all looking to hire talented students like you. Come prepared with your resume and a list of questions!",
-    location: "Campus Center, Ballroom A",
-    date: new Date("2024-04-12"),
-    approved_by: "Bob Johnson",
-    from_community: false,
-  },
-  {
-    title: "Introduction to Machine Learning",
-    shdesc: "Learn the basics of machine learning and its applications",
-    desc: "This event will cover the fundamentals of machine learning, including supervised and unsupervised learning, and provide an overview of the field's current state and future directions.",
-    location: "Engineering Building, Room 101",
-    date: new Date("2024-04-16"),
-    approved_by: "John Doe",
-    from_community: false,
-  },
-  {
-    title: "Community Service Day",
-    shdesc:
-      "Join us for a day of community service and give back to the local community",
-    desc: "This event will involve volunteering at a local soup kitchen or cleaning up a nearby park. Come make a difference and meet new people!",
-    location: "Local Park, Near Campus",
-    date: new Date("2024-04-11"),
-    approved_by: "Jane Smith",
-    from_community: true,
-  },
-  {
-    title: "Career Fair",
-    shdesc:
-      "Meet with representatives from top companies and learn about job opportunities",
-    desc: "This event will feature a variety of companies from different industries, all looking to hire talented students like you. Come prepared with your resume and a list of questions!",
-    location: "Campus Center, Ballroom A",
-    date: new Date("2024-04-12"),
-    approved_by: "Bob Johnson",
-    from_community: false,
-  },
-  {
-    title: "Introduction to Machine Learning",
-    shdesc: "Learn the basics of machine learning and its applications",
-    desc: "This event will cover the fundamentals of machine learning, including supervised and unsupervised learning, and provide an overview of the field's current state and future directions.",
-    location: "Engineering Building, Room 101",
-    date: new Date("2024-05-16"),
-    approved_by: "John Doe",
-    from_community: false,
-  },
-  {
-    title: "Community Service Day",
-    shdesc:
-      "Join us for a day of community service and give back to the local community",
-    desc: "This event will involve volunteering at a local soup kitchen or cleaning up a nearby park. Come make a difference and meet new people!",
-    location: "Local Park, Near Campus",
-    date: new Date("2024-05-11"),
-    approved_by: "Jane Smith",
-    from_community: true,
-  },
-  {
-    title: "Career Fair",
-    shdesc:
-      "Meet with representatives from top companies and learn about job opportunities",
-    desc: "This event will feature a variety of companies from different industries, all looking to hire talented students like you. Come prepared with your resume and a list of questions!",
-    location: "Campus Center, Ballroom A",
-    date: new Date("2024-12-12"),
-    approved_by: "Bob Johnson",
-    from_community: false,
-  },
-];
-
-export function UpcomingEventsSection() {
-  const markedInCalendar = all_events.map((event) => event.date);
+export function UpcomingEventsSection({ allEventsDates, upcomingEvents }: UpcomingEventsSectionProps) {
+  
   return (
     <section className="py-20" id="events">
       <div className="container mx-auto px-4">
@@ -122,12 +28,12 @@ export function UpcomingEventsSection() {
         <div className="flex md:w-1/3 space-y-4 content-center justify-center">
           <Calendar
             mode="multiple"
-            selected={markedInCalendar}
+            selected={allEventsDates}
             className="rounded-md border"
           />
         </div>
         <div className="md:w-2/3 space-y-4">
-          <UpcomingEventsTable events={all_events} />
+          <UpcomingEventsTable events={upcomingEvents} />
         </div>
       </div>
     </section>
