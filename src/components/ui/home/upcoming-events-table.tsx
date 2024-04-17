@@ -1,9 +1,10 @@
 "use client";
 
-import { Event } from "./eventsSection";
+import { Event } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
 import { Months } from "@/lib/utils";
+import { cx } from "class-variance-authority";
 
 const columns: ColumnDef<Event>[] = [
   {
@@ -29,26 +30,16 @@ const columns: ColumnDef<Event>[] = [
         hour: "2-digit",
         minute: "2-digit",
       });
-      const colorEvent: string = from_community ? "green" : "blue";
 
       return (
-        <div
-          className={
-            "grid grid-cols-6 gap-4 md:border-l-2 lg:border-l-2 xl:border-l-2" +
-            " " +
-            `md:border-l-${colorEvent}-400 lg:border-l-${colorEvent}-400 xl:border-l-${colorEvent}-400`
-          }
-        >
+        <div className={cx`grid grid-cols-6 gap-4 border-l-0 md:border-l-2 
+                        ${from_community ? 'border-l-green-400' : 'border-l-blue-400'}`}>
           <div className="col-start-1 col-end-2">
             <div className="font-mono grid grid-rows-2 gap-0 items-center justify-center">
               <span className="row-span-1">{month}</span>
               <span
-                className={
-                  "row-span-2 text-2xl font-bold content-center justify-center text-center border-b-2 md:border-b-0" +
-                  " " +
-                  `border-b-${colorEvent}-400`
-                }
-              >
+                className={cx`text-2xl font-bold content-center justify-center text-center border-b-2 md:border-b-0
+                          ${from_community ? 'border-b-green-400' : 'border-b-blue-400'}`}>
                 {day}
               </span>
             </div>
@@ -70,10 +61,11 @@ const columns: ColumnDef<Event>[] = [
 type UpcomingEventsProps = {
   events: Event[];
 };
+
 export default function UpcomingEventsTable(props: UpcomingEventsProps) {
   const { events } = props;
   return (
-    <div className="container mx-auto py-10">
+    <div id="upcoming-events-table" className="container mx-auto">
       <DataTable columns={columns} data={events} />
     </div>
   );

@@ -24,18 +24,18 @@ export function UpcomingEventsSection({ allEventsDates, upcomingEvents }: Upcomi
           </p>
         </div>
       </div>
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
-        <div className="flex md:w-1/3 space-y-4 content-center justify-center">
-          <Calendar
-            mode="multiple"
-            selected={allEventsDates}
-            className="rounded-md border"
-          />
-        </div>
-        <div className="md:w-2/3 space-y-4">
-          <UpcomingEventsTable events={upcomingEvents} />
-        </div>
-      </div>
+   
+
+  <div className="container grid md:grid-cols-4 gap-4 mx-auto py-5">
+    <Calendar
+      mode="multiple"
+      selected={allEventsDates}
+      className="md:col-span-1 h-85 justify-self-center"
+    />
+  <div className="md:col-span-3 h-85">
+    <UpcomingEventsTable events={upcomingEvents} />
+  </div>
+</div>
     </section>
   );
 }
