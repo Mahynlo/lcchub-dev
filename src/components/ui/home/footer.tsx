@@ -25,7 +25,7 @@ export function HomeFooter() {
             href="#"
           >
             Contact Us
-          </Link>
+          </Link>1
         </nav>
         <p className="text-gray-400 text-sm">
           © 2024 Ciencias de la Computación

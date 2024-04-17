@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 export function HeroSection() {
   return (
-    <section className="bg-gray-100 py-20 my-10">
+    <section className="bg-gray-100 py-20">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
         <div className="md:w-1/2 space-y-4">
           <h1 className="text-4xl font-bold">Bienvenid@ a LCC Hub</h1>
