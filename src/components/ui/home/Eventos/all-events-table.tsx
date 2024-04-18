@@ -46,7 +46,7 @@ const columns: ColumnDef<Event>[] = [
             </div>
           </div>
           <div className="text-left text-xs font-mono col-start-2 col-end-6">
-            <div>{start} - aprueba: {approved_by}</div>
+            <div>{(start == "12:00 AM") ? "horario no específico" : start} - aprueba: {approved_by}</div>
             <div className="text-lg font-semibold">{title}</div>
             <div className={`text-purple-600`}>{desc}</div>
           </div>

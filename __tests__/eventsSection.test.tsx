@@ -12,7 +12,7 @@ const mockEvents: Event[] = [
       shdesc: "Evento 1",
       desc: "Evento 1",
       location: "Evento 1",
-      date: new Date("2024-04-01"),
+      date: new Date("2024-04-01:00:00:00"),
       approved_by: "Evento 1",
       from_community: false,
     },
@@ -43,6 +43,15 @@ const mockEvents: Event[] = [
       approved_by: "Evento 4",
       from_community: true,
     },
+    {
+      title: "Evento 5",
+      shdesc: "Evento 5",
+      desc: "Evento 5",
+      location: "Evento 5",
+      date: new Date("2024-04-24"),
+      approved_by: "Evento 5",
+      from_community: false,
+    }
   ];
 
 describe("upcoming event table",  () => {
@@ -78,6 +87,12 @@ describe("upcoming event table",  () => {
           expect(apiEvents[i].date.getTime()).toBeLessThanOrEqual(apiEvents[i + 1].date.getTime());
         }
       }
+    });
+    it("deal with events with 00:00:00 time", async () => {
+      const { getByText } = render(
+          <UpcomingEventsSection allEventsDates={[]} upcomingEvents={mockEvents} />
+      );
+      expect(getByText(/horario no específico/i)).toBeInTheDocument();
     });
 });
 
@@ -120,5 +135,11 @@ describe("all events table", () => {
           <AllEventsTable events={mockEvents} />
       );
       expect(getAllByText(/2024/i)[0]).toBeInTheDocument();
+    });
+    it("deal with events with 00:00:00 time", async () => {
+      const { getByText } = render(
+          <AllEventsTable events={mockEvents} />
+      );
+      expect(getByText(/horario no específico/i)).toBeInTheDocument();
     });
 });
