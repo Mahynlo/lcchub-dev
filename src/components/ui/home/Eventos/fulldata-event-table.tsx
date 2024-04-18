@@ -104,7 +104,7 @@ export function FullDataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No hay eventos próximos.
+                  No se encontraron eventos.
                 </TableCell>
               </TableRow>
             )}

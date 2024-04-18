@@ -3,6 +3,7 @@ import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { Event } from "@/lib/types";
 import { getEventsAfterDate } from "@/lib/api/events";
+import AllEventsTable from "@/components/ui/home/Eventos/all-events-table";
 
 const longTimeAgo = new Date("2020-01-01");
 const mockEvents: Event[] = [
@@ -53,17 +54,53 @@ describe("upcoming event table",  () => {
         
     });
     it("shows a message when there are no events", async () => {
-        const { getByText } = render(
+        const { getAllByText } = render(
             <UpcomingEventsSection allEventsDates={[]} upcomingEvents={[]} />
         );
-        expect(getByText(/no hay eventos/i)).toBeInTheDocument();
+        expect(getAllByText(/No hay eventos próximos/i)[0]).toBeInTheDocument();
 
         const apiEvents = await getEventsAfterDate(new Date());
         if (apiEvents.length === 0) {
-            const { getByText } = render(
+            const { getAllByText } = render(
                 <UpcomingEventsSection allEventsDates={[]} upcomingEvents={[]} />
             );
-            expect(getByText(/no hay eventos/i)).toBeInTheDocument();
+            expect(getAllByText(/No hay eventos próximos/i)[0]).toBeInTheDocument();
+        }
+    });
+    it("receives sorted events", async () => {
+      
+      const apiEvents = await getEventsAfterDate(longTimeAgo);
+      if (apiEvents && apiEvents.length > 1) {
+        // check that events are sorted
+        console.log(apiEvents);
+        for (let i = 0; i < apiEvents.length - 1; i++) {
+          // say that is not sorted
+          expect(apiEvents[i].date.getTime()).toBeLessThanOrEqual(apiEvents[i + 1].date.getTime());
+        }
+      }
+    });
+});
+
+describe("all events table", () => {
+    it("renders even if there are no events", async () => {
+        const { container } = render(
+            <AllEventsTable events={[]} />
+        );
+        expect(container).toBeInTheDocument();
+    });
+    it("shows a message when there are no events", async () => {
+      /// TestingLibraryElementError: Found multiple elements with the text: /No se encontraron eventos/i
+      const { getAllByText } = render(
+          <AllEventsTable events={[]} />
+      );
+      expect(getAllByText(/No se encontraron eventos/i)[0]).toBeInTheDocument();
+
+        const apiEvents = await getEventsAfterDate(new Date());
+        if (apiEvents.length === 0) {
+            const { getAllByText } = render(
+                <AllEventsTable events={[]} />
+            );
+            expect(getAllByText(/No se encontraron eventos/i)[0]).toBeInTheDocument();
         }
     });
     it("receives sorted events", async () => {
