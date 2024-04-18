@@ -115,4 +115,10 @@ describe("all events table", () => {
         }
       }
     });
+    it("includes the year in the date", async () => {
+      const { getAllByText } = render(
+          <AllEventsTable events={mockEvents} />
+      );
+      expect(getAllByText(/2024/i)[0]).toBeInTheDocument();
+    });
 });
