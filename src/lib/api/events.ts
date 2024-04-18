@@ -23,7 +23,7 @@ export async function getEventsDates() {
 
 export async function getAllEvents() {
   try {
-    const response = await fetch(baseUrl + "/api/events", {cache: "no-cache", next: {revalidate: 0}});
+    const response = await fetch(baseUrl + "/api/events", {cache: "no-cache", next: {revalidate: 1800}});
     const strapiData = await response.json();
     const data = strapiData.data.map((event: any) => ({
       title: event.attributes.title,
