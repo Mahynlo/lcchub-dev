@@ -2,9 +2,9 @@
 
 import { Event } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "@/components/ui/data-table";
 import { Months } from "@/lib/utils";
 import { cx } from "class-variance-authority";
+import { FullDataTable } from "./fulldata-event-table";
 
 const columns: ColumnDef<Event>[] = [
   {
@@ -12,7 +12,7 @@ const columns: ColumnDef<Event>[] = [
     header: () => {
       return (
         <div className="flex flex-row justify-between items-center">
-          <div> 🗓️ Eventos próximos</div>
+          <div> 🗓️ Eventos</div>
           <div className="flex flex-row space-x-2 items-center">
             <div className="w-2 h-2 rounded-full bg-blue-400"></div>
             <div>evento oficial</div>
@@ -23,7 +23,7 @@ const columns: ColumnDef<Event>[] = [
       );
     },
     cell: ({ row }) => {
-      const { title, shdesc, desc, date, location, from_community } = row.original;
+      const { title, desc, date, location, from_community, approved_by } = row.original;
       const day: number = date.getDate();
       const month: string = Months[date.getMonth()].toUpperCase();
       const start: string = date.toLocaleTimeString("en-US", {
@@ -45,9 +45,9 @@ const columns: ColumnDef<Event>[] = [
             </div>
           </div>
           <div className="text-left text-xs font-mono col-start-2 col-end-6">
-            <div>{start}</div>
+            <div>{start} - aprueba: {approved_by}</div>
             <div className="text-lg font-semibold">{title}</div>
-            <div className={`text-purple-600`}>{shdesc || (desc.substring(0, 64) + "...")}</div>
+            <div className={`text-purple-600`}>{desc}</div>
           </div>
           <div className="col-start-6 col-end-7 items-center justify-center">
             📍{location}
@@ -58,15 +58,15 @@ const columns: ColumnDef<Event>[] = [
   },
 ];
 
-type UpcomingEventsProps = {
+type AllEventsProps = {
   events: Event[];
 };
 
-export default function UpcomingEventsTable(props: UpcomingEventsProps) {
+export default function AllEventsTable(props: AllEventsProps) {
   const { events } = props;
   return (
-    <div id="upcoming-events-table" className="container mx-auto">
-      <DataTable columns={columns} data={events} />
+    <div className="container mx-auto">
+      <FullDataTable columns={columns} data={events} />
     </div>
   );
 }

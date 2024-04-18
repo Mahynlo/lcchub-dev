@@ -13,8 +13,8 @@ export async function getEventsAfterDate(date: Date) {
       },
       {
         title: "Evento 2",
-        shdesc: "Evento 2",
-        desc: "Evento 2",
+        shdesc: "",
+        desc: "HOLAAAA UNO DOS TRES CUEATRO CISADN SEIS SISEE ONCE DOCE TRECE !$",
         location: "Evento 2",
         date: new Date("2024-04-23"),
         approved_by: "Evento 2",
@@ -49,7 +49,7 @@ export async function getEventsDates() {
   return res;
 }
 
-export async function getllEvents() {
+export async function getAllEvents() {
   const res: Event[] = [
     {
       title: "Evento 1",
@@ -62,8 +62,8 @@ export async function getllEvents() {
     },
     {
       title: "Evento 2",
-      shdesc: "Evento 2",
-      desc: "Evento 2",
+      shdesc: "",
+      desc: "Un graaaaan eventooo uno does tre cuatro cinco seis siete ocho nueve dizzz",
       location: "Evento 2",
       date: new Date("2024-04-23"),
       approved_by: "Evento 2",
@@ -81,7 +81,22 @@ export async function getllEvents() {
     {
       title: "Evento 4",
       shdesc: "Evento 4",
-      desc: "Evento 4",
+      desc: `<div className="w-2 h-2 rounded-full bg-blue-400"></div>
+      <div>evento oficial</div>
+      <div className="w-2 h-2 rounded-full bg-green-400"></div>
+      <div>evento comunitario</div>
+    </div>
+  </div>
+);
+},
+cell: ({ row }) => {
+const { title, desc } = row.original;
+
+return (
+  <div className="grid grid-cols-6 gap-4">
+    <div className="text-left text-xs font-mono col-start-2 col-end-6">
+      <div className="text-lg font-semibold">{title}</div>
+      <div classNam`,
       location: "Evento 4",
       date: new Date("2024-05-10"),
       approved_by: "Evento 4",
@@ -89,7 +104,7 @@ export async function getllEvents() {
     },
   ];
 
-  const events = res.sort((a, b) => a.date.getTime() - b.date.getTime());
+  const events = res.sort((a, b) => b.date.getTime() - a.date.getTime());
   return events;
 
 }
