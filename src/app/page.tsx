@@ -1,6 +1,6 @@
 import { HeroSection } from "@/components/ui/home/heroSection";
 import { UpcomingEventsSection } from "@/components/ui/home/eventsSection";
-import { NewsSection } from "@/components/ui/home/newsSection";
+import { SoyLCCSection } from "@/components/ui/home/soy-lcc-section.tsx";
 import { GallerySection } from "@/components/ui/home/gallerySection";
 import { JobBoardSection } from "@/components/ui/home/job-board-section";
 import { getEventsDates, getEventsAfterDate } from "@/lib/api/events";
@@ -16,7 +16,7 @@ export default async function HomePage() {
         allEventsDates={allEventsDates}
         upcomingEvents={upcomingEvents}
       />
-      <NewsSection />
+      <SoyLCCSection />
       {/* <JobBoardSection /> */}
       {/* <GallerySection /> */}
     </div>
