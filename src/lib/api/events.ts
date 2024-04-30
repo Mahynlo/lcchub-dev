@@ -4,11 +4,13 @@ const baseUrl = "http://localhost:1337";
 export async function getEventsAfterDate(date: Date) {
   try {
     const all_events = await getAllEvents();
-    const upcoming_events = all_events.filter((event: Event) => event.date >= date);
+    const upcoming_events = all_events.filter(
+      (event: Event) => event.date >= date,
+    );
     const sorted_events = upcoming_events.sort(
       (a: Event, b: Event) => a.date.getTime() - b.date.getTime(),
     );
-    return sorted_events; 
+    return sorted_events;
   } catch (error) {
     console.error(error);
     return [];
@@ -23,7 +25,10 @@ export async function getEventsDates() {
 
 export async function getAllEvents() {
   try {
-    const response = await fetch(baseUrl + "/api/events", {cache: "no-cache", next: {revalidate: 1800}});
+    const response = await fetch(baseUrl + "/api/events", {
+      cache: "force-cache",
+      next: { revalidate: 1800 },
+    });
     const strapiData = await response.json();
     const data = strapiData.data.map((event: any) => ({
       title: event.attributes.title,
@@ -43,4 +48,3 @@ export async function getAllEvents() {
     return [];
   }
 }
-

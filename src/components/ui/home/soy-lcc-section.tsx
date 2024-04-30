@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -7,12 +6,33 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-export function SoyLCCSection() {
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+import { SoyLCCVideo } from "@/lib/types";
+import Image from "next/image";
+
+interface SoyLCCSectionProps {
+  soyLCCVideos: SoyLCCVideo[];
+
+}
+export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
   return (
     <section className="bg-gray-100 py-20" id="news">
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold">Soy LCC</h2>
+          <div>
+
+          <span className="bg-blue-950 rounded-lg text-3xl font-bold text-slate-50">
+              SoyLCC
+              </span>
+          </div>
           <p className="text-gray-700">
             Un espacio para compartir consejos y experiencias de parte de
             egresados de nuestra comunidad.
@@ -20,25 +40,35 @@ export function SoyLCCSection() {
         </div>
         <div className="container">
           <Carousel>
-            <CarouselContent className="-ml-2">
-              <CarouselItem className="basis-1/2 lg:basis-1/3">
-                Hola
-              </CarouselItem>
-              <CarouselItem className="basis-1/2 lg:basis-1/3">
-                Hola
-              </CarouselItem>
-              <CarouselItem className="basis-1/2 lg:basis-1/3">
-                Hola
-              </CarouselItem>
-              <CarouselItem className="basis-1/2 lg:basis-1/3">
-                Hola
-              </CarouselItem>
-              <CarouselItem className="basis-1/2 lg:basis-1/3">
-                Hola
-              </CarouselItem>
-              <CarouselItem className="basis-1/2 lg:basis-1/3">
-                Hola
-              </CarouselItem>
+            <CarouselContent>
+              {soyLCCVideos.map((video, i) => (
+                <CarouselItem key={i} className="md:basis-1/3 h-300">
+                  <Card>
+                    <CardHeader>
+                    <a
+                        href={video.redirect}
+                        className="btn btn-primary"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                      <Image
+                        src={video.thumbnail || "/default-video-thumbnail.jpg"}
+                        alt={video.title}
+                        width={400}
+                        height={200}
+                      />
+                      </a>
+                    </CardHeader>
+                    <CardContent>
+                      <CardTitle>{video.title}</CardTitle>
+                      <CardDescription>{video.desc || "egresad@ de LCC"}</CardDescription>
+                    </CardContent>
+                    <CardFooter>    
+                    </CardFooter>
+                  </Card>
+                  
+                </CarouselItem>
+              ))}
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />
