@@ -7,14 +7,16 @@ export async function getAllSoyLCCVideos() {
       cache: "force-cache",
       next: { revalidate: 3600 },
     });
-    const strapiData = await response.json();    
+    const strapiData = await response.json();
     const data: SoyLCCVideo[] = strapiData.data.map((video: any) => ({
       title: video.attributes.title,
       desc: video.attributes.desc,
       redirect: video.attributes.redirect,
-      thumbnail: video.attributes.thumbnail.data ? (baseUrl + video.attributes.thumbnail.data.attributes.url) : "",
+      thumbnail: video.attributes.thumbnail.data
+        ? baseUrl + video.attributes.thumbnail.data.attributes.url
+        : "",
     }));
-  
+
     return data;
   } catch (error) {
     console.error(error);

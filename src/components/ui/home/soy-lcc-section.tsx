@@ -13,14 +13,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 import { SoyLCCVideo } from "@/lib/types";
 import Image from "next/image";
 
 interface SoyLCCSectionProps {
   soyLCCVideos: SoyLCCVideo[];
-
 }
 export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
   return (
@@ -28,10 +27,9 @@ export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
           <div>
-
-          <span className="bg-blue-950 rounded-lg text-3xl font-bold text-slate-50">
+            <span className="bg-blue-950 rounded-lg text-3xl font-bold text-slate-50">
               SoyLCC
-              </span>
+            </span>
           </div>
           <p className="text-gray-700">
             Un espacio para compartir consejos y experiencias de parte de
@@ -45,28 +43,30 @@ export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
                 <CarouselItem key={i} className="md:basis-1/3 h-300">
                   <Card>
                     <CardHeader>
-                    <a
+                      <a
                         href={video.redirect}
                         className="btn btn-primary"
                         target="_blank"
                         rel="noreferrer"
                       >
-                      <Image
-                        src={video.thumbnail || "/default-video-thumbnail.jpg"}
-                        alt={video.title}
-                        width={400}
-                        height={200}
-                      />
+                        <Image
+                          src={
+                            video.thumbnail || "/default-video-thumbnail.jpg"
+                          }
+                          alt={video.title}
+                          width={400}
+                          height={200}
+                        />
                       </a>
                     </CardHeader>
                     <CardContent>
                       <CardTitle>{video.title}</CardTitle>
-                      <CardDescription>{video.desc || "egresad@ de LCC"}</CardDescription>
+                      <CardDescription>
+                        {video.desc || "egresad@ de LCC"}
+                      </CardDescription>
                     </CardContent>
-                    <CardFooter>    
-                    </CardFooter>
+                    <CardFooter></CardFooter>
                   </Card>
-                  
                 </CarouselItem>
               ))}
             </CarouselContent>

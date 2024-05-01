@@ -28,7 +28,6 @@ export function FullDataTable<TData, TValue>({
   columns,
   data,
 }: FullDataTableProps<TData, TValue>) {
-
   const table = useReactTable({
     data,
     columns,

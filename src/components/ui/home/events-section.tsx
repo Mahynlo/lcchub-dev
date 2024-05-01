@@ -8,8 +8,10 @@ interface UpcomingEventsSectionProps {
   upcomingEvents: Event[];
 }
 
-export function UpcomingEventsSection({ allEventsDates, upcomingEvents }: UpcomingEventsSectionProps) {
-  
+export function UpcomingEventsSection({
+  allEventsDates,
+  upcomingEvents,
+}: UpcomingEventsSectionProps) {
   return (
     <section className="py-20" id="events">
       <div className="container mx-auto px-4">
@@ -17,26 +19,25 @@ export function UpcomingEventsSection({ allEventsDates, upcomingEvents }: Upcomi
           <Link href={"/Eventos"}>
             <span className="bg-red-500 rounded-lg text-3xl font-bold text-slate-50">
               Eventos
-              </span>
-            </Link>
+            </span>
+          </Link>
           <p className="text-gray-700">
             Enterate de los eventos organizados por la universidad y por la
             comunidad de ciencias de la computación.
           </p>
         </div>
       </div>
-   
 
-  <div className="container grid md:grid-cols-4 gap-4 mx-auto py-5">
-    <Calendar
-      mode="multiple"
-      selected={allEventsDates}
-      className="md:col-span-1 h-85 justify-self-center"
-    />
-  <div className="md:col-span-3 h-85">
-    <UpcomingEventsTable events={upcomingEvents} />
-  </div>
-</div>
+      <div className="container grid md:grid-cols-4 gap-4 mx-auto py-5">
+        <Calendar
+          mode="multiple"
+          selected={allEventsDates}
+          className="md:col-span-1 h-85 justify-self-center"
+        />
+        <div className="md:col-span-3 h-85">
+          <UpcomingEventsTable events={upcomingEvents} />
+        </div>
+      </div>
     </section>
   );
 }

@@ -23,7 +23,8 @@ const columns: ColumnDef<Event>[] = [
       );
     },
     cell: ({ row }) => {
-      const { title, shdesc, desc, date, location, from_community } = row.original;
+      const { title, shdesc, desc, date, location, from_community } =
+        row.original;
       const day: number = date.getDate();
       const month: string = Months[date.getMonth()].toUpperCase();
       const start: string = date.toLocaleTimeString("en-US", {
@@ -32,22 +33,27 @@ const columns: ColumnDef<Event>[] = [
       });
 
       return (
-        <div className={cx`grid grid-cols-6 gap-4 border-l-0 md:border-l-2 
-                        ${from_community ? 'border-l-green-400' : 'border-l-blue-400'}`}>
+        <div
+          className={cx`grid grid-cols-6 gap-4 border-l-0 md:border-l-2 
+                        ${from_community ? "border-l-green-400" : "border-l-blue-400"}`}
+        >
           <div className="col-start-1 col-end-2">
             <div className="font-mono grid grid-rows-2 gap-0 items-center justify-center">
               <span className="row-span-1">{month}</span>
               <span
                 className={cx`text-2xl font-bold content-center justify-center text-center border-b-2 md:border-b-0
-                          ${from_community ? 'border-b-green-400' : 'border-b-blue-400'}`}>
+                          ${from_community ? "border-b-green-400" : "border-b-blue-400"}`}
+              >
                 {day}
               </span>
             </div>
           </div>
           <div className="text-left text-xs font-mono col-start-2 col-end-6">
-            <div>{(start == "12:00 AM") ? "horario no específico" : start}</div>
+            <div>{start == "12:00 AM" ? "horario no específico" : start}</div>
             <div className="text-lg font-semibold">{title}</div>
-            <div className={`text-purple-600`}>{shdesc || (desc.substring(0, 64) + "...")}</div>
+            <div className={`text-purple-600`}>
+              {shdesc || desc.substring(0, 64) + "..."}
+            </div>
           </div>
           <div className="col-start-6 col-end-7 items-center justify-center">
             📍{location}
