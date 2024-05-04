@@ -14,3 +14,12 @@ export type SoyLCCVideo = {
   thumbnail: string;
   redirect: string;
 };
+
+export type ProyectOffering = {
+  proyect_title: string;
+  company: string;
+  readmore_manual: string;
+  readmore_img: string;
+  readmore_redirect: string;
+  issued: Date;
+}
