@@ -116,7 +116,7 @@ export function JobBoardSection( {proyectOfferings}: JobBoardSectionProps) {
             />
             <PaginationContent>
               {Array.from({
-                length: proyectOfferings.length / maxProyectsPerPage,
+                length: Math.ceil(proyectOfferings.length / maxProyectsPerPage),
               }).map((_, i) => {
                 const currentPage = i + 1;
                 return (

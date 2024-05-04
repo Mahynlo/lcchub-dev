@@ -41,7 +41,7 @@ export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
             <CarouselContent>
               {soyLCCVideos.map((video, i) => (
                 <CarouselItem key={i} className="md:basis-1/3 h-300">
-                  <Card>
+                  <Card className="rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
                     <CardHeader>
                       <a
                         href={video.redirect}
