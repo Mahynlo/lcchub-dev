@@ -19,7 +19,7 @@ export default async function HomePage() {
         upcomingEvents={upcomingEvents}
       />
       <SoyLCCSection soyLCCVideos={soyLCCVideos} />
-      {/* <JobBoardSection /> */}
+      <JobBoardSection />
       {/* <GallerySection /> */}
     </div>
   );

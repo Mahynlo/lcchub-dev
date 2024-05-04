@@ -22,4 +22,4 @@ export type ProyectOffering = {
   readmore_img: string;
   readmore_redirect: string;
   issued: Date;
-}
+};
