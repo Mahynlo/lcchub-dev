@@ -1,16 +1,27 @@
 "use client";
-import Link from "next/link";
+
 import {
   PaginationPrevious,
   PaginationItem,
   PaginationLink,
-  PaginationEllipsis,
   PaginationNext,
   PaginationContent,
   Pagination,
 } from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import { ProyectOffering } from "@/lib/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Link from "next/link";
 
 const api = {
   data: [
@@ -238,7 +249,11 @@ export function JobBoardSection() {
         issued: new Date(proyectOffering.attributes.issued),
         readmore_manual: proyectOffering.attributes.readmore_manual,
         readmore_redirect: proyectOffering.attributes.readmore_redirect,
-        readmore_img: proyectOffering.attributes.readmore_img,
+        readmore_img: proyectOffering.attributes.readmore_img.data?.attributes
+          .url
+          ? "http://localhost:1337" +
+            proyectOffering.attributes.readmore_img.data.attributes.url
+          : "",
       };
     },
   );
@@ -247,6 +262,8 @@ export function JobBoardSection() {
   );
   const maxProyectsPerPage = 4;
   const [page, setPage] = useState(1);
+  console.log(api);
+  console.log(proyectOfferingsSorted);
   return (
     <section className="bg-white py-12 md:py-16 dark:bg-gray-950">
       <div className="container mx-auto px-4 md:px-6">
@@ -278,15 +295,45 @@ export function JobBoardSection() {
                 </div>
                 <div className="mb-4 flex items-center text-sm text-gray-500 dark:text-gray-400">
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  <span>{proyectOffering.issued.toLocaleDateString("es-MX")}</span>
+                  <span>
+                    {proyectOffering.issued.toLocaleDateString("es-MX")}
+                  </span>
                 </div>
-
-                <Link
-                  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300"
-                  href="#"
-                >
-                  Más info
-                </Link>
+                <div>
+                  {proyectOffering.readmore_redirect ||
+                  proyectOffering.readmore_img ? (
+                    <Button>
+                      <Link
+                        href={
+                          proyectOffering.readmore_redirect ||
+                          proyectOffering.readmore_img
+                        }
+                        target="_blanc"
+                      >
+                        Ver más
+                      </Link>
+                    </Button>
+                  ) : (
+                    <>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button>Ver más</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>
+                              {proyectOffering.proyect_title}
+                            </DialogTitle>
+                            <DialogClose />
+                          </DialogHeader>
+                          <DialogDescription>
+                            {proyectOffering.readmore_manual}
+                          </DialogDescription>
+                        </DialogContent>
+                      </Dialog>
+                    </>
+                  )}
+                </div>
               </div>
             ))}
         </div>
@@ -301,27 +348,32 @@ export function JobBoardSection() {
               }
             />
             <PaginationContent>
-              {Array.from({ length: proyectOfferings.length / maxProyectsPerPage }).map(
-                (_, i) => {
-                  const currentPage = i + 1;
-                  return (
-                    <PaginationItem
-                      key={i}
-                      onClick={() => setPage(currentPage)}
-                    >
-                      <PaginationLink>{currentPage}</PaginationLink>
-                    </PaginationItem>
-                  );
-                },
-              )}
+              {Array.from({
+                length: proyectOfferings.length / maxProyectsPerPage,
+              }).map((_, i) => {
+                const currentPage = i + 1;
+                return (
+                  <PaginationItem key={i} onClick={() => setPage(currentPage)}>
+                    <PaginationLink>{currentPage}</PaginationLink>
+                  </PaginationItem>
+                );
+              })}
             </PaginationContent>
-            <PaginationNext 
-            onClick={() => setPage(page + 1)} 
-            aria-disabled={page >= proyectOfferings.length / maxProyectsPerPage}
-            tabIndex={page >= proyectOfferings.length / maxProyectsPerPage ? -1 : undefined}
-            className={
-              page >= proyectOfferings.length / maxProyectsPerPage ? "pointer-events-none opacity-50" : undefined
-            }
+            <PaginationNext
+              onClick={() => setPage(page + 1)}
+              aria-disabled={
+                page >= proyectOfferings.length / maxProyectsPerPage
+              }
+              tabIndex={
+                page >= proyectOfferings.length / maxProyectsPerPage
+                  ? -1
+                  : undefined
+              }
+              className={
+                page >= proyectOfferings.length / maxProyectsPerPage
+                  ? "pointer-events-none opacity-50"
+                  : undefined
+              }
             />
           </Pagination>
         </div>
