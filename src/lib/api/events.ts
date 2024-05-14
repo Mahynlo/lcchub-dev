@@ -26,7 +26,6 @@ export async function getEventsDates() {
 export async function getAllEvents() {
   try {
     const response = await fetch(baseUrl + "/api/events", {
-      cache: "force-cache",
       next: { revalidate: 1800 },
     });
     const strapiData = await response.json();

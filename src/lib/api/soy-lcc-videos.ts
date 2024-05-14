@@ -4,7 +4,6 @@ const baseUrl = "http://localhost:1337";
 export async function getAllSoyLCCVideos() {
   try {
     const response = await fetch(baseUrl + "/api/soy-lcc-videos?populate=*", {
-      cache: "force-cache",
       next: { revalidate: 3600 },
     });
     const strapiData = await response.json();

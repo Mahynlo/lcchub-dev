@@ -223,7 +223,6 @@ export async function getAllProyectOfferings() {
     const response = await fetch(
       baseUrl + "/api/proyect-opportunities?populate=*",
       {
-        cache: "force-cache",
         next: { revalidate: 3600 },
       },
     );
