@@ -35,7 +35,7 @@ export function DashboardNavbar( { instance, accounts }: DashboardNavbarProps) {
             onClick={() => instance.logoutRedirect( { postLogoutRedirectUri: "/home" })}
           >
             <LogOutIcon size={20} />
-            <span className="pl-1">Logout</span>
+            <span className="pl-1">Salir</span>
           </Button>
         </div>
       )}
