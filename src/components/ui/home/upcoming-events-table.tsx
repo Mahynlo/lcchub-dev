@@ -49,9 +49,9 @@ const columns: ColumnDef<Event>[] = [
             </div>
           </div>
           <div className="text-left text-xs font-mono col-start-2 col-end-6">
-            <div>{start == "12:00 AM" ? "horario no específico" : start}</div>
+            <div className="text-red-500 font-bold">{start == "12:00 AM" ? "horario no específico" : start}</div>
             <div className="text-lg font-semibold">{title}</div>
-            <div className={`text-purple-600`}>
+            <div>
               {shdesc || desc.substring(0, 64) + "..."}
             </div>
           </div>

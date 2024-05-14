@@ -14,7 +14,7 @@ function LCCIcon() {
 }
 
 export function HomeNavbar() {
-  const sections = ["Eventos", "Noticias"];
+  const sections = ["Eventos"];
   return (
     <div className="sticky top-0 z-10 py-0 w-full flex items-center px-6 bg-white">
       <Link className="flex flex-row items-center" href="/">
