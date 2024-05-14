@@ -12,10 +12,10 @@ export default function AuthLogin({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { instance } = useMsal();
+  const { instance, accounts } = useMsal();
   return (
     <div>
-       <DashboardNavbar />
+       <DashboardNavbar instance={instance} accounts={accounts} />
         <AuthenticatedTemplate>{children}</AuthenticatedTemplate>
         <UnauthenticatedTemplate>
           <Login instance={instance} />
