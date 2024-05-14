@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
 export default function AuthPage() {
-    return <div>Hello you are auth</div>;
-    }
+  redirect("/dashboard/auth/progress");
+  return <></>;
+}
