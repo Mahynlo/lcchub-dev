@@ -27,7 +27,7 @@ export function HomeNavbar() {
         {sections.map((nameOfSection, index) => (
           <Link
             key={index}
-            href={"/" + nameOfSection}
+            href={"/" + nameOfSection.toLowerCase()}
             className="text-gray-700 hover:text-purple-600 transition-colors"
           >
             {nameOfSection}
