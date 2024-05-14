@@ -17,7 +17,7 @@ export function HomeNavbar() {
   const sections = ["Eventos"];
   return (
     <div className="sticky top-0 z-10 py-0 w-full flex items-center px-6 bg-white">
-      <Link className="flex flex-row items-center" href="/">
+      <Link className="flex flex-row items-center" href="/home">
         <LCCIcon />
         <span className="px-3 font-mono text-blue-950 text-xl font-semibold">
           LCCHUB
@@ -27,7 +27,7 @@ export function HomeNavbar() {
         {sections.map((nameOfSection, index) => (
           <Link
             key={index}
-            href={"/" + nameOfSection.toLowerCase()}
+            href={"/home/" + nameOfSection.toLowerCase()}
             className="text-gray-700 hover:text-purple-600 transition-colors"
           >
             {nameOfSection}
