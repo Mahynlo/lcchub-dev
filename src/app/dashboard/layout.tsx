@@ -1,3 +1,5 @@
+import { DashboardNavbar } from "@/components/ui/dashboard/navbar";
+
 export default function DashboardLayout({
   children,
 }: Readonly<{
@@ -5,7 +7,7 @@ export default function DashboardLayout({
 }>) {
   return (
     <div>
-        Hello template
+      <DashboardNavbar />
       {children}
     </div>
   );
