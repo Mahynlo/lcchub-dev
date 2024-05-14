@@ -21,7 +21,7 @@ export default async function HomePage() {
         upcomingEvents={upcomingEvents}
       />
       <SoyLCCSection soyLCCVideos={soyLCCVideos} />
-      <JobBoardSection proyectOfferings={proyectOfferings}/>
+      <JobBoardSection proyectOfferings={proyectOfferings} />
     </div>
   );
 }

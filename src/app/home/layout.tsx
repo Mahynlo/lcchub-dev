@@ -1,7 +1,9 @@
+"use server";
+
 import { HomeNavbar } from "@/components/ui/home/navbar";
 import { HomeFooter } from "@/components/ui/home/footer";
 
-export default function HomeLayout({
+export default async function HomeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

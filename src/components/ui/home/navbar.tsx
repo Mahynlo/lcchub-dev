@@ -35,7 +35,7 @@ export function HomeNavbar() {
         ))}
       </nav>
       <Button asChild>
-        <Link href="/dashboard">Mi Portal</Link>
+        <Link href="/dashboard/auth">Mi Portal</Link>
       </Button>
     </div>
   );

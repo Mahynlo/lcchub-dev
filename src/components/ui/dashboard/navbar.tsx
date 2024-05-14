@@ -21,6 +21,6 @@ export function DashboardNavbar() {
           LCCHUB
         </span>
       </Link>
-      </div>
+    </div>
   );
 }

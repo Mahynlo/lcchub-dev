@@ -23,12 +23,10 @@ import { ProyectOffering } from "@/lib/types";
 import { useState } from "react";
 import Link from "next/link";
 
-
 interface JobBoardSectionProps {
   proyectOfferings: ProyectOffering[];
-
 }
-export function JobBoardSection( {proyectOfferings}: JobBoardSectionProps) {
+export function JobBoardSection({ proyectOfferings }: JobBoardSectionProps) {
   const maxProyectsPerPage = 4;
   const [page, setPage] = useState(1);
   return (
