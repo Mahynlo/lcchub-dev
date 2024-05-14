@@ -15,7 +15,7 @@ export function HeroSection() {
           </p>
           <div className="flex space-x-4">
             <Button asChild>
-              <Link href="#">Mi Portal</Link>
+              <Link href="/dashboard">Mi Portal</Link>
             </Button>
             <Button variant="secondary" asChild>
               <Link
