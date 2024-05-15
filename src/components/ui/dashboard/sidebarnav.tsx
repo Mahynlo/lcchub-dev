@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "../button";
 
 interface SidebarNavProps {
@@ -25,7 +25,7 @@ export function SidebarNav({ items }: SidebarNavProps) {
             pathname === item.href
               ? "bg-muted hover:bg-muted"
               : "hover:bg-transparent hover:underline",
-            "justify-start"
+            "justify-start",
           )}
         >
           {item.title}

@@ -9,12 +9,10 @@ export default async function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body>
-        <HomeNavbar />
-        {children}
-        <HomeFooter />
-      </body>
-    </html>
+    <>
+      <HomeNavbar />
+      {children}
+      <HomeFooter />
+    </>
   );
 }

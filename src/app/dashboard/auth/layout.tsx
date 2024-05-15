@@ -37,8 +37,8 @@ export default function AuthLogin({
               <div className="space-y-0.5">
                 <h2 className="text-2xl font-bold tracking-tight">Mi Portal</h2>
                 <p className="text-muted-foreground">
-                  Bienvenido a tu portal personal de la carrera en ciencias de la
-                  computación.
+                  Bienvenido a tu portal personal de la carrera en ciencias de
+                  la computación.
                 </p>
               </div>
               <Separator className="my-6" />
