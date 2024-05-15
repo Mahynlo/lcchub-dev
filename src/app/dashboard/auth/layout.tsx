@@ -46,7 +46,9 @@ export default function AuthLogin({
                 <aside className="-mx-4 lg:w-1/5">
                   <SidebarNav items={sidebarNavItems} />
                 </aside>
-                <div className="flex-1 lg:max-w-2xl">{children}</div>
+                <div className="flex-1 px-4 lg:px-0 lg:w-4/5">
+                {children}
+                </div>
               </div>
             </div>
           </div>

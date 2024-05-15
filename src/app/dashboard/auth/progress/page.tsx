@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
+import { Separator } from "@/components/ui/separator";
 
 export default function Page() {
   const { accounts } = useMsal();
@@ -22,10 +23,10 @@ export default function Page() {
 
   return student && (
     <div>
-      <main className="flex-1 py-8 md:py-12 lg:py-16">
+      <main>
         <div className="w-full">
           <section className="grid gap-6 md:grid-cols-[1fr_auto]">
-            <div className="space-y-4">
+            <div className="space-y-1">
               <h1 className="text-xl font-bold">{student.name}</h1>
               <p className="text-lg text-gray-500 dark:text-gray-400">{student.email}</p>
               <p className="text-lg text-gray-500 dark:text-gray-400">{student.programName}</p>
@@ -38,7 +39,8 @@ export default function Page() {
               </div>
             </div>
           </section>
-          <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <Separator  className="my-6" />
+          <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-4`">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Créditos Aprobados</CardTitle>
@@ -107,7 +109,7 @@ export default function Page() {
 }
 
 
-function BookIcon(props) {
+function BookIcon(props: any) {
   return (
     <svg
       {...props}
@@ -127,7 +129,7 @@ function BookIcon(props) {
 }
 
 
-function BookOpenIcon(props) {
+function BookOpenIcon(props: any) {
   return (
     <svg
       {...props}
@@ -148,7 +150,7 @@ function BookOpenIcon(props) {
 }
 
 
-function CalendarIcon(props) {
+function CalendarIcon(props: any) {
   return (
     <svg
       {...props}
@@ -171,7 +173,7 @@ function CalendarIcon(props) {
 }
 
 
-function StarIcon(props) {
+function StarIcon(props: any) {
   return (
     <svg
       {...props}
