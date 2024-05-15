@@ -16,7 +16,7 @@ function LCCIcon() {
 export function HomeNavbar() {
   const sections = ["Eventos"];
   return (
-    <div className="sticky top-0 z-10 py-0 w-full flex items-center px-6 bg-white">
+    <div className="sticky top-0 z-50 py-0 w-full flex items-center px-6 bg-white border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <Link className="flex flex-row items-center" href="/home">
         <LCCIcon />
         <span className="px-3 font-mono text-blue-950 text-xl font-semibold">
