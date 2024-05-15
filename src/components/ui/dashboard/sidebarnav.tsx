@@ -2,34 +2,35 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "../button";
 
 interface SidebarNavProps {
   items: {
-    href: string
-    title: string
-  }[]
+    href: string;
+    title: string;
+  }[];
 }
 
 export function SidebarNav({ items }: SidebarNavProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <nav className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
       {items.map((item) => (
         <Link
-        key={item.href}
-        href={item.href}
-        className={cn(
-          "hover:bg-accent hover:text-accent-foreground",
-          pathname === item.href
-            ? "bg-muted hover:bg-muted"
-            : "hover:bg-transparent hover:underline",
-          "justify-start"
-        )}
-      >
-        {item.title}
-      </Link>
-    ))}
+          key={item.href}
+          href={item.href}
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            pathname === item.href
+              ? "bg-muted hover:bg-muted"
+              : "hover:bg-transparent hover:underline",
+            "justify-start"
+          )}
+        >
+          {item.title}
+        </Link>
+      ))}
     </nav>
   );
 }
