@@ -6,8 +6,19 @@ import {
   useMsal,
 } from "@azure/msal-react";
 import { DashboardNavbar } from "@/components/ui/dashboard/navbar";
-import Sidebar from "@/components/ui/dashboard/sidebar";
+import { SidebarNav } from "@/components/ui/dashboard/sidebarnav";
 import Login from "@/components/ui/dashboard/login";
+
+const sidebarNavItems = [
+  {
+    title: "Mi Progreso",
+    href: "/dashboard/auth/progress",
+  },
+  {
+    title: "Mapa Interactivo",
+    href: "/dashboard/auth/lccmap",
+  },
+];
 
 export default function AuthLogin({
   children,
@@ -20,7 +31,7 @@ export default function AuthLogin({
       <AuthenticatedTemplate>
       <DashboardNavbar instance={instance} accounts={accounts} />
         <div className="flex flex-row">
-          <Sidebar />
+          <SidebarNav items={sidebarNavItems} />
           {children}
         </div>
       </AuthenticatedTemplate>
