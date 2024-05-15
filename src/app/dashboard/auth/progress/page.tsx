@@ -7,7 +7,7 @@ import { Student } from "@/lib/types";
 export default function Page() {
   const { accounts } = useMsal();
   const studentAccount = accounts[0];
-  const studentId = studentAccount.username;
+  const studentId = studentAccount.username.split("@")[0].substring(1);
   const [student, setStudent] = useState<Student | null>(null);
 
   useEffect(() => {
@@ -20,6 +20,7 @@ export default function Page() {
     <div>
       <p>{studentAccount.username}</p>
       <p>{studentAccount.name}</p>
+      <p>{studentId}</p>
       {student && (
         <div>
           <p>{student.name}</p>
