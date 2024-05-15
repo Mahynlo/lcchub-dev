@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { getStudentById } from "@/lib/api/student-by-id";
 import { useMsal } from "@azure/msal-react";
 import { Student } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 
 export default function Page() {
   const { accounts } = useMsal();
@@ -42,10 +45,9 @@ export default function Page() {
           <p>{student.failedSubjects}</p>
           <p>{student.creditedSubjects}</p>
           <p>{student.thirdEnrolledSubjects}</p>
-JSON
+          JSON
           <pre>{JSON.stringify(student, null, 2)}</pre>
-
-          </div>
+        </div>
       )}
     </div>
   );
