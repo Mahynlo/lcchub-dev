@@ -10,6 +10,7 @@ export async function getStudentById(id: string) {
     const studentSnap = await getDoc(studentRef);
     if (studentSnap.exists()) {
         const student = studentSnap.data() as Student;
+        console.log(student);
         return student;
     } else {
         return null;
