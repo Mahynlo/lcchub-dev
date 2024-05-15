@@ -32,8 +32,8 @@ export default function AuthLogin({
       <AuthenticatedTemplate>
         <DashboardNavbar instance={instance} accounts={accounts} />
         <div className="container relative py-5">
-          <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
-            <div className="hidden space-y-6 p-10 pb-16 md:block">
+          <div className="rounded-[0.5rem] border bg-background shadow">
+            <div className="space-y-6 p-10 pb-16 md:block">
               <div className="space-y-0.5">
                 <h2 className="text-2xl font-bold tracking-tight">Mi Portal</h2>
                 <p className="text-muted-foreground">
