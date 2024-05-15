@@ -23,3 +23,25 @@ export type ProyectOffering = {
   readmore_redirect: string;
   issued: Date;
 };
+
+export type Student = {
+  programKey: string;
+  approvedCredits: number;
+  approvedSubjects: number;
+  creditedSubjects: string;
+  cultCredits: number;
+  droppedSubjects: string;
+  email: string;
+  enrolledCredits: number;
+  enrolledSubjects: string;
+  failedSubjects: string;
+  kardexGrade: number;
+  levelAndCycleEnglish: string;
+  name: string;
+  periodGrade: number;
+  programName: string;
+  requiredCredits: number;
+  sportsCredits: number;
+  studentStatus: string;
+  thirdEnrolledSubjects: string;
+};
