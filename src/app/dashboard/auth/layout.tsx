@@ -9,20 +9,16 @@ import { DashboardNavbar } from "@/components/ui/dashboard/navbar";
 import { SidebarNav } from "@/components/ui/dashboard/sidebarnav";
 import Login from "@/components/ui/dashboard/login";
 import { Separator } from "@/components/ui/separator";
-import { Student } from "@/lib/types";
-import { getStudentById } from "@/lib/api/student-by-id";
-import { createContext, useState, useEffect } from "react";
 
-export const StudentInfoContext = createContext<Student | null>(null);
 
 const sidebarNavItems = [
   {
     title: "Mi Progreso",
-    href: "/dashboard/auth/progress",
+    href: "/dashboard/auth/profile/progress",
   },
   {
     title: "Mapa Interactivo",
-    href: "/dashboard/auth/lccmap",
+    href: "/dashboard/auth/profile/lccmap",
   },
 ];
 
@@ -32,15 +28,6 @@ export default function AuthLogin({
   children: React.ReactNode;
 }>) {
   const { instance, accounts } = useMsal();
-  const studentAccount = accounts[0];
-  const studentId = studentAccount.username.split("@")[0].substring(1);
-  const [student, setStudent] = useState<Student | null>(null);
-
-  useEffect(() => {
-    getStudentById(studentId).then((student) => {
-      setStudent(student);
-    });
-  }, [studentId]);
 
   return (
     <div>
@@ -62,9 +49,7 @@ export default function AuthLogin({
                   <SidebarNav items={sidebarNavItems} />
                 </aside>
                 <div className="flex-1 px-4 lg:px-0 lg:w-4/5">
-              <StudentInfoContext.Provider value={student}>
                 {children}
-              </StudentInfoContext.Provider>
                 </div>
               </div>
             </div>

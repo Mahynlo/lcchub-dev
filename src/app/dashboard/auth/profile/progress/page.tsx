@@ -1,8 +1,5 @@
 "use client";
 import { useContext } from "react";
-import { getStudentById } from "@/lib/api/student-by-id";
-import { useMsal } from "@azure/msal-react";
-import { Student } from "@/lib/types";
 import { Progress } from "@/components/ui/progress";
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";

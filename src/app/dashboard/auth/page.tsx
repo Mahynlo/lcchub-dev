@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 export default function AuthPage() {
-  redirect("/dashboard/auth/progress");
+  redirect("/dashboard/auth/profile/progress");
   return <></>;
 }
