@@ -3,16 +3,24 @@
 import { Subject, CurriculumMap, Student } from "@/lib/types";
 import { StudentInfoContext } from "../layout";
 import { useContext, useEffect, useState } from "react";
-import { getCurriculumMaps } from "@/lib/api/curriculumMap-by-key";
+import { getCurriculumMaps, cacheSubjectInfo } from "@/lib/api/curriculumMap-by-key";
+import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
 
 export default function Page() {
   const student = useContext(StudentInfoContext);
   const key = student?.studyPlan;
   const [curriculumMap, setCurriculumMap] = useState<CurriculumMap | null>(null);
+  const [cacheSubject, setCacheSubject] = useState<Map<string, Subject> | null>(null);
   useEffect(() => {
     if (key) {
       getCurriculumMaps(key).then((curriculumMap) => {
         setCurriculumMap(curriculumMap);
+        if (curriculumMap) {
+          const program = curriculumMap.semesters;
+          cacheSubjectInfo(program).then((cache) => {
+            setCacheSubject(cache);
+          });
+        }
       });
     }
   }, [key]);
@@ -34,16 +42,6 @@ export default function Page() {
           <AxisCard title="Integrador" credits={curriculumMap.integratorCredits} color="#9966ff" />
         </div>
       </div>
-    </div>
-  );
-}
-
-function AxisCard({ title, credits, color }: { title: string; credits: number, color: string}) {
-  return (
-    <div className="p-4 bg-white rounded-lg shadow-md" style={{ backgroundColor: color }}>
-      <h3 className="text-xl">Eje {title}</h3>
-      <p className="text-4xl font-bold text-black">{credits}</p>
-      <p className="text-gray-500">Créditos</p>
     </div>
   );
 }
