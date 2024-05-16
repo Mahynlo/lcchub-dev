@@ -3,13 +3,11 @@
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
-  useMsal,
 } from "@azure/msal-react";
 import { DashboardNavbar } from "@/components/ui/dashboard/navbar";
 import { SidebarNav } from "@/components/ui/dashboard/sidebarnav";
 import Login from "@/components/ui/dashboard/login";
 import { Separator } from "@/components/ui/separator";
-
 
 const sidebarNavItems = [
   {
@@ -27,12 +25,10 @@ export default function AuthLogin({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { instance, accounts } = useMsal();
-
   return (
     <div>
+      <DashboardNavbar />
       <AuthenticatedTemplate>
-        <DashboardNavbar instance={instance} accounts={accounts} />
         <div className="container relative py-5">
           <div className="rounded-[0.5rem] border bg-background shadow">
             <div className="space-y-6 p-10 pb-16 md:block">
@@ -48,17 +44,14 @@ export default function AuthLogin({
                 <aside className="-mx-4 lg:w-1/5">
                   <SidebarNav items={sidebarNavItems} />
                 </aside>
-                <div className="flex-1 px-4 lg:px-0 lg:w-4/5">
-                {children}
-                </div>
+                <div className="flex-1 px-4 lg:px-0 lg:w-4/5">{children}</div>
               </div>
             </div>
           </div>
         </div>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <DashboardNavbar instance={instance} accounts={accounts} />
-        <Login instance={instance} />
+        <Login />
       </UnauthenticatedTemplate>
     </div>
   );

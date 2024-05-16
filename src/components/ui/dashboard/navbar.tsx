@@ -2,16 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { AccountInfo, IPublicClientApplication } from "@azure/msal-browser";
 import { LogOutIcon } from "lucide-react";
 import { Button } from "../button";
+import { useMsal } from "@azure/msal-react";
 
-interface DashboardNavbarProps {
-  instance: IPublicClientApplication;
-  accounts: AccountInfo[];
-}
-
-export function DashboardNavbar({ instance, accounts }: DashboardNavbarProps) {
+export function DashboardNavbar() {
+  const { instance, accounts, inProgress } = useMsal();
   return (
     <div className="sticky top-0 z-50 py-0 w-full flex items-center px-6 bg-white border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <Link className="flex flex-row items-center" href="/home">

@@ -46,7 +46,6 @@ export type Student = {
   thirdEnrolledSubjects: string;
 };
 
-
 export type Subject = {
   academicDivision: string;
   branch: string;

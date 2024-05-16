@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from "firebase/app";
-import { getFirestore} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 // Instead, set FirestoreSettings.localCache to an instance of PersistentLocalCache to turn on IndexedDb cache. Calling this function when FirestoreSettings.localCache is already specified will throw an exception.
 const firebaseConfig = {
@@ -13,9 +13,7 @@ const firebaseConfig = {
   kind: "memory",
 };
 
-const app = getApps().length
-  ? getApps()[0]
-  : initializeApp(firebaseConfig);
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
