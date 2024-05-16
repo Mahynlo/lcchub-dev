@@ -45,3 +45,32 @@ export type Student = {
   studentStatus: string;
   thirdEnrolledSubjects: string;
 };
+
+
+export type Subject = {
+  academicDivision: string;
+  branch: string;
+  credits: string; // Yeah. This is from the db ...
+  department: string;
+  labHours: string;
+  releases: string;
+  requirements: string;
+  subjectKey: string;
+  subjectName: string;
+  theoryHours: string;
+  tracklistSubject: string[];
+  workshopHours: string;
+};
+
+export type CurriculumMap = {
+  basicCredits: number;
+  commonCredits: number;
+  electiveCredits: number;
+  integratorSubjects: string;
+  map: number;
+  obligatoryCredits: number;
+  professionalCredits: number;
+  selectiveSubjects: string;
+  semesters: string[];
+  specialistCredits: number;
+};

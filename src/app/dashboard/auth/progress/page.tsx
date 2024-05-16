@@ -1,25 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { getStudentById } from "@/lib/api/student-by-id";
 import { useMsal } from "@azure/msal-react";
 import { Student } from "@/lib/types";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
-import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import { Separator } from "@/components/ui/separator";
+import { StudentInfoContext } from "../layout";
 
 export default function Page() {
-  const { accounts } = useMsal();
-  const studentAccount = accounts[0];
-  const studentId = studentAccount.username.split("@")[0].substring(1);
-  const [student, setStudent] = useState<Student | null>(null);
-
-  useEffect(() => {
-    getStudentById(studentId).then((student) => {
-      setStudent(student);
-    });
-  }, [studentId]);
+  const student  = useContext(StudentInfoContext);
 
   return student && (
     <div>

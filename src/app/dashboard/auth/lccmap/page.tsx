@@ -1,3 +1,6 @@
+import { Subject, CurriculumMap } from "@/lib/types";
+import { useState } from "react";
+
 export default function Page() {
   return (
     <div>
