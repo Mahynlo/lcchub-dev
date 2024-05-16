@@ -7,7 +7,7 @@ import { loginRequest } from "@/lib/msal-config";
 import { useMsal } from "@azure/msal-react";
 
 export default function Login() {
-  const { instance, inProgress } = useMsal();
+  const { instance } = useMsal();
   return (
     <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-gray-100 px-2 dark:bg-gray-900">
       <div className="mx-auto w-full max-w-md space-y-6">
