@@ -11,7 +11,6 @@ export default function Page() {
   return (
     student && (
       <div>
-        <main>
           <div className="w-full">
             <section className="grid gap-6 md:grid-cols-[1fr_auto]">
               <div className="space-y-1">
@@ -143,7 +142,6 @@ export default function Page() {
               </Card>
             </section>
           </div>
-        </main>
       </div>
     )
   );

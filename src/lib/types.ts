@@ -43,6 +43,7 @@ export type Student = {
   requiredCredits: number;
   sportsCredits: number;
   studentStatus: string;
+  studyPlan: string;
   thirdEnrolledSubjects: string;
 };
 
@@ -72,4 +73,6 @@ export type CurriculumMap = {
   selectiveSubjects: string;
   semesters: string[];
   specialistCredits: number;
+  integratorCredits: number;
+  totalCredits: number;
 };
