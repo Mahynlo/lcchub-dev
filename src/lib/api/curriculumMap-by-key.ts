@@ -8,7 +8,6 @@ import { unstable_cache } from "next/cache";
 export async function getCurriculumMaps(key: string) {
     const docRef = doc(db, "curriculumMaps", key);
     const docSnap = await getDoc(docRef);
-    console.log(docSnap);
     if (docSnap.exists()) {
         const curriculumMap = docSnap.data() as CurriculumMap;
         return curriculumMap;
@@ -21,7 +20,6 @@ const getSubjectInfo = unstable_cache(
     async (subjectKey: string) => {
         const docRef = doc(db, "subjects", subjectKey);
         const docSnap = await getDoc(docRef);
-        console.log(docSnap);
         if (docSnap.exists()) {
             const subject = docSnap.data() as Subject;
             return subject;

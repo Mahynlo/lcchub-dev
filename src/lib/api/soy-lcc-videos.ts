@@ -3,9 +3,7 @@ import { SoyLCCVideo } from "../types";
 const baseUrl = "http://localhost:1337";
 export async function getAllSoyLCCVideos() {
   try {
-    const response = await fetch(baseUrl + "/api/soy-lcc-videos?populate=*", {
-      next: { revalidate: 3600 },
-    });
+    const response = await fetch(baseUrl + "/api/soy-lcc-videos?populate=*");
     const strapiData = await response.json();
     const data: SoyLCCVideo[] = strapiData.data.map((video: any) => ({
       title: video.attributes.title,
