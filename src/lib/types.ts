@@ -60,6 +60,7 @@ export type Subject = {
   theoryHours: string;
   tracklistSubject: string[];
   workshopHours: string;
+  abbr?: string;
 };
 
 export type CurriculumMap = {

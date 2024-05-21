@@ -77,7 +77,7 @@ function SemesterCard({ semester, subjectCache }: { semester: string, subjectCac
 function SubjectCard({ subject }: { subject: Subject | undefined }) {
   return (
     <div className={cn(`flex flex-col bg-white hover:scale-125 p-4 max-h-16 min-h-14 max-w-30 min-w-31 flex items-center justify-center gap-1 ${axisColor(subject?.branch.trim())}`)}>
-      <h3 className="text-[8px] text-center">{subject?.subjectName.substring(0, 25)}</h3>
+      <h3 className="text-[8px] text-center">{subject?.abbr || subject?.subjectName}</h3>
       <p className="text-[8px] text-center">{subject?.credits}</p>
     </div>
   );
