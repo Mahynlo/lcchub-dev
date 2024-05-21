@@ -16,7 +16,7 @@ export function DashboardNavbar() {
           LCCHUB
         </span>
       </Link>
-      {accounts && accounts.length > 0 && 
+      {accounts && accounts.length > 0 && (
         <div className="flex flex-row items-center ml-auto">
           <Button
             className="flex flex-row items-center px-3 py-2 text-blue-950 font-semibold bg-white rounded-md hover:bg-blue-100"
@@ -28,7 +28,7 @@ export function DashboardNavbar() {
             <span className="pl-1">Salir</span>
           </Button>
         </div>
-      } 
+      )}
     </div>
   );
 }

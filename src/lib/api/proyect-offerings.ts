@@ -4,7 +4,7 @@ const baseUrl = "http://localhost:1337";
 export async function getAllProyectOfferings() {
   try {
     const response = await fetch(
-      baseUrl + "/api/proyect-opportunities?populate=*"
+      baseUrl + "/api/proyect-opportunities?populate=*",
     );
     const strapiData = await response.json();
     const data: ProyectOffering[] = strapiData.data.map((proyect: any) => ({

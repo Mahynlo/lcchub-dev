@@ -28,7 +28,7 @@ export default function AuthLogin({
   return (
     <div>
       <AuthenticatedTemplate>
-      <DashboardNavbar />
+        <DashboardNavbar />
         <div className="container relative py-5">
           <div className="rounded-[0.5rem] border bg-background shadow">
             <div className="space-y-6 p-10 pb-16 md:block">
@@ -51,7 +51,7 @@ export default function AuthLogin({
         </div>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-      <DashboardNavbar />
+        <DashboardNavbar />
         <Login />
       </UnauthenticatedTemplate>
     </div>
