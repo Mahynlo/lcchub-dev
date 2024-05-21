@@ -2,7 +2,7 @@
 
 import { Subject, CurriculumMap, Student } from "@/lib/types";
 import { StudentInfoContext } from "../layout";
-import { useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { getCurriculumMaps, cacheSubjectInfo } from "@/lib/api/curriculumMap-by-key";
 import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
 import { cn } from "@/lib/utils";
@@ -14,12 +14,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { set } from "date-fns";
+
+interface SubjectShowContext {
+  showAll: boolean;
+  showSubject: Map<string, boolean>;
+  setShowAll?: (showAll: boolean) => void;
+}
+
+const SubjectShowContext = createContext<SubjectShowContext | null>(null);
 
 export default function Page() {
   const student = useContext(StudentInfoContext);
   const key = student?.studyPlan;
   const [curriculumMap, setCurriculumMap] = useState<CurriculumMap | null>(null);
   const [cacheSubject, setCacheSubject] = useState<Map<string, Subject>>(new Map());
+  const [showAll, setShowAll] = useState(true);
+  const [showSubject, setShowSubject] = useState(new Map<string, boolean>());
+
   useEffect(() => {
     if (key) {
       getCurriculumMaps(key).then((curriculumMap) => {
@@ -34,6 +46,7 @@ export default function Page() {
     }
   }, [key]);
   return curriculumMap && (
+    <SubjectShowContext.Provider value={{ showAll, showSubject, setShowAll }}>
     <div className="w-full items-center">
       <div className="container grid gap-8 px-4 md:px-6">
         <div className="grid gap-4">
@@ -56,6 +69,7 @@ export default function Page() {
         <CurriculumMapSection semesters={curriculumMap.semesters} subjectCache={cacheSubject} />
         </div>
     </div>
+    </SubjectShowContext.Provider>
   );
 }
 
@@ -87,8 +101,30 @@ function SemesterCard({ semester, subjectCache }: { semester: string, subjectCac
 }
 
 function SubjectCard({ subject }: { subject: Subject | undefined }) {
+  const { showAll, showSubject, setShowAll } = useContext(SubjectShowContext)!;
+
+  function subjectClick() {
+    setShowAll && setShowAll(false);
+    if (subject?.tracklistSubject) {
+      all2false(showSubject);
+      for (const key of subject.tracklistSubject) showSubject.set(key, true);
+    }
+  }
+
+  function subjectLeave() {
+    setShowAll && setShowAll(true);
+  }
+
+
   return (
-      <Card className={cn(`w-[125px] h-[100px] text-center justify-between ${axisColor(subject?.branch)}`)}>
+      <Card className={cn(`w-[125px] h-[100px] text-center justify-between 
+      ${axisColor(subject?.branch)} hover:scale-110
+      ${showAll || subject && showSubject.get(subject.subjectKey)  ? "opacity-100" : "opacity-50"}
+      hover:opacity-100
+      `)}
+      onClick={subjectClick}
+      onMouseLeave={subjectLeave}
+      >
         <CardHeader>
           <CardTitle>
             <h3 className="text-[12px]">{subject?.abbr || subject?.subjectName.trim()}</h3>
@@ -114,11 +150,13 @@ function axisColor(axis: string | undefined) {
 }
 
 function int2roman(num: number) {
-  if (typeof num !== "number") return false;
-  var digits = String(+num).split(""),
-    key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM", "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC", "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
-    roman = "",
-    i = 3;
-  while (i--) roman = (key[+digits.pop() + i * 10] || "") + roman;
-  return Array(+digits.join("") + 1).join("M") + roman;
+  const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
+  return roman[num];
+}
+
+function all2false(map: Map<string, boolean>) {
+  const keys = Array.from(map.keys());
+  for (const key of keys) {
+    map.set(key, false);
+  }
 }
