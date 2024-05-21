@@ -1,6 +1,6 @@
 "use client";
 
-import { Subject, CurriculumMap, Student } from "@/lib/types";
+import { Subject, CurriculumMap } from "@/lib/types";
 import { StudentInfoContext } from "../layout";
 import { createContext, useContext, useEffect, useState } from "react";
 import {
@@ -8,16 +8,7 @@ import {
   cacheSubjectInfo,
 } from "@/lib/api/curriculumMap-by-key";
 import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
-import { cn } from "@/lib/utils";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { set } from "date-fns";
+import CurriculumMapSection from "@/components/ui/dashboard/lccmap/curriculum-map";
 
 interface SubjectShowContext {
   showAll: boolean;
@@ -25,7 +16,9 @@ interface SubjectShowContext {
   setShowAll?: (showAll: boolean) => void;
 }
 
-const SubjectShowContext = createContext<SubjectShowContext | null>(null);
+export const SubjectShowContext = createContext<SubjectShowContext | null>(
+  null,
+);
 
 export default function Page() {
   const student = useContext(StudentInfoContext);
@@ -104,109 +97,4 @@ export default function Page() {
       </SubjectShowContext.Provider>
     )
   );
-}
-
-function CurriculumMapSection({
-  semesters,
-  subjectCache,
-}: {
-  semesters: string[];
-  subjectCache: Map<string, Subject>;
-}) {
-  return (
-    <>
-      {semesters.map((semester, i) => (
-        <div key={i} className={cn(`grid grid-rows-8 gap-2`)}>
-          <div className="bg-white border-2 rounded-full absolute">
-            <h4 className="">{int2roman(i + 1)}</h4>
-          </div>
-          <SemesterCard
-            key={i}
-            semester={semester}
-            subjectCache={subjectCache}
-          />
-        </div>
-      ))}
-    </>
-  );
-}
-
-function SemesterCard({
-  semester,
-  subjectCache,
-}: {
-  semester: string;
-  subjectCache: Map<string, Subject>;
-}) {
-  const subjectKeys = semester.split("-");
-  return (
-    <>
-      {subjectKeys.map((subjectKey, i) => (
-        <SubjectCard key={i} subject={subjectCache.get(subjectKey)} />
-      ))}
-    </>
-  );
-}
-
-function SubjectCard({ subject }: { subject: Subject | undefined }) {
-  const { showAll, showSubject, setShowAll } = useContext(SubjectShowContext)!;
-
-  function subjectClick() {
-    setShowAll && setShowAll(false);
-    if (subject?.tracklistSubject) {
-      all2false(showSubject);
-      for (const key of subject.tracklistSubject) showSubject.set(key, true);
-    }
-  }
-
-  function subjectLeave() {
-    setShowAll && setShowAll(true);
-  }
-
-  return (
-    <Card
-      className={cn(`w-[125px] h-[100px] text-center justify-between 
-      ${axisColor(subject?.branch)} hover:scale-110
-      ${showAll || (subject && showSubject.get(subject.subjectKey)) ? "opacity-100" : "opacity-50"}
-      hover:opacity-100
-      `)}
-      onClick={subjectClick}
-      onMouseLeave={subjectLeave}
-    >
-      <CardHeader>
-        <CardTitle>
-          <h3 className="text-[12px]">
-            {subject?.abbr || subject?.subjectName.trim()}
-          </h3>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <CardDescription>
-          <p>{subject?.credits}</p>
-        </CardDescription>
-      </CardContent>
-      <CardFooter />
-    </Card>
-  );
-}
-
-function axisColor(axis: string | undefined) {
-  if (axis == "Basico") return "bg-[#e8eef7]";
-  if (axis == "Comun") return "bg-[#ffff66]";
-  if (axis == "Profesional") return "bg-[#ff9966]";
-  if (axis == "Especializante" || axis == "Selectiva") return "bg-[#99ff66]";
-  if (axis == "Integrador") return "bg-[#9966ff]";
-  return "bg-[#e8ef7]";
-}
-
-function int2roman(num: number) {
-  const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
-  return roman[num];
-}
-
-function all2false(map: Map<string, boolean>) {
-  const keys = Array.from(map.keys());
-  for (const key of keys) {
-    map.set(key, false);
-  }
 }
