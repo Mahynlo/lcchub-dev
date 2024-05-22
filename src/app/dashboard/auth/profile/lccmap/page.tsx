@@ -2,7 +2,7 @@
 
 import { Subject, CurriculumMap } from "@/lib/types";
 import { StudentInfoContext } from "../layout";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   getCurriculumMaps,
   cacheSubjectInfo,
@@ -10,18 +10,7 @@ import {
 import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
 import CurriculumMapSection from "@/components/ui/dashboard/lccmap/curriculum-map";
 import { ComboboxPopover } from "@/components/ui/dashboard/lccmap/combobox-popover";
-
-interface SubjectShowContext {
-  showAll: boolean;
-  showSubject: Map<string, boolean>;
-  setShowAll?: (showAll: boolean) => void;
-  filterOption: string;
-  setFilterOption: (filterOption: string) => void;
-}
-
-export const SubjectShowContext = createContext<SubjectShowContext | null>(
-  null,
-);
+import { SubjectShowContext } from "@/lib/types";
 
 export default function Page() {
   const student = useContext(StudentInfoContext);
@@ -51,7 +40,15 @@ export default function Page() {
   }, [key]);
   return (
     curriculumMap && (
-      <SubjectShowContext.Provider value={{ showAll, showSubject, setShowAll, filterOption, setFilterOption }}>
+      <SubjectShowContext.Provider
+        value={{
+          showAll,
+          showSubject,
+          setShowAll,
+          filterOption,
+          setFilterOption,
+        }}
+      >
         <div className="w-full items-center">
           <div className="container grid gap-8 px-4 md:px-6">
             <div className="grid gap-4">

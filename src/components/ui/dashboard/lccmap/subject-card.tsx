@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 
 import { useContext, useState } from "react";
-import { SubjectShowContext } from "@/app/dashboard/auth/profile/lccmap/page";
+import { SubjectShowContext } from "@/lib/types";
 import { StudentInfoContext } from "@/app/dashboard/auth/profile/layout";
 import { Subject } from "@/lib/types";
 
@@ -18,7 +18,8 @@ export default function SubjectCard({
 }: {
   subject: Subject | undefined;
 }) {
-  const { showAll, showSubject, setShowAll, filterOption, setFilterOption} = useContext(SubjectShowContext)!;
+  const { showAll, showSubject, setShowAll, filterOption, setFilterOption } =
+    useContext(SubjectShowContext)!;
   const student = useContext(StudentInfoContext);
   const [click, setClick] = useState(false);
 
@@ -27,8 +28,7 @@ export default function SubjectCard({
     setShowAll && setShowAll(false);
     all2false(showSubject);
     if (subject?.tracklistSubject) {
-      for (const key of subject.tracklistSubject) 
-        showSubject.set(key, true);
+      for (const key of subject.tracklistSubject) showSubject.set(key, true);
     }
   }
 
@@ -53,17 +53,15 @@ export default function SubjectCard({
       <CardHeader>
         <CardTitle>
           {subject && (
-          <h3 className="text-[12px]">
-            {subject?.abbr || subject?.subjectName.trim()}
-          </h3>
+            <h3 className="text-[12px]">
+              {subject?.abbr || subject?.subjectName.trim()}
+            </h3>
           )}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <CardDescription>
-          {subject && (
-            <p>{subject?.credits || 0}</p>
-          )}
+          {subject && <p>{subject?.credits || 0}</p>}
         </CardDescription>
       </CardContent>
       <CardFooter />
@@ -91,16 +89,25 @@ function extractSubjectsKeys(str: string) {
   return str.split(" ").map((s) => s.split("-")[0]);
 }
 
-export function setOptionSubjects(student: any, filterOption: string, showSubject: Map<string, boolean>) {
+export function setOptionSubjects(
+  student: any,
+  filterOption: string,
+  showSubject: Map<string, boolean>,
+) {
   if (filterOption == "credited") {
-    for (const key of extractSubjectsKeys(student?.creditedSubjects || "")) showSubject.set(key, true);
+    for (const key of extractSubjectsKeys(student?.creditedSubjects || ""))
+      showSubject.set(key, true);
   } else if (filterOption == "dropped") {
-    for (const key of extractSubjectsKeys(student?.droppedSubjects || "")) showSubject.set(key, true);
+    for (const key of extractSubjectsKeys(student?.droppedSubjects || ""))
+      showSubject.set(key, true);
   } else if (filterOption == "enrolled") {
-    for (const key of extractSubjectsKeys(student?.enrolledSubjects || "")) showSubject.set(key, true);
+    for (const key of extractSubjectsKeys(student?.enrolledSubjects || ""))
+      showSubject.set(key, true);
   } else if (filterOption == "failed") {
-    for (const key of extractSubjectsKeys(student?.failedSubjects || "")) showSubject.set(key, true);
+    for (const key of extractSubjectsKeys(student?.failedSubjects || ""))
+      showSubject.set(key, true);
   } else if (filterOption == "third enrolled") {
-    for (const key of extractSubjectsKeys(student?.thirdEnrolledSubjects || "")) showSubject.set(key, true);
+    for (const key of extractSubjectsKeys(student?.thirdEnrolledSubjects || ""))
+      showSubject.set(key, true);
   }
 }

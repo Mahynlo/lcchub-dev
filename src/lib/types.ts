@@ -1,3 +1,5 @@
+import { createContext } from "react";
+
 export type Event = {
   title: string;
   shdesc: string;
@@ -77,3 +79,15 @@ export type CurriculumMap = {
   integratorCredits: number;
   totalCredits: number;
 };
+
+type SubjectShowContext = {
+  showAll: boolean;
+  showSubject: Map<string, boolean>;
+  setShowAll?: (showAll: boolean) => void;
+  filterOption: string;
+  setFilterOption: (filterOption: string) => void;
+};
+
+export const SubjectShowContext = createContext<SubjectShowContext | null>(
+  null,
+);
