@@ -8,8 +8,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SubjectShowContext } from "@/app/dashboard/auth/profile/lccmap/page";
+import { StudentInfoContext } from "@/app/dashboard/auth/profile/layout";
 import { Subject } from "@/lib/types";
 
 export default function SubjectCard({
@@ -17,18 +18,26 @@ export default function SubjectCard({
 }: {
   subject: Subject | undefined;
 }) {
-  const { showAll, showSubject, setShowAll } = useContext(SubjectShowContext)!;
+  const { showAll, showSubject, setShowAll, filterOption, setFilterOption} = useContext(SubjectShowContext)!;
+  const student = useContext(StudentInfoContext);
+  const [click, setClick] = useState(false);
 
   function subjectClick() {
+    setClick(true);
     setShowAll && setShowAll(false);
+    all2false(showSubject);
     if (subject?.tracklistSubject) {
-      all2false(showSubject);
-      for (const key of subject.tracklistSubject) showSubject.set(key, true);
+      for (const key of subject.tracklistSubject) 
+        showSubject.set(key, true);
     }
   }
 
   function subjectLeave() {
-    setShowAll && setShowAll(true);
+    if (click) {
+      if (filterOption == "all") setShowAll && setShowAll(true);
+      else setOptionSubjects(student, filterOption, showSubject);
+    }
+    setClick(false);
   }
 
   return (
@@ -43,14 +52,18 @@ export default function SubjectCard({
     >
       <CardHeader>
         <CardTitle>
+          {subject && (
           <h3 className="text-[12px]">
             {subject?.abbr || subject?.subjectName.trim()}
           </h3>
+          )}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <CardDescription>
-          <p>{subject?.credits}</p>
+          {subject && (
+            <p>{subject?.credits || 0}</p>
+          )}
         </CardDescription>
       </CardContent>
       <CardFooter />
@@ -58,7 +71,7 @@ export default function SubjectCard({
   );
 }
 
-function all2false(map: Map<string, boolean>) {
+export function all2false(map: Map<string, boolean>) {
   const keys = Array.from(map.keys());
   for (const key of keys) {
     map.set(key, false);
@@ -72,4 +85,22 @@ function axisColor(axis: string | undefined) {
   if (axis == "Especializante" || axis == "Selectiva") return "bg-[#99ff66]";
   if (axis == "Integrador") return "bg-[#9966ff]";
   return "bg-[#e8ef7]";
+}
+
+function extractSubjectsKeys(str: string) {
+  return str.split(" ").map((s) => s.split("-")[0]);
+}
+
+export function setOptionSubjects(student: any, filterOption: string, showSubject: Map<string, boolean>) {
+  if (filterOption == "credited") {
+    for (const key of extractSubjectsKeys(student?.creditedSubjects || "")) showSubject.set(key, true);
+  } else if (filterOption == "dropped") {
+    for (const key of extractSubjectsKeys(student?.droppedSubjects || "")) showSubject.set(key, true);
+  } else if (filterOption == "enrolled") {
+    for (const key of extractSubjectsKeys(student?.enrolledSubjects || "")) showSubject.set(key, true);
+  } else if (filterOption == "failed") {
+    for (const key of extractSubjectsKeys(student?.failedSubjects || "")) showSubject.set(key, true);
+  } else if (filterOption == "third enrolled") {
+    for (const key of extractSubjectsKeys(student?.thirdEnrolledSubjects || "")) showSubject.set(key, true);
+  }
 }

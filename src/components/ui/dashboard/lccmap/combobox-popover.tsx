@@ -14,8 +14,10 @@ import {
 } from "@/components/ui/popover";
 
 import { Button } from "@/components/ui/button";
-
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { SubjectShowContext } from "@/app/dashboard/auth/profile/lccmap/page";
+import { StudentInfoContext } from "@/app/dashboard/auth/profile/layout";
+import { setOptionSubjects, all2false } from "./subject-card";
 
 interface showStatus {
   value: string;
@@ -36,6 +38,8 @@ export function ComboboxPopover() {
   const [selectedStatus, setSelectedStatus] = useState<showStatus | null>(
     null,
   );
+  const { showAll, showSubject, setShowAll, filterOption, setFilterOption} = useContext(SubjectShowContext)!;
+  const student = useContext(StudentInfoContext);
 
   return (
     <div className="flex items-center space-x-4">
@@ -56,12 +60,19 @@ export function ComboboxPopover() {
                   <CommandItem
                     key={status.value}
                     value={status.value}
-                    onSelect={(value) => {
+                    onSelect={(value: string) => {
                       setSelectedStatus(
                         showStatusList.find((priority) => priority.value === value) ||
                           null,
                       );
                       setOpen(false);
+                      setFilterOption(value);
+                      if (value == "all") setShowAll && setShowAll(true);
+                      else {
+                        setShowAll && setShowAll(false);
+                        all2false(showSubject);
+                        setOptionSubjects(student, value, showSubject);
+                      }
                     }}
                   >
                     {status.label}

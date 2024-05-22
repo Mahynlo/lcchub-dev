@@ -15,6 +15,8 @@ interface SubjectShowContext {
   showAll: boolean;
   showSubject: Map<string, boolean>;
   setShowAll?: (showAll: boolean) => void;
+  filterOption: string;
+  setFilterOption: (filterOption: string) => void;
 }
 
 export const SubjectShowContext = createContext<SubjectShowContext | null>(
@@ -32,6 +34,7 @@ export default function Page() {
   );
   const [showAll, setShowAll] = useState(true);
   const [showSubject, setShowSubject] = useState(new Map<string, boolean>());
+  const [filterOption, setFilterOption] = useState("all");
 
   useEffect(() => {
     if (key) {
@@ -48,7 +51,7 @@ export default function Page() {
   }, [key]);
   return (
     curriculumMap && (
-      <SubjectShowContext.Provider value={{ showAll, showSubject, setShowAll }}>
+      <SubjectShowContext.Provider value={{ showAll, showSubject, setShowAll, filterOption, setFilterOption }}>
         <div className="w-full items-center">
           <div className="container grid gap-8 px-4 md:px-6">
             <div className="grid gap-4">

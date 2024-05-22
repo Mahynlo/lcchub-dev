@@ -14,7 +14,7 @@ export default function CurriculumMapSection({
       {semesters.map((semester, i) => (
         <div key={i} className={cn(`grid grid-rows-8 gap-2`)}>
           <div className="bg-white border-2 rounded-full absolute">
-            <h4 className="">{int2roman(i + 1)}</h4>
+            <h4 className="">{int2roman(i)}</h4>
           </div>
           <SemesterCard
             key={i}
