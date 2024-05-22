@@ -9,6 +9,7 @@ import {
 } from "@/lib/api/curriculumMap-by-key";
 import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
 import CurriculumMapSection from "@/components/ui/dashboard/lccmap/curriculum-map";
+import { ComboboxPopover } from "@/components/ui/dashboard/lccmap/combobox-popover";
 
 interface SubjectShowContext {
   showAll: boolean;
@@ -87,6 +88,9 @@ export default function Page() {
             </div>
           </div>
           <h2 className="text-xl font-bold py-6">Mapa curricular</h2>
+          <div className="flex justify-start md:px-6 py-2">
+            <ComboboxPopover />
+          </div>
           <div className="md:grid md:grid-cols-8 md:gap-10 md:w-full md:h-[800px]">
             <CurriculumMapSection
               semesters={curriculumMap.semesters}
