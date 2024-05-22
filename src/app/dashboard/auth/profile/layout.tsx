@@ -23,9 +23,12 @@ export default function ProfileLayout({
     });
   }, [studentId]);
 
-  return (
+  if (student) return (
     <StudentInfoContext.Provider value={student}>
       {children}
     </StudentInfoContext.Provider>
   );
+  else {
+    return <div>La o el estudiante {studentAccount.name} con cuenta {studentAccount.username} no se encuentra en la base de datos de LCC.</div>;
+  }
 }
