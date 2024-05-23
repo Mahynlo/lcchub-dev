@@ -32,7 +32,7 @@ export default function Page() {
               <div className="text-right">
                 <div className="text-2xl font-bold">
                   {Math.trunc(
-                    (student.approvedCredits / student.requiredCredits) * 100,
+                    (student.approvedCredits / student.requiredCredits) * 100
                   )}
                   %
                 </div>
