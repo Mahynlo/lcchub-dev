@@ -41,8 +41,8 @@ export function ComboboxPopover() {
   const student = useContext(StudentInfoContext);
 
   return (
-    <div className="flex items-center space-x-4">
-      <p className="text-sm text-muted-foreground">Mostrar</p>
+    <div>
+      <h1 className="text-sm text-muted-foreground">Mostrar</h1>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-[150px] justify-start">
@@ -62,8 +62,8 @@ export function ComboboxPopover() {
                     onSelect={(value: string) => {
                       setSelectedStatus(
                         showStatusList.find(
-                          (priority) => priority.value === value,
-                        ) || null,
+                          (priority) => priority.value === value
+                        ) || null
                       );
                       setOpen(false);
                       setFilterOption(value);
