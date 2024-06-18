@@ -16,10 +16,10 @@ export default function Page() {
   const student = useContext(StudentInfoContext);
   const key = student?.studyPlan;
   const [curriculumMap, setCurriculumMap] = useState<CurriculumMap | null>(
-    null,
+    null
   );
   const [cacheSubject, setCacheSubject] = useState<Map<string, Subject>>(
-    new Map(),
+    new Map()
   );
   const [showAll, setShowAll] = useState(true);
   const [showSubject, setShowSubject] = useState(new Map<string, boolean>());
@@ -88,7 +88,7 @@ export default function Page() {
             </div>
           </div>
           <h2 className="text-xl font-bold py-6">Mapa curricular</h2>
-          <div className="flex justify-start md:px-6 py-2">
+          <div className="px-6 py-2">
             <ComboboxPopover />
           </div>
           <div className="md:grid md:grid-cols-8 md:gap-10 md:w-full md:h-[800px]">

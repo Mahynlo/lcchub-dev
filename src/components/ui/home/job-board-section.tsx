@@ -22,6 +22,7 @@ import {
 import { ProyectOffering } from "@/lib/types";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface JobBoardSectionProps {
   proyectOfferings: ProyectOffering[];
@@ -65,14 +66,10 @@ export function JobBoardSection({ proyectOfferings }: JobBoardSectionProps) {
                   </span>
                 </div>
                 <div>
-                  {proyectOffering.readmore_redirect ||
-                  proyectOffering.readmore_img ? (
+                  {proyectOffering.readmore_redirect ? (
                     <Button>
                       <Link
-                        href={
-                          proyectOffering.readmore_redirect ||
-                          proyectOffering.readmore_img
-                        }
+                        href={proyectOffering.readmore_redirect}
                         target="_blanc"
                       >
                         Ver más
@@ -87,12 +84,20 @@ export function JobBoardSection({ proyectOfferings }: JobBoardSectionProps) {
                         <DialogContent>
                           <DialogHeader>
                             <DialogTitle>
-                              {proyectOffering.proyect_title}
+                              {proyectOffering.proyect_title || ""}
                             </DialogTitle>
                             <DialogClose />
                           </DialogHeader>
                           <DialogDescription>
-                            {proyectOffering.readmore_manual}
+                            {proyectOffering.readmore_manual || ""}
+                            {proyectOffering.readmore_img && (
+                              <Image
+                                src={proyectOffering.readmore_img}
+                                alt={proyectOffering.proyect_title}
+                                width={600}
+                                height={400}
+                              />
+                            )}
                           </DialogDescription>
                         </DialogContent>
                       </Dialog>
