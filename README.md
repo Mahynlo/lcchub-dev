@@ -1,36 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LCCHub-Frontend 🦫+🦆+🥚
 
-## Getting Started
+Como parte de un proyecto para el Servicio Social en la unidad de Ciencias de la Computación (LCC) de la Universidad de Sonora se propuso desarrollar un portal web que permita dar seguimiento personalizado sobre la trayectoria académica de los alúmnos de LCC.
 
-First, run the development server:
+En algún punto del desarollo se planteó agreagar un "Hub" o espacio para compartir información que sea relevante para lo estudiantes como eventos próximos, videos de egresados, y bolsa proyectos. Y cumpliendo con el objetivo del proyecto, un sitio (portal) accesible a través de la cuenta de IDenTIdad Unison en el cual se puede visualizar el progreso en la carrera, y un mapa de materias interactivo del programa.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<img align="right" height="200px" src="https://i.pinimg.com/originals/c0/46/05/c0460581a0d5ef331a3bc98ec24546e5.png" alt="perry" />
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+El proyecto ha pasado por varias iteraciones y distintas generaciones, utilizando metodologías de ingeniería de software para garantizar la más alta calidad (guiño, guiño), y siguiendo una metodología de desarollo ágil (en extremo) que eficientizo todo el proceso (guiño, guiño). El resultado ha sido una amalgama de varios intentos de implementación pasando por Django, Flutter, React, y convergiendo en Nextjs, he ahí nuestra mascota representativa: un ornitorrinco.
