@@ -44,7 +44,7 @@ export default function SubjectCard({
     <Card
       className={cn(`w-[125px] h-[100px] text-center justify-between 
         ${axisColor(subject?.branch)} hover:scale-110
-        ${showAll || (subject && showSubject.get(subject.subjectKey)) ? "opacity-100" : "opacity-50"}
+        ${showAll || (subject && showSubject.get(subject.subjectKey)) ? "opacity-100" : "opacity-20"}
         hover:opacity-100
         `)}
       onClick={subjectClick}
@@ -92,7 +92,7 @@ function extractSubjectsKeys(str: string) {
 export function setOptionSubjects(
   student: any,
   filterOption: string,
-  showSubject: Map<string, boolean>,
+  showSubject: Map<string, boolean>
 ) {
   if (filterOption == "credited") {
     for (const key of extractSubjectsKeys(student?.creditedSubjects || ""))
