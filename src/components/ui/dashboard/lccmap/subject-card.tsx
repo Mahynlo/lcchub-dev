@@ -59,11 +59,7 @@ export default function SubjectCard({
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <CardDescription>
-          {subject && <p>{subject?.credits || 0}</p>}
-        </CardDescription>
-      </CardContent>
+      <CardContent></CardContent>
       <CardFooter />
     </Card>
   );
