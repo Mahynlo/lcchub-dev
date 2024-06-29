@@ -16,6 +16,7 @@ export default function CurriculumMapSection({
           key={i}
           className={cn(`grid grid-rows-8 gap-2 justify-center text-center`)}
         >
+          <h2 className="text-lg font-bold absolute">{int2roman(i)}</h2>
           <SemesterCard
             key={i}
             semester={semester}
