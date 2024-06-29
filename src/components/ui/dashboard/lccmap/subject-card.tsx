@@ -104,16 +104,20 @@ export default function SubjectCard({
             <p className="text-sm">Taller: {subject?.workshopHours}</p>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 mt-2">
-            <p className="text-sm">Requisitos: {subject?.requirements}</p>
-            <p className="text-sm">Liberaciones: {subject?.releases}</p>
+          <div>
+            <h1 className="text-sm font-bold mt-3">Requisitos</h1>
+            {subject?.requirements?.split("-").map((req) => (
+              <p className="text-sm" key={req}>
+                {subjectCache.get(req)?.subjectName.trim()}
+              </p>
+            ))}
           </div>
 
           <div>
-            <h1 className="text-sm font-bold">Requisitos</h1>
-            {subject?.requirements?.split("-").map((req) => (
+            <h1 className="text-sm font-bold mt-3">Libera</h1>
+            {subject?.releases?.split("-").map((req) => (
               <p className="text-sm" key={req}>
-                {req}
+                {subjectCache.get(req)?.subjectName.trim()}
               </p>
             ))}
           </div>
