@@ -105,7 +105,7 @@ export default function SubjectCard({
           </div>
 
           <div>
-            <h1 className="text-sm font-bold mt-3">Requisitos</h1>
+            <h1 className="text-sm font-bold mt-3">Requiere de:</h1>
             {subject?.requirements?.split("-").map((req) => (
               <p className="text-sm" key={req}>
                 {subjectCache.get(req)?.subjectName.trim()}
@@ -114,7 +114,7 @@ export default function SubjectCard({
           </div>
 
           <div>
-            <h1 className="text-sm font-bold mt-3">Libera</h1>
+            <h1 className="text-sm font-bold mt-3">Libera:</h1>
             {subject?.releases?.split("-").map((req) => (
               <p className="text-sm" key={req}>
                 {subjectCache.get(req)?.subjectName.trim()}
