@@ -41,8 +41,8 @@ export function ComboboxPopover() {
   const student = useContext(StudentInfoContext);
 
   return (
-    <div>
-      <h1 className="text-sm text-muted-foreground">Mostrar</h1>
+    <div className="flex items-center">
+      <h1 className="text-sm text-muted-foreground pr-5">Mostrar</h1>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-[150px] justify-start">
