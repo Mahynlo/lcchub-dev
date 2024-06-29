@@ -1,4 +1,4 @@
-# LCCHub-Frontend 🦫+🦆+🥚
+# LCCHub-Frontend
 
 Como parte de un proyecto de Servicio Social en la unidad de Ciencias de la Computación (LCC) de la Universidad de Sonora, se propuso desarrollar un portal web innovador. El objetivo principal era proporcionar a los estudiantes de LCC un seguimiento personalizado de su trayectoria académica.
 
