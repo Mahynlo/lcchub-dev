@@ -22,14 +22,18 @@ import { StudentInfoContext } from "@/app/dashboard/auth/profile/layout";
 import { Subject } from "@/lib/types";
 
 export default function SubjectCard({
-  subject,
+  subjectKey,
+  subjectCache,
 }: {
-  subject: Subject | undefined;
+  subjectKey: string;
+  subjectCache: Map<string, Subject>;
 }) {
   const { showAll, showSubject, setShowAll, filterOption, setFilterOption } =
     useContext(SubjectShowContext)!;
   const student = useContext(StudentInfoContext);
   const [click, setClick] = useState(false);
+
+  const subject = subjectCache.get(subjectKey);
 
   function subjectClick() {
     setClick(true);

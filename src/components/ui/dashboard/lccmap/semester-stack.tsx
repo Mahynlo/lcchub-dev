@@ -12,7 +12,11 @@ export default function SemesterCard({
   return (
     <>
       {subjectKeys.map((subjectKey, i) => (
-        <SubjectCard key={i} subject={subjectCache.get(subjectKey)} />
+        <SubjectCard
+          key={i}
+          subjectKey={subjectKey}
+          subjectCache={subjectCache}
+        />
       ))}
     </>
   );
