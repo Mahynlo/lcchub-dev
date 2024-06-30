@@ -36,6 +36,8 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=xxxx-xx-x
 
 ## Uso
 `npm run dev` para desarrollo local
+
 `npm run build` para construír la versión optimizada de producción
+
 `npm run start` correr versión de producción
 
