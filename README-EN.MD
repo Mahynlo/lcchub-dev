@@ -1,5 +1,5 @@
 # LCCHub-Frontend
-[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/enriquegiottonini/lcchub-dev/main/README.MD)
+[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/enriquegiottonini/lcchub-dev/blob/main/README.md)
 
 As part of a Social Service project at the Computer Science Unit (LCC) of the University of Sonora, 
 it was proposed to develop an innovative web portal.
