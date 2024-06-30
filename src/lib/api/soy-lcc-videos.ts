@@ -16,7 +16,6 @@ export async function getAllSoyLCCVideos() {
 
     return data;
   } catch (error) {
-    console.error(error);
     return [];
   }
 }

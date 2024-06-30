@@ -5,14 +5,13 @@ export async function getEventsAfterDate(date: Date) {
   try {
     const all_events = await getAllEvents();
     const upcoming_events = all_events.filter(
-      (event: Event) => event.date >= date,
+      (event: Event) => event.date >= date
     );
     const sorted_events = upcoming_events.sort(
-      (a: Event, b: Event) => a.date.getTime() - b.date.getTime(),
+      (a: Event, b: Event) => a.date.getTime() - b.date.getTime()
     );
     return sorted_events;
   } catch (error) {
-    console.error(error);
     return [];
   }
 }
@@ -37,11 +36,10 @@ export async function getAllEvents() {
       from_community: event.attributes.from_community,
     }));
     const events = data.sort(
-      (a: Event, b: Event) => b.date.getTime() - a.date.getTime(),
+      (a: Event, b: Event) => b.date.getTime() - a.date.getTime()
     );
     return events;
   } catch (error) {
-    console.error(error);
     return [];
   }
 }
