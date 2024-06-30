@@ -51,4 +51,14 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=xxxx-xx-x
 
 ![home page](/repo/lcchub-home.jpeg)
 
+### `/home/events`
+
 ![events page](/repo/lcchub-home-events.jpeg)
+
+### `/dashboard/progress`
+
+![progress page](/repo/lcchub-dashboard-progress.jpeg)
+
+### `/dashboard/lccmap`
+
+![lcc map page](/repo/lcchub-dashboard-lccmap.jpeg)
