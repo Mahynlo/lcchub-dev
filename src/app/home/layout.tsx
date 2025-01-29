@@ -2,6 +2,7 @@
 
 import { HomeNavbar } from "@/components/ui/home/navbar";
 import { HomeFooter } from "@/components/ui/home/footer";
+import ChatTab from "@/components/ui/chat/Chatbot";
 
 export default async function HomeLayout({
   children,
@@ -13,6 +14,8 @@ export default async function HomeLayout({
       <HomeNavbar />
       {children}
       <HomeFooter />
+
+      <ChatTab />
     </>
   );
 }
