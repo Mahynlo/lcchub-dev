@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState, useContext } from "react";
 import { SubjectShowContext } from "@/lib/types";
-import { StudentInfoContext } from "@/app/dashboard/auth/profile/layout";
+import { StudentInfoContext } from "@/app/dashboard/auth/profile/StudentInfoContext";
 import { setOptionSubjects, all2false } from "./subject-card";
 
 interface showStatus {

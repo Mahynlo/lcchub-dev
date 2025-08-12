@@ -9,6 +9,8 @@ export default function CurriculumMapSection({
   semesters: string[];
   subjectCache: Map<string, Subject>;
 }) {
+  //console.log("subjectCacheasa: ",subjectCache);
+  //console.log("semestersasa: ",semesters);
   return (
     <>
       {semesters.map((semester, i) => (
@@ -29,6 +31,6 @@ export default function CurriculumMapSection({
 }
 
 function int2roman(num: number) {
-  const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
+  const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
   return roman[num];
 }

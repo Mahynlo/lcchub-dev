@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { fontSans } from "@/lib/fonts";
+//import { fontSans } from "@/lib/fonts";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-
+import { CacheSubjectProvider } from "./dashboard/auth/profile/SubjectCache";
 export const metadata: Metadata = {
   title: "LCC Hub",
   description: "Social Service Project for the LCC Community",
@@ -18,12 +18,15 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          //fontSans.variable,
         )}
       >
         <div vaul-drawer-wrapper="">
           <div className="relative flex min-h-screen flex-col bg-background">
-            {children}
+            <CacheSubjectProvider>
+              {children}
+            </CacheSubjectProvider>
+            
           </div>
         </div>
       </body>

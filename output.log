@@ -1,0 +1,12 @@
+nohup: ignoring input
+
+> frontend@0.1.0 start
+> next start -p 62213
+
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:62213
+
+ ✓ Ready in 534ms
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+ ⚠ For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'npm i sharp', and Next.js will use it automatically for Image Optimization.
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
