@@ -28,7 +28,7 @@ const Notification = ({
     <div className={`bg-white border border-gray-300 shadow-lg rounded-lg px-6 py-4 min-w-[300px] md:min-w-[400px] ${className}`}>
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="font-bold text-lg">Notificación</p>
+          <p className="font-bold text-lg">Advertencia</p>
           <p className="text-gray-700">{message}</p>
         </div>
         <button
