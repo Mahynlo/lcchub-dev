@@ -3,13 +3,15 @@ import { useContext } from "react";
 import { Progress } from "@/components/ui/progress";
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { StudentInfoContext } from "../layout";
-
+import { StudentInfoContext } from "../StudentInfoContext";
+import { Badge } from "@/components/ui/badge";
+import { useCurriculum } from "../CurriculumContext";
 export default function Page() {
   const student = useContext(StudentInfoContext);
+  const {curriculumMap} = useCurriculum();
 
   return (
-    student && (
+    curriculumMap && student && (
       <div>
         <div className="w-full">
           <section className="grid gap-6 md:grid-cols-[1fr_auto]">
@@ -18,21 +20,30 @@ export default function Page() {
               <p className="text-lg text-gray-500 dark:text-gray-400">
                 {student.email}
               </p>
-              <p className="text-lg text-gray-500 dark:text-gray-400">
+              <div>
+                <p className="text-lg text-gray-500 dark:text-gray-400">
                 {student.programName}
-              </p>
+                </p>
+                <p className="text-lg text-gray-500 dark:text-gray-400">
+                  PLAN - {student.studyPlan}
+                </p>
+              </div>
+              
             </div>
+            <div className="flex flex-col items-start gap-2">
+
             <div className="flex items-center gap-4">
               <Progress
                 className="w-32"
                 value={
-                  (student.approvedCredits / student.requiredCredits) * 100
+                  (student.approvedCredits / curriculumMap.totalCredits) * 100
                 }
               />
+              
               <div className="text-right">
                 <div className="text-2xl font-bold">
                   {Math.trunc(
-                    (student.approvedCredits / student.requiredCredits) * 100
+                    (student.approvedCredits / curriculumMap.totalCredits) * 100
                   )}
                   %
                 </div>
@@ -40,6 +51,29 @@ export default function Page() {
                   Avance
                 </p>
               </div>
+              </div>
+              <a href="https://buhos.uson.mx/web/apps/portalAlumnos/index.php" target="_blank">
+              <Badge  className={
+                    (student?.approvedCredits / curriculumMap.totalCredits) * 100 >= 70
+                      ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset"
+                      : "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset"
+                  }>
+                  {(student?.approvedCredits / curriculumMap.totalCredits) * 100 >= 70
+                  ? "Ya puedes hacer el servicio"
+                  : "Aún no puedes hacer el servicio"}
+              </Badge>
+              </a>
+              {student?.studyPlan == "2252" && (
+              <Badge  className={
+                    student?.approvedCredits >= 192
+                      ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset"
+                      : "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset"
+                  }>
+                  {student?.approvedCredits >= 192 
+                  ? "Ya puedes hacer las practicas profesionales"
+                  : "Aún no puedes hacer las practicas profesionales"}
+              </Badge>
+            )}
             </div>
           </section>
           <Separator className="my-6" />
@@ -56,7 +90,7 @@ export default function Page() {
                   {student.approvedCredits}
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  de {student.requiredCredits} requeridos
+                  de {curriculumMap.totalCredits} requeridos
                 </p>
               </CardContent>
             </Card>
@@ -69,7 +103,7 @@ export default function Page() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {student.requiredCredits - student.approvedCredits}
+                  {curriculumMap.totalCredits - student.approvedCredits}
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   para graduarse

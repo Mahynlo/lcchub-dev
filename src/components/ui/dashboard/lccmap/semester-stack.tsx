@@ -9,6 +9,8 @@ export default function SemesterCard({
   subjectCache: Map<string, Subject>;
 }) {
   const subjectKeys = semester.split("-");
+  //console.log("cosas del subkeys: ",subjectKeys);
+  //console.log("cosas del semesterasa: ",semester);
   return (
     <>
       {subjectKeys.map((subjectKey, i) => (

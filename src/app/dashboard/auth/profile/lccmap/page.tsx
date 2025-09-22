@@ -1,43 +1,23 @@
 "use client";
 
-import { Subject, CurriculumMap } from "@/lib/types";
-import { StudentInfoContext } from "../layout";
-import { useContext, useEffect, useState } from "react";
-import {
-  getCurriculumMaps,
-  cacheSubjectInfo,
-} from "@/lib/api/curriculumMap-by-key";
-import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
-import CurriculumMapSection from "@/components/ui/dashboard/lccmap/curriculum-map";
-import { ComboboxPopover } from "@/components/ui/dashboard/lccmap/combobox-popover";
+import { useCurriculum } from "../CurriculumContext";
+import { useContext, useState } from "react";
+import { StudentInfoContext } from "../StudentInfoContext";
 import { SubjectShowContext } from "@/lib/types";
+import CurriculumMapSection from "@/components/ui/dashboard/lccmap/curriculum-map";
+import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
+import { ComboboxPopover } from "@/components/ui/dashboard/lccmap/combobox-popover";
 
 export default function Page() {
+  const { curriculumMap, updatedPrograma, subjectCache: cacheSubject } = useCurriculum();
   const student = useContext(StudentInfoContext);
-  const key = student?.studyPlan;
-  const [curriculumMap, setCurriculumMap] = useState<CurriculumMap | null>(
-    null
-  );
-  const [cacheSubject, setCacheSubject] = useState<Map<string, Subject>>(
-    new Map()
-  );
   const [showAll, setShowAll] = useState(true);
   const [showSubject, setShowSubject] = useState(new Map<string, boolean>());
   const [filterOption, setFilterOption] = useState("all");
 
-  useEffect(() => {
-    if (key) {
-      getCurriculumMaps(key).then((curriculumMap) => {
-        setCurriculumMap(curriculumMap);
-        if (curriculumMap) {
-          const program = curriculumMap.semesters;
-          cacheSubjectInfo(program).then((cache) => {
-            setCacheSubject(cache);
-          });
-        }
-      });
-    }
-  }, [key]);
+  const cols = student?.studyPlan === '2052' ? "md:grid-cols-8" : "md:grid-cols-9";
+
+
   return (
     curriculumMap && (
       <SubjectShowContext.Provider
@@ -65,35 +45,48 @@ export default function Page() {
                 credits={curriculumMap.basicCredits}
                 color="#e8eef7"
               />
-              <AxisCard
-                title="Común"
-                credits={curriculumMap.commonCredits}
-                color="#ffff66"
-              />
-              <AxisCard
-                title="Profesionalizante"
-                credits={curriculumMap.electiveCredits}
-                color="#ff9966"
-              />
-              <AxisCard
-                title="Especializante"
-                credits={curriculumMap.specialistCredits}
-                color="#99ff66"
-              />
+              {student?.studyPlan == '2052' && (
+                <AxisCard
+                  title="Común"
+                  credits={curriculumMap.commonCredits}
+                  color="#ffff66"
+                />
+              )}
+              {student?.studyPlan == '2052' && (
+                <AxisCard
+                  title="Profesionalizante"
+                  credits={curriculumMap.electiveCredits}
+                  color="#ff9966"
+                />
+              )}
+              {student?.studyPlan == '2052' && (
+                <AxisCard
+                  title="Especializante"
+                  credits={curriculumMap.specialistCredits}
+                  color="#99ff66"
+                />
+              )}
               <AxisCard
                 title="Integrador"
                 credits={curriculumMap.integratorCredits}
                 color="#9966ff"
               />
+              {student?.studyPlan == '2252' && (
+                <AxisCard
+                  title="Vocacional"
+                  credits={curriculumMap.vocationalCredits}
+                  color="#99ff66"
+                />
+              )}
             </div>
           </div>
           <h2 className="text-xl font-bold py-6">Mapa curricular</h2>
           <div className="px-6 py-2">
             <ComboboxPopover />
           </div>
-          <div className="md:grid md:grid-cols-8 md:gap-10 md:w-full md:h-[800px]">
+          <div className={`md:grid ${cols} md:gap-10 md:w-full md:h-[800px]`}>
             <CurriculumMapSection
-              semesters={curriculumMap.semesters}
+              semesters={updatedPrograma}
               subjectCache={cacheSubject}
             />
           </div>

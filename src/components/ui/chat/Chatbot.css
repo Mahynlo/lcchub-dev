@@ -1,0 +1,148 @@
+/* Contenedor principal del chat */
+.chat-tab-container {
+  position: fixed;
+  bottom: auto;
+  top: auto;
+  right: 20px;
+  z-index: 9999;
+  /* Para que se sobreponga sobre todo */
+  width: 300px;
+  /* Ajusta el ancho del chat según sea necesario */
+  max-height: 800px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  min-height: 500px;
+  resize: none;
+  overflow: hidden;
+}
+
+.resizer {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: 0;
+  left: 0;
+  background: gray;
+  cursor: nw-resize;
+  z-index: 9999;
+  border-top-left-radius: 4px;
+}
+
+/* Chat minimizado */
+.chat-tab-container.minimized {
+  width: 50px;
+  height: 50px;
+  min-height: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #0078d4;
+  resize: none;
+  overflow: hidden;
+}
+
+/* Estilo de la cabecera del chat */
+.chat-header {
+  background-color: #0078d4;
+  /* Azul o color de tu preferencia */
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+}
+
+.chat-header.minimized {
+  display: flex;
+  justify-content: center;
+  /* Centra el icono */
+  align-items: center;
+  /* Centra el icono verticalmente */
+}
+
+/* Estilo del título (solo se verá cuando no esté minimizado) */
+.chat-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Estilo del botón de minimizar */
+.minimize-button {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Icono cuando está minimizado (utilizando un globo de chat) */
+.chat-header .chat-title.minimized {
+  display: none;
+}
+
+.chat-header .chat-icon {
+  font-size: 25px;
+  display: block;
+}
+
+/* Contenedor de los mensajes */
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+/* Estilos de los mensajes */
+.message.user {
+  text-align: right;
+  background-color: #e6f7ff;
+  color: #000;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 8px;
+  float: right;
+}
+
+.message.server {
+  text-align: left;
+  background-color: #d9f7be;
+  color: #000;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 8px;
+  float: left;
+}
+
+/* Input de texto */
+.chat-input {
+  display: flex;
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 8px 8px;
+}
+
+.chat-input textarea {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+}
+
+.chat-input button {
+  margin-left: 10px;
+  padding: 8px 12px;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background-color: #005a9e;
+}

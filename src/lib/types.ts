@@ -47,6 +47,7 @@ export type Student = {
   studentStatus: string;
   studyPlan: string;
   thirdEnrolledSubjects: string;
+  studentID: string;
 };
 
 export type Subject = {
@@ -63,6 +64,18 @@ export type Subject = {
   tracklistSubject: string[];
   workshopHours: string;
   abbr?: string;
+  detalles?: string;
+  opciones?: Opcion[];
+  page?: string;
+};
+export type Detalle = {
+  periodo?: string;
+  creditos: string;
+};
+
+export type Opcion = {
+  nombre: string;
+  detalles: Detalle[];
 };
 
 export type CurriculumMap = {
@@ -78,6 +91,9 @@ export type CurriculumMap = {
   specialistCredits: number;
   integratorCredits: number;
   totalCredits: number;
+  specialistSubjects: string;
+  Optativas: string;
+  vocationalCredits: number;
 };
 
 type SubjectShowContext = {
