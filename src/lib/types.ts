@@ -26,6 +26,15 @@ export type ProyectOffering = {
   issued: Date;
 };
 
+export type AnunciosYNoticias= {
+  title: string;
+  desc: string;
+  thumbnail: string;
+  redirect: string;
+  issued: Date;
+  visible: boolean;
+}
+
 export type Student = {
   programKey: string;
   approvedCredits: number;

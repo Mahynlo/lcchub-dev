@@ -56,7 +56,7 @@ const columns: ColumnDef<Event>[] = [
             <div>{shdesc || desc.substring(0, 64) + "..."}</div>
           </div>
           <div className="col-start-6 col-end-7 items-center justify-center">
-            📍{location}
+            📍 {location}
           </div>
         </div>
       );

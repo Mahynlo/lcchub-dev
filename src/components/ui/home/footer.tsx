@@ -45,7 +45,7 @@ export function HomeFooter() {
             <span className="sr-only">GitHub</span>
           </Link>
         </nav>
-        <p className="text-sm text-center md:text-left">© 2024 LCC</p>
+        <p className="text-sm text-center md:text-left">© 2025 LCC</p>
       </div>
     </footer>
   );

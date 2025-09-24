@@ -2,7 +2,6 @@ import { Calendar } from "@/components/ui/calendar";
 import UpcomingEventsTable from "@/components/ui/home/upcoming-events-table";
 import { Event } from "@/lib/types";
 import Link from "next/link";
-
 interface UpcomingEventsSectionProps {
   allEventsDates: Date[];
   upcomingEvents: Event[];
@@ -17,11 +16,11 @@ export function UpcomingEventsSection({
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
           <Link href={"/eventos"}>
-            <span className="bg-red-500 rounded-lg text-3xl font-bold text-slate-50">
+            <span className="bg-red-500 rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
               Eventos
             </span>
           </Link>
-          <p className="text-gray-700">
+          <p className="text-gray-700 mt-2">
             Enterate de los eventos organizados por la universidad y por la
             comunidad de ciencias de la computación.
           </p>

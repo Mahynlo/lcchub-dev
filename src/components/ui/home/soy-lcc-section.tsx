@@ -27,11 +27,11 @@ export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
           <div>
-            <span className="bg-blue-950 rounded-lg text-3xl font-bold text-slate-50">
+            <span className="bg-blue-950 rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
               SoyLCC
             </span>
           </div>
-          <p className="text-gray-700">
+          <p className="text-gray-700 mt-2">
             Un espacio para compartir consejos y experiencias de parte de
             egresados de nuestra comunidad.
           </p>
