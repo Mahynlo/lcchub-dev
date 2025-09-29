@@ -32,7 +32,7 @@ export function AnunciosYNoticiasSection({
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
           <div>
-            <span className="bg-green-700 rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
+            <span className="bg-blue-900 rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
               Anuncios
             </span>
           </div>
@@ -48,18 +48,29 @@ export function AnunciosYNoticiasSection({
                 <CarouselItem key={i} className="md:basis-1/3">
                   <Card className="h-full flex flex-col rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
 
-                    {/* Fecha con ícono */}
-                    <div className="flex items-center gap-2 px-4 pt-4 text-sm text-gray-500">
-                      <CalendarDays className="w-6 h-6 text-green-700" />
-                      <span>
-                        
+                    {/* Fecha con ícono y tag con color */}
+                    <div className="flex items-center gap-2 px-4 pt-4 text-sm">
+                      <CalendarDays
+                        className={`w-6 h-6 ${item.tag === "evento"
+                          ? "text-red-700"
+                          : item.tag === "convocatoria"
+                            ? "text-blue-500"
+                            : item.tag === "noticia"
+                              ? "text-green-500"
+                              : "text-gray-500"
+                          }`}
+                      />
+                      Publicado:
+                      <span className="text-gray-500">
                         {item.issued.toLocaleDateString("es-ES", {
-                          day: "2-digit",    // 06
-                          month: "long",     // octubre
-                          year: "numeric",   // 2025
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
                         })}
                       </span>
+
                     </div>
+
 
                     {/* Imagen con aspect ratio */}
                     <CardHeader className="px-0 pt-2">
@@ -80,10 +91,31 @@ export function AnunciosYNoticiasSection({
                       </a>
                     </CardHeader>
 
+
                     {/* Título y descripción */}
                     <CardContent>
                       <CardTitle className="text-xl font-bold">
                         {item.title}
+                        {/* Tag con color de fondo */}
+                        <span
+                          className={`ml-2 px-2 py-0.5 rounded text-white text-xs ${item.tag === "evento"
+                            ? "bg-red-700"
+                            : item.tag === "convocatoria"
+                              ? "bg-blue-500"
+                              : item.tag === "noticia"
+                                ? "bg-green-500"
+                                : "bg-gray-500"
+                            }`}
+                        >
+                          {item.tag === "evento"
+                            ? "Evento"
+                            : item.tag === "convocatoria"
+                              ? "Convocatoria"
+                              : item.tag === "noticia"
+                                ? "Noticia"
+                                : "General"}
+                        </span>
+
                       </CardTitle>
                       <CardDescription className="mt-2">
                         {item.desc || "Sin descripción disponible"}

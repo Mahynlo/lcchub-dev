@@ -15,7 +15,9 @@ export async function getAllAnuncios() {
         ? baseUrl + item.attributes.thumbnail.data.attributes.url
         : "",
       issued: new Date(item.attributes.issued),
-      visible: item.attributes.Visible, // ojo que tu JSON tiene "Visible" con mayúscula
+      eventStart: new Date(item.attributes.eventStart),
+      eventEnd: new Date(item.attributes.eventEnd),
+      tag: item.attributes.tag,
     }));
 
     return data;

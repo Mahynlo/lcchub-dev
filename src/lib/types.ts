@@ -31,8 +31,10 @@ export type AnunciosYNoticias= {
   desc: string;
   thumbnail: string;
   redirect: string;
-  issued: Date;
-  visible: boolean;
+  issued: Date;        // fecha de publicación
+  eventStart?: Date;   // fecha de inicio del evento (opcional)
+  eventEnd?: Date;     // fecha de fin del evento (opcional)
+  tag: "evento" | "convocatoria" | "noticia" | "general";
 }
 
 export type Student = {
