@@ -37,6 +37,18 @@ export type AnunciosYNoticias = {
   tag: "evento" | "convocatoria" | "noticia" | "general" | "platicas" | "taller";
 };
 
+// Tipos compartidos para la galería
+export type GalleryItem = {
+  id?: number;
+  images: string[];  // galería del evento
+  title: string;
+  description: string;
+  date: string;
+  tag: "evento" | "convocatoria" | "noticia" | "general" | "platicas" | "taller";
+};
+
+export type ViewMode = "cards" | "collage";
+
 export type Student = {
   programKey: string;
   approvedCredits: number;

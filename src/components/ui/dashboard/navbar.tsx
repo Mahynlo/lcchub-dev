@@ -19,6 +19,7 @@ export function DashboardNavbar() {
           LCCHUB
         </span>
       </Link>
+    
       {accounts && accounts.length > 0 && (
         <div className="flex flex-row items-center ml-auto">
           <Button

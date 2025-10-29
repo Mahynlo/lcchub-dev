@@ -27,7 +27,7 @@ export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
           <div>
-            <span className="bg-blue-950 rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
+            <span className="bg-[#5121CC] rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
               SoyLCC
             </span>
           </div>

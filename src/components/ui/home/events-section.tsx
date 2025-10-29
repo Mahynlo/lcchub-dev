@@ -16,7 +16,7 @@ export function UpcomingEventsSection({
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
           <Link href={"/eventos"}>
-            <span className="bg-red-500 rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
+            <span className="bg-[#CC2146] rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
               Eventos
             </span>
           </Link>

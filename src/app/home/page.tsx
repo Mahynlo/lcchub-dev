@@ -8,12 +8,10 @@ import { getAllProyectOfferings } from "@/lib/api/proyect-offerings";
 import { ProyectOffering } from "@/lib/types";
 import { getAllAnuncios} from "@/lib/api/anuncios-y-noticias";
 import { AnunciosYNoticiasSection } from "@/components/ui/home/anuncios-Section";
-
 export default async function HomePage() {
   const allEventsDates = await getEventsDates();
   const upcomingEvents = await getEventsAfterDate(new Date());
   const soyLCCVideos = await getAllSoyLCCVideos();
-  //des
   //const proyectOfferings: ProyectOffering[] = await getAllProyectOfferings();
   const anuncios = await getAllAnuncios();
 

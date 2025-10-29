@@ -3,53 +3,57 @@ import Link from "next/link";
 export function HomeFooter() {
   return (
     <footer className="bg-gray-900 text-gray-400 py-8 px-4 md:px-6">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-2">
+      <div className="container mx-auto flex flex-col md:flex-row items-center gap-6">
+        {/* Columna izquierda */}
+        <div className="flex items-center justify-center md:justify-start flex-1">
           <span className="text-lg font-semibold">Universidad de Sonora</span>
         </div>
-        <nav className="flex items-center gap-4 flex-wrap justify-center">
+
+        {/* Columna centro: nav */}
+        <nav className="flex items-center justify-center flex-wrap gap-4 flex-1">
           <Link
-            className="hover:text-gray-200"
+            className="hover:text-gray-200 hover:bg-gradient-to-r hover:from-blue-600 hover:via-blue-400 hover:to-blue-600 p-1 rounded"
             href="https://www.facebook.com/LCCUNISON"
-            target="_blanc"
+            target="_blank"
           >
             <FacebookIcon className="h-5 w-5" />
             <span className="sr-only">Facebook</span>
           </Link>
-          {/* <Link className="hover:text-gray-200" href="#">
-            <TwitterIcon className="h-5 w-5" />
-            <span className="sr-only">Twitter</span>
-          </Link> */}
           <Link
-            className="hover:text-gray-200"
+            className="hover:text-gray-200 hover:bg-gradient-to-r hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600 p-1 rounded"
             href="https://www.instagram.com/soy_lcc/"
-            target="_blanc"
+            target="_blank"
           >
             <InstagramIcon className="h-5 w-5" />
             <span className="sr-only">Instagram</span>
           </Link>
           <Link
-            className="hover:text-gray-200"
+            className="hover:text-gray-200 hover:bg-gradient-to-r hover:from-blue-700 hover:via-blue-500 hover:to-blue-700 p-1 rounded"
             href="https://www.linkedin.com/in/lcc-unison-8206b4280/"
-            target="_blanc"
+            target="_blank"
           >
             <LinkedinIcon className="h-5 w-5" />
             <span className="sr-only">LinkedIn</span>
           </Link>
           <Link
-            className="hover:text-gray-200"
+            className="hover:text-gray-200 hover:bg-gradient-to-r hover:from-gray-400 hover:via-gray-500 hover:to-gray-600 p-1 rounded"
             href="https://cc-unison.github.io/documentation-lcchub/"
-            target="_blanc"
+            target="_blank"
           >
             <GithubIcon className="h-5 w-5" />
             <span className="sr-only">GitHub</span>
           </Link>
         </nav>
-        <p className="text-sm text-center md:text-left">© 2025 LCC</p>
+
+        {/* Columna derecha */}
+        <div className="flex items-center justify-center md:justify-end flex-1">
+          <span className="text-lg font-semibold">© 2025 LCC</span>
+        </div>
       </div>
     </footer>
   );
 }
+
 
 function FacebookIcon(props: any) {
   return (
