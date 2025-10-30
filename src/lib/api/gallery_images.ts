@@ -4,7 +4,7 @@ const baseUrl = "http://localhost:1337";
 
 export async function getGalleryImages() {
   try {
-    const response = await fetch(baseUrl + "/api/galleries?populate=*", {
+    const response = await fetch(baseUrl + "/api/galleries?populate=images", {
       cache: "no-store",
     });
     const strapiData = await response.json();
