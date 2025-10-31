@@ -4,7 +4,7 @@ const baseUrl = "http://localhost:1337";
 
 export async function getGalleryImages() {
   try {
-    const response = await fetch(baseUrl + "/api/galleries?populate=images", {
+    const response = await fetch(baseUrl + "/api/galleries?populate=*", {
       cache: "no-store",
     });
     const strapiData = await response.json();
@@ -21,7 +21,7 @@ export async function getGalleryImages() {
         title: item.attributes.title,
         description: item.attributes.description || "",
         date: item.attributes.date || new Date().toISOString(),
-        tag: item.attributes.tag || "General",
+        tag: item.attributes.tag || "general",
         images: images,
       };
     });

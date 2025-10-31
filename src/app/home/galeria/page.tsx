@@ -1,8 +1,9 @@
-import AllEventsTable from "@/components/ui/home/Eventos/all-events-table";
-import { getAllEvents } from "@/lib/api/events";
 import { GallerySection } from "@/components/ui/home/gallery-section";
+import { getGalleryImages } from "@/lib/api/gallery_images";
+
 export default async function GaleriaPage() {
-  const all_events = await getAllEvents();
+  const galleryImages = await getGalleryImages();
+  
   return (
     <div className="container mx-auto px-4 py-5">
       <div className="mb-8 text-center">
@@ -17,7 +18,7 @@ export default async function GaleriaPage() {
       </div>
       
      <div className="container">
-       <GallerySection />
+       <GallerySection galleryImages={galleryImages} />
      </div>
        
       
