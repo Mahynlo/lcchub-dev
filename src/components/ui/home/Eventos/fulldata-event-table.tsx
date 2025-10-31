@@ -101,9 +101,12 @@ export function FullDataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-48 text-center"
                 >
-                  No se encontraron eventos.
+                  <div className="flex flex-col items-center justify-center py-8">
+                    <div className="text-gray-400 text-6xl mb-4">📅</div>
+                    <p className="text-gray-600 text-lg">No se encontraron eventos.</p>
+                  </div>
                 </TableCell>
               </TableRow>
             )}
