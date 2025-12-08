@@ -23,6 +23,8 @@ export function CardsView({ images, onImageClick }: CardsViewProps) {
               alt={item.title}
               fill
               className="object-cover"
+              loading="lazy"
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
             />
             {/* Badge con el número de imágenes */}
             {item.images && item.images.length > 1 && (

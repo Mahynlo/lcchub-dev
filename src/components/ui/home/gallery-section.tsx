@@ -18,12 +18,15 @@ interface GallerySectionProps {
   galleryImages: GalleryItem[];
 }
 
+const IMAGES_PER_PAGE = 30;
+
 export function GallerySection({ galleryImages }: GallerySectionProps) {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [filterYear, setFilterYear] = useState<string>("All");
   const [filterType, setFilterType] = useState<string>("All");
   const [viewMode, setViewMode] = useState<ViewMode>("collage");
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(IMAGES_PER_PAGE);
 
   const zoomControls = useZoomControls();
 
@@ -34,7 +37,17 @@ export function GallerySection({ galleryImages }: GallerySectionProps) {
     return matchesYear && matchesType;
   });
 
-  // Crear array plano de TODAS las imágenes individuales
+  // Limitar imágenes visibles (paginación)
+  const visibleEvents = useMemo(() => {
+    return filteredEvents.slice(0, visibleCount);
+  }, [filteredEvents, visibleCount]);
+
+  // Resetear contador cuando cambian los filtros
+  useMemo(() => {
+    setVisibleCount(IMAGES_PER_PAGE);
+  }, [filterYear, filterType]);
+
+  // Crear array plano de TODAS las imágenes individuales (para el lightbox)
   const flatImages = useMemo(() => {
     const flat: FlatImage[] = [];
     filteredEvents.forEach((event) => {
@@ -54,7 +67,7 @@ export function GallerySection({ galleryImages }: GallerySectionProps) {
 
   // Click desde CardsView (eventos agrupados) - abre en la primera imagen del evento
   const handleCardClick = (eventIndex: number) => {
-    const event = filteredEvents[eventIndex];
+    const event = visibleEvents[eventIndex];
     // Encontrar el índice de la primera imagen de este evento en el array plano
     const flatIndex = flatImages.findIndex((img) => img.event === event);
     if (flatIndex !== -1) {
@@ -66,7 +79,7 @@ export function GallerySection({ galleryImages }: GallerySectionProps) {
 
   // Click desde CollageView (imágenes individuales) - usa directamente el índice plano
   const handleCollageImageClick = (eventIndex: number, imageIndex: number) => {
-    const event = filteredEvents[eventIndex];
+    const event = visibleEvents[eventIndex];
     // Encontrar el índice de esta imagen específica en el array plano
     const flatIndex = flatImages.findIndex(
       (img) => img.event === event && img.src === event.images[imageIndex]
@@ -77,6 +90,12 @@ export function GallerySection({ galleryImages }: GallerySectionProps) {
       setIsDescriptionExpanded(false);
     }
   };
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + IMAGES_PER_PAGE);
+  };
+
+  const hasMore = visibleCount < filteredEvents.length;
 
   const handleModalClose = () => {
     setCurrentIndex(null);
@@ -129,11 +148,23 @@ export function GallerySection({ galleryImages }: GallerySectionProps) {
         />
 
         {viewMode === "collage" && (
-          <CollageView images={filteredEvents} onImageClick={handleCollageImageClick} />
+          <CollageView images={visibleEvents} onImageClick={handleCollageImageClick} />
         )}
 
         {viewMode === "cards" && (
-          <CardsView images={filteredEvents} onImageClick={handleCardClick} />
+          <CardsView images={visibleEvents} onImageClick={handleCardClick} />
+        )}
+
+        {/* Botón "Cargar más" */}
+        {hasMore && (
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={handleLoadMore}
+              className="px-6 py-3 bg-[#5121CC] hover:bg-[#4018AA] text-white font-semibold rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+            >
+              Cargar más imágenes ({filteredEvents.length - visibleCount} restantes)
+            </button>
+          </div>
         )}
 
         <ImageModal

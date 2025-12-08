@@ -144,7 +144,7 @@ useEffect(() => {
         {children}
       </StudentInfoContext.Provider>
 
-      <div className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center gap-4">
+      <div className="fixed top-16 md:top-5 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center gap-2 md:gap-4 w-[calc(100%-2rem)] md:w-auto max-w-md px-4 md:px-0">
         {notifications
           .filter((n) => n.position === "top")
           .map((n) => (
@@ -159,7 +159,7 @@ useEffect(() => {
           ))}
       </div>
 
-      <div className="fixed bottom-20 right-5 z-50 flex flex-col gap-4">
+      <div className="fixed bottom-4 md:bottom-20 right-2 md:right-5 z-50 flex flex-col gap-2 md:gap-4 w-[calc(100%-1rem)] md:w-auto max-w-sm md:max-w-md">
         {notifications
           .filter((n) => n.position !== "top")
           .map((n) => (

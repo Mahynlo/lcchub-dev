@@ -36,9 +36,9 @@ export default function AuthLogin({
     <div>
       <AuthenticatedTemplate>
         <DashboardNavbar />
-        <div className="container relative py-5">
+        <div className="relative py-5 w-full mx-auto px-2 md:px-10">
           <div className="rounded-[0.5rem] border bg-background shadow">
-            <div className="space-y-6 p-10 pb-16 md:block">
+            <div className="space-y-6 p-4 md:p-10 pb-8 md:pb-16">
               <div className="space-y-0.5">
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-bold tracking-tight">Mi Portal</h2>
@@ -54,7 +54,7 @@ export default function AuthLogin({
                 <aside className="-mx-4 lg:w-1/7">{/*cambiar espacio horizontal del sidenavbar */}
                   <SidebarNav items={sidebarNavItems} />
                 </aside>
-                <div className="flex-1 px-4 lg:px-0 lg:w-4/5">{children}</div>
+                <div className="flex-1 px-1 md:px-4 lg:px-0 lg:w-4/5">{children}</div>
               </div>
             </div>
           </div>

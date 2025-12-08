@@ -1,12 +1,15 @@
 "use client";
 
 import { useCurriculum } from "../CurriculumContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { StudentInfoContext } from "../StudentInfoContext";
 import { SubjectShowContext } from "@/lib/types";
 import CurriculumMapSection from "@/components/ui/dashboard/lccmap/curriculum-map";
+import CurriculumConnections from "@/components/ui/dashboard/lccmap/curriculum-connections";
+import CurriculumFlow from "@/components/ui/dashboard/lccmap/curriculum-flow";
 import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
 import { ComboboxPopover } from "@/components/ui/dashboard/lccmap/combobox-popover";
+import { SubjectSearch } from "@/components/ui/dashboard/lccmap/subject-search";
 
 export default function Page() {
   const { curriculumMap, updatedPrograma, subjectCache: cacheSubject } = useCurriculum();
@@ -14,6 +17,11 @@ export default function Page() {
   const [showAll, setShowAll] = useState(true);
   const [showSubject, setShowSubject] = useState(new Map<string, boolean>());
   const [filterOption, setFilterOption] = useState("all");
+  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.title = "Mapa Interactivo | LCCHUB";
+  }, []);
 
   const cols = student?.studyPlan === '2052' ? "md:grid-cols-8" : "md:grid-cols-9";
 
@@ -27,6 +35,8 @@ export default function Page() {
           setShowAll,
           filterOption,
           setFilterOption,
+          selectedSubject,
+          setSelectedSubject,
         }}
       >
         <div className="w-full items-center">
@@ -39,11 +49,11 @@ export default function Page() {
               <h2 className="text-xl font-bold">Total de créditos</h2>
               <p className="text-4xl font-bold">{curriculumMap.totalCredits}</p>
             </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 md:gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
               <AxisCard
                 title="Básico"
                 credits={curriculumMap.basicCredits}
-                color="#e8eef7"
+                color="#9EC0DB"
               />
               {student?.studyPlan == '2052' && (
                 <AxisCard
@@ -54,7 +64,7 @@ export default function Page() {
               )}
               {student?.studyPlan == '2052' && (
                 <AxisCard
-                  title="Profesionalizante"
+                  title="Profesional"
                   credits={curriculumMap.electiveCredits}
                   color="#ff9966"
                 />
@@ -80,12 +90,13 @@ export default function Page() {
               )}
             </div>
           </div>
-          <h2 className="text-xl font-bold py-6">Mapa curricular</h2>
-          <div className="px-6 py-2">
+          <h2 className="text-xl font-bold py-6 px-4 md:px-0">Mapa curricular</h2>
+          <div className="px-4 md:px-6 py-2 flex flex-col md:flex-row gap-3 md:gap-4">
             <ComboboxPopover />
+            <SubjectSearch subjectCache={cacheSubject} />
           </div>
-          <div className={`md:grid ${cols} md:gap-10 md:w-full md:h-[800px]`}>
-            <CurriculumMapSection
+          <div className="w-full px-4 md:px-6 py-4">
+            <CurriculumFlow
               semesters={updatedPrograma}
               subjectCache={cacheSubject}
             />

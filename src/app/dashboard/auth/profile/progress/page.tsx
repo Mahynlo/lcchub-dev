@@ -1,84 +1,96 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { StudentInfoContext } from "../StudentInfoContext";
 import { Badge } from "@/components/ui/badge";
 import { useCurriculum } from "../CurriculumContext";
+
 export default function Page() {
   const student = useContext(StudentInfoContext);
   const {curriculumMap} = useCurriculum();
 
+  useEffect(() => {
+    document.title = "Mi Progreso | LCCHUB";
+  }, []);
+
   return (
     curriculumMap && student && (
-      <div>
+      <div className="w-full px-4 md:px-6">
         <div className="w-full">
-          <section className="grid gap-6 md:grid-cols-[1fr_auto]">
-            <div className="space-y-1">
-              <h1 className="text-xl font-bold">{student.name}</h1>
-              <p className="text-lg text-gray-500 dark:text-gray-400">
+          <section className="grid gap-4 md:gap-6 md:grid-cols-[1fr_auto]">
+            <div className="space-y-2">
+              <h1 className="text-lg md:text-xl font-bold">{student.name}</h1>
+              <p className="text-sm md:text-lg text-gray-500 dark:text-gray-400">
                 {student.email}
               </p>
               <div>
-                <p className="text-lg text-gray-500 dark:text-gray-400">
-                {student.programName}
+                <p className="text-sm md:text-lg text-gray-500 dark:text-gray-400">
+                  {student.programName}
                 </p>
-                <p className="text-lg text-gray-500 dark:text-gray-400">
+                <p className="text-sm md:text-lg text-gray-500 dark:text-gray-400">
                   PLAN - {student.studyPlan}
                 </p>
               </div>
-              
             </div>
-            <div className="flex flex-col items-start gap-2">
-
-            <div className="flex items-center gap-4">
-              <Progress
-                className="w-32"
-                value={
-                  (student.approvedCredits / curriculumMap.totalCredits) * 100
-                }
-              />
-              
-              <div className="text-right">
-                <div className="text-2xl font-bold">
-                  {Math.trunc(
+            
+            <div className="flex flex-col items-start gap-3">
+              <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto">
+                <Progress
+                  className="w-24 md:w-32"
+                  value={
                     (student.approvedCredits / curriculumMap.totalCredits) * 100
-                  )}
-                  %
+                  }
+                />
+                
+                <div className="text-right">
+                  <div className="text-xl md:text-2xl font-bold">
+                    {Math.trunc(
+                      (student.approvedCredits / curriculumMap.totalCredits) * 100
+                    )}
+                    %
+                  </div>
+                  <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                    Avance
+                  </p>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Avance
-                </p>
               </div>
-              </div>
-              <a href="https://buhos.uson.mx/web/apps/portalAlumnos/index.php" target="_blank">
-              <Badge  className={
-                    (student?.approvedCredits / curriculumMap.totalCredits) * 100 >= 70
-                      ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset"
-                      : "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset"
-                  }>
+              
+              <a 
+                href="https://buhos.uson.mx/web/apps/portalAlumnos/index.php" 
+                target="_blank"
+                className="w-full md:w-auto"
+              >
+                <Badge className={
+                  (student?.approvedCredits / curriculumMap.totalCredits) * 100 >= 70
+                    ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset w-full md:w-auto justify-center"
+                    : "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset w-full md:w-auto justify-center"
+                }>
                   {(student?.approvedCredits / curriculumMap.totalCredits) * 100 >= 70
-                  ? "Ya puedes hacer el servicio"
-                  : "Aún no puedes hacer el servicio"}
-              </Badge>
+                    ? "Ya puedes hacer el servicio"
+                    : "Aún no puedes hacer el servicio"}
+                </Badge>
               </a>
+              
               {student?.studyPlan == "2252" && (
-              <Badge  className={
-                    student?.approvedCredits >= 192
-                      ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset"
-                      : "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset"
-                  }>
+                <Badge className={
+                  student?.approvedCredits >= 192
+                    ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset w-full md:w-auto justify-center"
+                    : "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset w-full md:w-auto justify-center"
+                }>
                   {student?.approvedCredits >= 192 
-                  ? "Ya puedes hacer las practicas profesionales"
-                  : "Aún no puedes hacer las practicas profesionales"}
-              </Badge>
-            )}
+                    ? "Ya puedes hacer las prácticas profesionales"
+                    : "Aún no puedes hacer las prácticas profesionales"}
+                </Badge>
+              )}
             </div>
           </section>
-          <Separator className="my-6" />
-          <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-4`">
-            <Card>
+          
+          <Separator className="my-4 md:my-6" />
+          
+          <section className="grid gap-4 md:gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Créditos Aprobados
@@ -94,7 +106,8 @@ export default function Page() {
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            
+            <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Créditos Restantes
@@ -110,7 +123,8 @@ export default function Page() {
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            
+            <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Promedio</CardTitle>
                 <StarIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
@@ -122,7 +136,8 @@ export default function Page() {
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            
+            <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Promedio</CardTitle>
                 <StarIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
@@ -130,11 +145,12 @@ export default function Page() {
               <CardContent>
                 <div className="text-2xl font-bold">{student.periodGrade}</div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  del periodo
+                  del periodo anterior
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            
+            <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Nivel de inglés
@@ -148,7 +164,8 @@ export default function Page() {
                 <p className="text-xs text-gray-500 dark:text-gray-400">de 4</p>
               </CardContent>
             </Card>
-            <Card>
+            
+            <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Créditos Culturales

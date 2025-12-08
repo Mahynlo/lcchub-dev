@@ -6,6 +6,7 @@ import { useCacheSubject } from "./SubjectCache";
 import { getCurriculumMaps, cacheSubjectInfo } from "@/lib/api/curriculumMap-by-key";
 import { extractSubjectsKeys } from "@/components/ui/dashboard/lccmap/subject-card";
 import { StudentInfoContext } from "./StudentInfoContext";
+import { normalizeSubjectKey } from "@/lib/utils/subjectKey";
 
 type CurriculumContextType = {
   curriculumMap: CurriculumMap | null;
@@ -37,9 +38,9 @@ export function CurriculumProvider({ children }: { children: React.ReactNode }) 
       setCurriculumMap(map);
 
       const program = map.semesters;
-      const selectivas = (map.selectiveSubjects || "").split("-");
-      const integradoras = (map.integratorSubjects || "").split("-");
-      const especializantes = (map.specialistSubjects || "").split("-");
+      const selectivas = (map.selectiveSubjects || "").split("-").map(normalizeSubjectKey);
+      const integradoras = (map.integratorSubjects || "").split("-").map(normalizeSubjectKey);
+      const especializantes = (map.specialistSubjects || "").split("-").map(normalizeSubjectKey);
 
       const { creditedSubjects, enrolledSubjects, droppedSubjects, failedSubjects } = student;
       const enrolledKeys = extractSubjectsKeys(enrolledSubjects);
@@ -69,16 +70,19 @@ export function CurriculumProvider({ children }: { children: React.ReactNode }) 
       };
 
       const replaceSubjectKey = (subjectKey: string, assignedSubjects: Set<string>) => {
-        if (subjectKey === "Selec") {
-          return getStudentSubject(selectivas, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || subjectKey;
+        // Normalizar el key antes de cualquier comparación
+        const normalizedKey = normalizeSubjectKey(subjectKey);
+        
+        if (normalizedKey === "Selec") {
+          return getStudentSubject(selectivas, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || normalizedKey;
         }
-        if (subjectKey === "Intg") {
-          return getStudentSubject(integradoras, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || subjectKey;
+        if (normalizedKey === "Intg") {
+          return getStudentSubject(integradoras, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || normalizedKey;
         }
-        if (subjectKey === "Esp") {
-          return getStudentSubject(especializantes, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || subjectKey;
+        if (normalizedKey === "Esp") {
+          return getStudentSubject(especializantes, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || normalizedKey;
         }
-        return subjectKey;
+        return normalizedKey;
       };
 
       const updatedProgram = program.map((semester) => {
@@ -97,7 +101,6 @@ export function CurriculumProvider({ children }: { children: React.ReactNode }) 
 
       cacheSubjectInfo(updatedProgram).then((cache) => {
         setCacheSubject(cache);
-        //console.log(cache);
       });
     });
   }, [student, setCacheSubject]);

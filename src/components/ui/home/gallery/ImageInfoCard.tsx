@@ -1,5 +1,6 @@
 import { GalleryItem } from "@/lib/types";
 import { Months } from "@/lib/utils";
+import { tagColors, tagLabels } from "@/lib/constants/tags";
 
 interface ImageInfoCardProps {
   item: GalleryItem;
@@ -61,19 +62,9 @@ export function ImageInfoCard({
             {/* Tipo y fecha */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className={`inline-block text-white text-xs sm:text-sm px-2.5 py-1 rounded-md font-semibold uppercase tracking-wide ${
-                item.tag === "evento"
-                  ? "bg-red-700"
-                  : item.tag === "convocatoria"
-                  ? "bg-blue-500"
-                  : item.tag === "noticia"
-                  ? "bg-green-500"
-                  : item.tag === "platicas"
-                  ? "bg-purple-600"
-                  : item.tag === "taller"
-                  ? "bg-orange-500"
-                  : "bg-gray-500"
+                tagColors[item.tag] || "bg-gray-500"
               }`}>
-                {item.tag}
+                {tagLabels[item.tag] || item.tag}
               </span>
               <span className="text-xs sm:text-sm text-white/90 font-medium">
                 📅 {formatDate(item.date)}

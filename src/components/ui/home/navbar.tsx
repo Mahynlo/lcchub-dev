@@ -1,9 +1,9 @@
 "use client";
-
+//navbar para la página de home (pública)
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home, Calendar, Image as ImageIcon, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 function LCCIcon() {
@@ -18,11 +18,17 @@ function LCCIcon() {
 }
 
 export function HomeNavbar() {
-  const sections = ["Eventos", "Galeria"];
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const sections = [
+    { name: "Inicio", href: "/home", icon: Home },
+    { name: "Eventos", href: "/home/eventos", icon: Calendar },
+    { name: "Galería", href: "/home/galeria", icon: ImageIcon },
+    { name: "Anuncios y noticias", href: "/home/blog", icon: BookOpen },
+  ];
+
   return (
-    <div className="sticky top-0 z-50 py-0 w-full flex items-center justify-center px-6 bg-white border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <div className="sticky top-0 z-50 py-0 w-full flex items-center px-6 bg-white border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       
       {/* Logo */}
       <a href="https://cc.unison.mx" target="_blank" rel="noopener noreferrer">
@@ -38,14 +44,14 @@ export function HomeNavbar() {
 
       {/* Navegación escritorio */}
       <nav className="hidden md:flex items-center space-x-6 px-20 ml-auto">
-        
-        {sections.map((nameOfSection, index) => (
+        {sections.map((section) => (
           <Link
-            key={index}
-            href={"/home/" + nameOfSection.toLowerCase()}
-            className="text-gray-700 hover:text-purple-600 transition-colors"
+            key={section.name}
+            href={section.href}
+            className="flex items-center gap-2 text-gray-700 hover:text-purple-600 transition-colors"
           >
-            {nameOfSection}
+            <section.icon className="h-4 w-4" />
+            {section.name}
           </Link>
         ))}
       </nav>
@@ -65,14 +71,15 @@ export function HomeNavbar() {
       {menuOpen && (
         <div className="md:hidden absolute top-full right-0 w-48 bg-white border border-gray-200 shadow-lg rounded-b-md z-50">
           <div className="flex flex-col py-2">
-            {sections.map((nameOfSection, index) => (
+            {sections.map((section) => (
               <Link
-                key={index}
-                href={"/home/" + nameOfSection.toLowerCase()}
+                key={section.name}
+                href={section.href}
                 onClick={() => setMenuOpen(false)}
-                className="px-4 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
               >
-                {nameOfSection}
+                <section.icon className="h-4 w-4" />
+                {section.name}
               </Link>
             ))}
           </div>

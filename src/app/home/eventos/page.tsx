@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import AllEventsTable from "@/components/ui/home/Eventos/all-events-table";
 import { getAllEvents } from "@/lib/api/events";
+
+export const metadata: Metadata = {
+  title: "Eventos",
+  description: "Todos los eventos de la comunidad LCC",
+};
 
 export default async function EventosPage() {
   const all_events = await getAllEvents();

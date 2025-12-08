@@ -64,6 +64,8 @@ export function CollageView({ images, onImageClick }: CollageViewProps) {
               width={400}
               height={300}
               className="w-full h-auto object-cover"
+              loading="lazy"
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
             />
             <div className="absolute inset-0 bg-black/0 hover:bg-black/50 flex items-end justify-start p-2 text-white text-xs sm:text-sm opacity-0 hover:opacity-100 transition-opacity">
               <div>

@@ -4,14 +4,14 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase-config";
 import { CurriculumMap, Subject } from "@/lib/types";
 import { unstable_cache } from "next/cache";
+import { normalizeSubjectKey } from "@/lib/utils/subjectKey";
 
-export async function getCurriculumMaps(key: string) {//esto extrae la info de la db
+export async function getCurriculumMaps(key: string) {
   const docRef = doc(db, "curriculumMaps", key);
   const docSnap = await getDoc(docRef);
-  //console.log("docSnap",docSnap.data());
+  
   if (docSnap.exists()) {
     const curriculumMap = docSnap.data() as CurriculumMap;
-    //console.log("curriculumMapasas: ", curriculumMap);
     return curriculumMap;
   } else {
     return null;
@@ -35,19 +35,29 @@ const getSubjectInfo = unstable_cache(async (subjectKey: string) => {
 
 export async function cacheSubjectInfo(program: string[]) {
   const cache = new Map<string, Subject>();
+  const errors: string[] = [];
+  
   for (const semester of program) {
-    const subjectKeys = semester.split("-");
-    //console.log("nosea: ", subjectKeys);
+    const subjectKeys = semester.split("-")
+      .filter(key => key.trim())
+      .map(normalizeSubjectKey);  // ✅ Normalizar cada key
+    
     for (const subjectKey of subjectKeys) {
       if (!cache.has(subjectKey)) {
         const subject = await getSubjectInfo(subjectKey);
         if (subject) {
           cache.set(subjectKey, subject);
+        } else {
+          errors.push(subjectKey);
         }
       }
     }
   }
-
-  //console.log("cacheasa: ",cache);
+  
+  if (errors.length > 0) {
+    console.warn(`[SubjectCache] Failed to load ${errors.length} subjects:`, errors);
+  }
+  
+  console.log(`[SubjectCache] Loaded ${cache.size} subjects`);
   return cache;
 }

@@ -3,9 +3,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { CacheSubjectProvider } from "./dashboard/auth/profile/SubjectCache";
+
 export const metadata: Metadata = {
-  title: "LCC Hub",
-  description: "Social Service Project for the LCC Community",
+  title: {
+    default: "LCCHUB",
+    template: "%s | LCCHUB"
+  },
+  description: "Portal de la comunidad de Ciencias de la Computación de la Universidad de Sonora",
 };
 
 export default function RootLayout({

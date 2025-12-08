@@ -28,11 +28,10 @@ export type ProyectOffering = {
 
 export type AnunciosYNoticias = {
   title: string;
-  desc: string;
+  excerpt: string;
   thumbnail: string;
   redirect: string;
   issued: Date;        // fecha de publicación
-  eventStart?: Date;   // fecha de inicio del evento (opcional)
   eventEnd?: Date;     // fecha de fin del evento (opcional)
   tag: "evento" | "convocatoria" | "noticia" | "general" | "platicas" | "taller";
 };
@@ -48,6 +47,47 @@ export type GalleryItem = {
 };
 
 export type ViewMode = "cards" | "collage";
+
+// Tipos para el contenido enriquecido de Strapi
+export type RichTextNode = {
+  type: "paragraph" | "heading" | "list" | "quote" | "code" | "image";
+  children?: RichTextChild[];
+  level?: number; // para headings (1-6)
+  format?: "ordered" | "unordered"; // para listas
+  image?: {
+    name: string;
+    alternativeText: string;
+    url: string;
+    caption: string | null;
+    width: number;
+    height: number;
+    formats?: any;
+  };
+};
+
+export type RichTextChild = {
+  type: "text" | "link";
+  text?: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
+  code?: boolean;
+  url?: string; // para links
+  children?: RichTextChild[]; // para links que contienen texto
+};
+
+export type BlogPost = {
+  id: string;
+  title: string;
+  author?: string;
+  content: RichTextNode[]; // Contenido enriquecido de Strapi
+  excerpt: string;
+  thumbnail?: string;
+  issued: Date;        // fecha de publicación
+  eventEnd?: Date;     // fecha de fin del evento (opcional)
+  tag: "evento" | "convocatoria" | "noticia" | "general" | "platicas" | "taller";
+};
 
 export type Student = {
   programKey: string;
@@ -125,6 +165,8 @@ type SubjectShowContext = {
   setShowAll?: (showAll: boolean) => void;
   filterOption: string;
   setFilterOption: (filterOption: string) => void;
+  selectedSubject?: string | null;
+  setSelectedSubject?: (subject: string | null) => void;
 };
 
 export const SubjectShowContext = createContext<SubjectShowContext | null>(

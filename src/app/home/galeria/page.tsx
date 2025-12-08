@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { GallerySection } from "@/components/ui/home/gallery-section";
 import { getGalleryImages } from "@/lib/api/gallery_images";
+
+export const metadata: Metadata = {
+  title: "Galería",
+  description: "Galería de imágenes de la comunidad LCC",
+};
 
 export default async function GaleriaPage() {
   const galleryImages = await getGalleryImages();

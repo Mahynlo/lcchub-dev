@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ViewMode } from "@/lib/types";
+import { tags } from "@/lib/constants/tags";
 
 interface GalleryFiltersProps {
   viewMode: ViewMode;
@@ -66,12 +67,11 @@ export function GalleryFilters({
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <option value="All">Todos los tipos</option>
-        <option value="evento">Evento</option>
-        <option value="convocatoria">Convocatoria</option>
-        <option value="noticia">Noticia</option>
-        <option value="general">General</option>
-        <option value="platicas">Pláticas</option>
-        <option value="taller">Taller</option>
+        {tags.slice(1).map((tag) => (
+          <option key={tag.value} value={tag.value}>
+            {tag.label}
+          </option>
+        ))}
       </select>
     </div>
   );
