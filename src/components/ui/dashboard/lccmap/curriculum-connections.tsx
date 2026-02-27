@@ -44,16 +44,15 @@ export default function CurriculumConnections({
       if (!containerRect) return;
 
       const newConnections: Connection[] = [];
-      const processedSubjects = new Set<string>();
 
-      const selectedSemester = semesters.findIndex((sem) =>
-        sem.split("-").includes(selectedSubject)
-      );
+      // Sets INDEPENDIENTES para evitar que uno bloquee al otro
+      const processedRequirements = new Set<string>();
+      const processedReleases = new Set<string>();
 
       const processRequirements = (subjectKey: string, visited: Set<string> = new Set()) => {
-        if (visited.has(subjectKey) || processedSubjects.has(subjectKey)) return;
+        if (visited.has(subjectKey) || processedRequirements.has(subjectKey)) return;
         visited.add(subjectKey);
-        processedSubjects.add(subjectKey);
+        processedRequirements.add(subjectKey);
 
         const subj = subjectCache.get(subjectKey);
         if (!subj || !subj.requirements || subj.requirements.trim() === "") return;
@@ -66,96 +65,52 @@ export default function CurriculumConnections({
         if (!toCard) return;
 
         const toRect = toCard.getBoundingClientRect();
-        const toY = toRect.top - containerRect.top + toRect.height / 2;
-
-        const subjectSemester = semesters.findIndex((sem) =>
-          sem.split("-").includes(subjectKey)
-        );
 
         requirements.forEach((reqKey) => {
           const fromCard = document.querySelector(`[data-subject-key="${reqKey}"]`);
           if (!fromCard) return;
 
           const fromRect = fromCard.getBoundingClientRect();
-          
-          // Calcular centros de ambas tarjetas
+
           const fromCenterX = fromRect.left - containerRect.left + fromRect.width / 2;
           const fromCenterY = fromRect.top - containerRect.top + fromRect.height / 2;
           const toCenterX = toRect.left - containerRect.left + toRect.width / 2;
           const toCenterY = toRect.top - containerRect.top + toRect.height / 2;
-          
-          // Calcular diferencias
+
           const dx = toCenterX - fromCenterX;
           const dy = toCenterY - fromCenterY;
-          
-          // Determinar el lado más cercano para conectar con espaciado
-          const spacing = 8; // Espacio de separación de las tarjetas
+
+          const spacing = 8;
           let fromCenter, toCenter;
-          
+
           if (Math.abs(dx) > Math.abs(dy)) {
-            // Conexión horizontal (izquierda/derecha)
             if (dx > 0) {
-              // From: derecha, To: izquierda
-              fromCenter = {
-                x: fromRect.left - containerRect.left + fromRect.width + spacing,
-                y: fromCenterY,
-              };
-              toCenter = {
-                x: toRect.left - containerRect.left - spacing,
-                y: toCenterY,
-              };
+              fromCenter = { x: fromRect.left - containerRect.left + fromRect.width + spacing, y: fromCenterY };
+              toCenter = { x: toRect.left - containerRect.left - spacing, y: toCenterY };
             } else {
-              // From: izquierda, To: derecha
-              fromCenter = {
-                x: fromRect.left - containerRect.left - spacing,
-                y: fromCenterY,
-              };
-              toCenter = {
-                x: toRect.left - containerRect.left + toRect.width + spacing,
-                y: toCenterY,
-              };
+              fromCenter = { x: fromRect.left - containerRect.left - spacing, y: fromCenterY };
+              toCenter = { x: toRect.left - containerRect.left + toRect.width + spacing, y: toCenterY };
             }
           } else {
-            // Conexión vertical (arriba/abajo)
             if (dy > 0) {
-              // From: abajo, To: arriba
-              fromCenter = {
-                x: fromCenterX,
-                y: fromRect.top - containerRect.top + fromRect.height + spacing,
-              };
-              toCenter = {
-                x: toCenterX,
-                y: toRect.top - containerRect.top - spacing,
-              };
+              fromCenter = { x: fromCenterX, y: fromRect.top - containerRect.top + fromRect.height + spacing };
+              toCenter = { x: toCenterX, y: toRect.top - containerRect.top - spacing };
             } else {
-              // From: arriba, To: abajo
-              fromCenter = {
-                x: fromCenterX,
-                y: fromRect.top - containerRect.top - spacing,
-              };
-              toCenter = {
-                x: toCenterX,
-                y: toRect.top - containerRect.top + toRect.height + spacing,
-              };
+              fromCenter = { x: fromCenterX, y: fromRect.top - containerRect.top - spacing };
+              toCenter = { x: toCenterX, y: toRect.top - containerRect.top + toRect.height + spacing };
             }
           }
 
-          const type = subjectSemester <= selectedSemester ? "requirement" : "release";
-
-          newConnections.push({
-            from: fromCenter,
-            to: toCenter,
-            type,
-          });
+          newConnections.push({ from: fromCenter, to: toCenter, type: "requirement" });
 
           processRequirements(reqKey, new Set(visited));
         });
       };
 
       const processReleases = (subjectKey: string, visited: Set<string> = new Set()) => {
-        if (visited.has(subjectKey) || processedSubjects.has(subjectKey)) return;
+        if (visited.has(subjectKey) || processedReleases.has(subjectKey)) return;
         visited.add(subjectKey);
-        processedSubjects.add(subjectKey);
+        processedReleases.add(subjectKey);
 
         const subj = subjectCache.get(subjectKey);
         if (!subj || !subj.releases || subj.releases.trim() === "") return;
@@ -166,81 +121,43 @@ export default function CurriculumConnections({
         if (!fromCard) return;
 
         const fromRect = fromCard.getBoundingClientRect();
-        const fromY = fromRect.top - containerRect.top + fromRect.height / 2;
 
         releases.forEach((relKey) => {
           const toCard = document.querySelector(`[data-subject-key="${relKey}"]`);
           if (!toCard) return;
 
           const toRect = toCard.getBoundingClientRect();
-          
-          // Calcular centros de ambas tarjetas
+
           const fromCenterX = fromRect.left - containerRect.left + fromRect.width / 2;
           const fromCenterY = fromRect.top - containerRect.top + fromRect.height / 2;
           const toCenterX = toRect.left - containerRect.left + toRect.width / 2;
           const toCenterY = toRect.top - containerRect.top + toRect.height / 2;
-          
-          // Calcular diferencias
+
           const dx = toCenterX - fromCenterX;
           const dy = toCenterY - fromCenterY;
-          
-          // Determinar el lado más cercano para conectar con espaciado
-          const spacing = 8; // Espacio de separación de las tarjetas
+
+          const spacing = 8;
           let fromCenter, toCenter;
-          
+
           if (Math.abs(dx) > Math.abs(dy)) {
-            // Conexión horizontal (izquierda/derecha)
             if (dx > 0) {
-              // From: derecha, To: izquierda
-              fromCenter = {
-                x: fromRect.left - containerRect.left + fromRect.width + spacing,
-                y: fromCenterY,
-              };
-              toCenter = {
-                x: toRect.left - containerRect.left - spacing,
-                y: toCenterY,
-              };
+              fromCenter = { x: fromRect.left - containerRect.left + fromRect.width + spacing, y: fromCenterY };
+              toCenter = { x: toRect.left - containerRect.left - spacing, y: toCenterY };
             } else {
-              // From: izquierda, To: derecha
-              fromCenter = {
-                x: fromRect.left - containerRect.left - spacing,
-                y: fromCenterY,
-              };
-              toCenter = {
-                x: toRect.left - containerRect.left + toRect.width + spacing,
-                y: toCenterY,
-              };
+              fromCenter = { x: fromRect.left - containerRect.left - spacing, y: fromCenterY };
+              toCenter = { x: toRect.left - containerRect.left + toRect.width + spacing, y: toCenterY };
             }
           } else {
-            // Conexión vertical (arriba/abajo)
             if (dy > 0) {
-              // From: abajo, To: arriba
-              fromCenter = {
-                x: fromCenterX,
-                y: fromRect.top - containerRect.top + fromRect.height + spacing,
-              };
-              toCenter = {
-                x: toCenterX,
-                y: toRect.top - containerRect.top - spacing,
-              };
+              fromCenter = { x: fromCenterX, y: fromRect.top - containerRect.top + fromRect.height + spacing };
+              toCenter = { x: toCenterX, y: toRect.top - containerRect.top - spacing };
             } else {
-              // From: arriba, To: abajo
-              fromCenter = {
-                x: fromCenterX,
-                y: fromRect.top - containerRect.top - spacing,
-              };
-              toCenter = {
-                x: toCenterX,
-                y: toRect.top - containerRect.top + toRect.height + spacing,
-              };
+              fromCenter = { x: fromCenterX, y: fromRect.top - containerRect.top - spacing };
+              toCenter = { x: toCenterX, y: toRect.top - containerRect.top + toRect.height + spacing };
             }
-          };
+          }
 
-          newConnections.push({
-            from: fromCenter,
-            to: toCenter,
-            type: "release",
-          });
+          newConnections.push({ from: fromCenter, to: toCenter, type: "release" });
 
           processReleases(relKey, new Set(visited));
         });
@@ -285,14 +202,14 @@ export default function CurriculumConnections({
       {connections.map((conn, index) => {
         const dx = conn.to.x - conn.from.x;
         const dy = conn.to.y - conn.from.y;
-        
+
         const strokeColor = conn.type === "requirement" ? "#3b82f6" : "#22c55e";
         const glowColor = conn.type === "requirement" ? "#3b82f680" : "#22c55e80";
         const markerUrl = conn.type === "requirement" ? "url(#arrowhead-blue)" : "url(#arrowhead-green)";
 
         // Crear una ruta en forma de escalera
         let pathD;
-        
+
         if (Math.abs(dx) > Math.abs(dy)) {
           // Conexión principalmente horizontal
           const midX = conn.from.x + dx / 2;

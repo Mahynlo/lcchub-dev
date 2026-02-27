@@ -1,8 +1,8 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useContext } from "react";
 import { Handle, Position } from "reactflow";
-import { Subject } from "@/lib/types";
+import { Subject, SubjectShowContext } from "@/lib/types";
 import {
   Dialog,
   DialogContent,
@@ -11,13 +11,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getSubjectFlowColor } from "@/lib/utils/subjectColors";
-import { 
-  SubjectDialogContent, 
-  getSubjectDialogTitle 
+import {
+  SubjectDialogContent,
+  getSubjectDialogTitle
 } from "./SubjectDialogContent";
-import { 
-  useSubjectInteraction, 
-  shouldShowDialog 
+import {
+  useSubjectInteraction,
+  shouldShowDialog
 } from "@/hooks/useSubjectInteraction";
 
 interface SubjectNodeProps {
@@ -31,11 +31,13 @@ interface SubjectNodeProps {
 
 function SubjectNodeComponent({ data }: SubjectNodeProps) {
   const { subject, subjectKey, subjectCache, isVisible } = data;
-  
+  const { selectedSubject } = useContext(SubjectShowContext)!;
+
   // Hook personalizado para manejar la interacción
-  const { isHovered, handleClick, handleMouseEnter, handleMouseLeave } = 
+  const { isHovered, handleClick, handleMouseEnter, handleMouseLeave } =
     useSubjectInteraction(subjectKey, subject);
 
+  const isSelected = selectedSubject === subjectKey;
   // Calcular la opacidad final
   const finalOpacity = isHovered ? 1 : (isVisible ? 1 : 0.3);
 
@@ -44,15 +46,21 @@ function SubjectNodeComponent({ data }: SubjectNodeProps) {
       <div
         className={`
           ${getSubjectFlowColor(subject?.branch)} 
-          rounded-lg shadow-md p-4
+          rounded-lg p-4
           w-[160px] h-[120px]
           flex flex-col items-center justify-center
           transition-all duration-200
           hover:scale-105 hover:shadow-lg
           cursor-pointer
-          border-2 border-gray-200
+          border-2
+          ${isSelected ? "border-blue-500" : "border-gray-200"}
         `}
-        style={{ opacity: finalOpacity }}
+        style={{
+          opacity: finalOpacity,
+          boxShadow: isSelected
+            ? "0 0 0 3px rgba(59,130,246,0.35), 0 4px 16px rgba(59,130,246,0.25)"
+            : undefined,
+        }}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -81,7 +89,7 @@ function SubjectNodeComponent({ data }: SubjectNodeProps) {
             {getSubjectDialogTitle(subjectKey, subject)}
           </DialogTitle>
         </DialogHeader>
-        <SubjectDialogContent 
+        <SubjectDialogContent
           subject={subject}
           subjectKey={subjectKey}
           subjectCache={subjectCache}

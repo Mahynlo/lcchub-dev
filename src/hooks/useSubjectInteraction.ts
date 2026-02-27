@@ -21,12 +21,12 @@ export function useSubjectInteraction(subjectKey: string, subject: Subject | und
     setClick(true);
     setShowAll && setShowAll(false);
     all2false(showSubject);
-    
+
     setSelectedSubject && setSelectedSubject(subjectKey);
-    
+
     // Mantener visible la tarjeta seleccionada
     showSubject.set(subjectKey, true);
-    
+
     // Mostrar materias relacionadas en el tracklist
     if (subject?.tracklistSubject) {
       for (const key of subject.tracklistSubject) {
@@ -41,9 +41,12 @@ export function useSubjectInteraction(subjectKey: string, subject: Subject | und
       if (filterOption === "all") {
         setShowAll && setShowAll(true);
       } else {
+        // Limpiar el estado antes de re-aplicar el filtro,
+        // para evitar que entradas del click anterior (tracklist, etc.) queden visibles
+        all2false(showSubject);
         setOptionSubjects(student, filterOption, showSubject);
       }
-      
+
       setSelectedSubject && setSelectedSubject(null);
     }
     setClick(false);

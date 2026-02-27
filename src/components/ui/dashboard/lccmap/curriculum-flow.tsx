@@ -35,7 +35,7 @@ function toRoman(num: number): string {
     [4, 'IV'],
     [1, 'I']
   ];
-  
+
   let result = '';
   for (const [value, numeral] of romanNumerals) {
     while (num >= value) {
@@ -55,10 +55,10 @@ export default function CurriculumFlow({
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [updateTrigger, setUpdateTrigger] = useState(0);
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
-  
+
   // Detectar si es móvil para optimizaciones
   const [isMobile, setIsMobile] = useState(false);
-  
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -104,25 +104,25 @@ export default function CurriculumFlow({
   useEffect(() => {
     const newNodes: Node[] = [];
     const newEdges: Edge[] = [];
-    
+
     // Espaciado entre nodos
     const nodeWidth = 180;
     const nodeHeight = 140;
     const horizontalGap = 60;
     const verticalGap = 40;
-    
+
     // Crear nodos organizados por semestre
     semesters.forEach((semester, semesterIndex) => {
       const subjects = semester.split("-").filter(key => key.trim() !== "");
       const xPosition = semesterIndex * (nodeWidth + horizontalGap);
-      
+
       // Agregar nodo de etiqueta de semestre
       newNodes.push({
         id: `semester-${semesterIndex}`,
         type: "default",
         position: { x: xPosition, y: -60 },
-        data: { 
-          label: `Semestre ${toRoman(semesterIndex + 1)}` 
+        data: {
+          label: `Semestre ${toRoman(semesterIndex + 1)}`
         },
         draggable: false,
         selectable: false,
@@ -136,16 +136,16 @@ export default function CurriculumFlow({
           pointerEvents: 'none',
         },
       });
-      
+
       subjects.forEach((subjectKey, subjectIndex) => {
         const subject = subjectCache.get(subjectKey);
         if (!subject) return;
-        
+
         const yPosition = subjectIndex * (nodeHeight + verticalGap);
-        
+
         // Determinar opacidad basada en filtros
         const isVisible = showAll || showSubject.get(subjectKey);
-        
+
         newNodes.push({
           id: subjectKey,
           type: "subjectNode",
@@ -164,16 +164,18 @@ export default function CurriculumFlow({
         });
       });
     });
-    
+
     // Crear edges (conexiones) solo si hay un subject seleccionado
     if (selectedSubject) {
-      const processedSubjects = new Set<string>();
-      
-      // Función recursiva para procesar requisitos
+      // Sets INDEPENDIENTES para evitar que uno bloquee al otro
+      const processedRequirements = new Set<string>();
+      const processedReleases = new Set<string>();
+
+      // Función recursiva para procesar requisitos (hacia atrás)
       const processRequirements = (subjectKey: string, visited: Set<string> = new Set()) => {
-        if (visited.has(subjectKey) || processedSubjects.has(subjectKey)) return;
+        if (visited.has(subjectKey) || processedRequirements.has(subjectKey)) return;
         visited.add(subjectKey);
-        processedSubjects.add(subjectKey);
+        processedRequirements.add(subjectKey);
 
         const subj = subjectCache.get(subjectKey);
         if (!subj || !subj.requirements || subj.requirements.trim() === "") return;
@@ -184,37 +186,35 @@ export default function CurriculumFlow({
 
         requirements.forEach((reqKey) => {
           if (subjectCache.has(reqKey)) {
-            // Agregar edge
             newEdges.push({
-              id: `${reqKey}-${subjectKey}`,
+              id: `req-${reqKey}-${subjectKey}`,
               source: reqKey,
               target: subjectKey,
               type: "smoothstep",
-              animated: !isMobile, // Desactivar animación en móvil para mejor rendimiento
-              style: { 
+              animated: !isMobile,
+              style: {
                 stroke: "#3b82f6",
-                strokeWidth: isMobile ? 1.5 : 2, // Líneas más delgadas en móvil
+                strokeWidth: isMobile ? 1.5 : 2,
                 strokeDasharray: "5,5",
               },
               markerEnd: {
                 type: MarkerType.ArrowClosed,
                 color: "#3b82f6",
-                width: isMobile ? 16 : 20, // Flechas más pequeñas en móvil
+                width: isMobile ? 16 : 20,
                 height: isMobile ? 16 : 20,
               },
             });
-            
-            // Procesar recursivamente los requisitos de este requisito
+
             processRequirements(reqKey, new Set(visited));
           }
         });
       };
-      
-      // Función recursiva para procesar liberaciones
+
+      // Función recursiva para procesar liberaciones (hacia adelante)
       const processReleases = (subjectKey: string, visited: Set<string> = new Set()) => {
-        if (visited.has(subjectKey) || processedSubjects.has(subjectKey)) return;
+        if (visited.has(subjectKey) || processedReleases.has(subjectKey)) return;
         visited.add(subjectKey);
-        processedSubjects.add(subjectKey);
+        processedReleases.add(subjectKey);
 
         const subj = subjectCache.get(subjectKey);
         if (!subj || !subj.releases || subj.releases.trim() === "") return;
@@ -223,37 +223,35 @@ export default function CurriculumFlow({
 
         releases.forEach((relKey) => {
           if (subjectCache.has(relKey)) {
-            // Agregar edge
             newEdges.push({
-              id: `${subjectKey}-${relKey}`,
+              id: `rel-${subjectKey}-${relKey}`,
               source: subjectKey,
               target: relKey,
               type: "smoothstep",
-              animated: !isMobile, // Desactivar animación en móvil para mejor rendimiento
-              style: { 
+              animated: !isMobile,
+              style: {
                 stroke: "#22c55e",
-                strokeWidth: isMobile ? 1.5 : 2, // Líneas más delgadas en móvil
+                strokeWidth: isMobile ? 1.5 : 2,
                 strokeDasharray: "5,5",
               },
               markerEnd: {
                 type: MarkerType.ArrowClosed,
                 color: "#22c55e",
-                width: isMobile ? 16 : 20, // Flechas más pequeñas en móvil
+                width: isMobile ? 16 : 20,
                 height: isMobile ? 16 : 20,
               },
             });
-            
-            // Procesar recursivamente las liberaciones de esta liberación
+
             processReleases(relKey, new Set(visited));
           }
         });
       };
-      
-      // Iniciar procesamiento recursivo desde la materia seleccionada
+
+      // Procesar ambas direcciones de forma independiente
       processRequirements(selectedSubject);
       processReleases(selectedSubject);
     }
-    
+
     setNodes(newNodes);
     setEdges(newEdges);
   }, [semesters, subjectCache, showAll, showSubject, selectedSubject, updateTrigger, setNodes, setEdges, isMobile]);
@@ -282,7 +280,7 @@ export default function CurriculumFlow({
       >
         <Background gap={isMobile ? 20 : 16} />
         <Controls className="hidden md:flex" />
-        <MiniMap 
+        <MiniMap
           className="hidden lg:block"
           nodeColor={(node) => getSubjectMinimapColor(subjectCache.get(node.id)?.branch)}
           maskColor="rgba(0, 0, 0, 0.1)"

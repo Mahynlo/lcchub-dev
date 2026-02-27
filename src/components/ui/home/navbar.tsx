@@ -1,10 +1,11 @@
 "use client";
 //navbar para la página de home (pública)
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, Home, Calendar, Image as ImageIcon, BookOpen } from "lucide-react";
+import { Menu, X, Home, Calendar, Image as ImageIcon, BookOpen, LogOutIcon, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useMsal } from "@azure/msal-react";
 
 function LCCIcon() {
   return (
@@ -18,7 +19,13 @@ function LCCIcon() {
 }
 
 export function HomeNavbar() {
+  const { instance, accounts } = useMsal();
+  const [isMounted, setIsMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Solo evaluar auth en el cliente (evita hydration mismatch con SSR)
+  useEffect(() => { setIsMounted(true); }, []);
+  const isAuthenticated = isMounted && accounts && accounts.length > 0;
 
   const sections = [
     { name: "Inicio", href: "/home", icon: Home },
@@ -29,7 +36,7 @@ export function HomeNavbar() {
 
   return (
     <div className="sticky top-0 z-50 py-0 w-full flex items-center px-6 bg-white border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      
+
       {/* Logo */}
       <a href="https://cc.unison.mx" target="_blank" rel="noopener noreferrer">
         <LCCIcon />
@@ -43,7 +50,7 @@ export function HomeNavbar() {
       </Link>
 
       {/* Navegación escritorio */}
-      <nav className="hidden md:flex items-center space-x-6 px-20 ml-auto">
+      <nav className="hidden md:flex items-center space-x-6 px-10 ml-auto">
         {sections.map((section) => (
           <Link
             key={section.name}
@@ -54,6 +61,30 @@ export function HomeNavbar() {
             {section.name}
           </Link>
         ))}
+
+        {/* Botón Mi Portal / Salir según estado de autenticación */}
+        {isAuthenticated ? (
+          <>
+            <Link
+              href="/dashboard/auth/profile/progress"
+              className="flex items-center gap-2 text-blue-700 font-semibold hover:text-purple-600 transition-colors"
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              Mi Portal
+            </Link>
+            <Button
+              className="flex flex-row items-center px-3 py-2 text-blue-950 font-semibold bg-white rounded-md hover:bg-blue-100"
+              onClick={() => instance.logoutRedirect({ postLogoutRedirectUri: "/home" })}
+            >
+              <LogOutIcon size={20} />
+              <span className="pl-1">Salir</span>
+            </Button>
+          </>
+        ) : (
+          <Button asChild className="bg-[#2145CC] hover:bg-purple-700 text-white">
+            <Link href="/dashboard/auth">Mi Portal</Link>
+          </Button>
+        )}
       </nav>
 
       {/* Botón hamburguesa solo móvil */}
@@ -82,6 +113,36 @@ export function HomeNavbar() {
                 {section.name}
               </Link>
             ))}
+
+            {/* Mi Portal / Salir en móvil */}
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/dashboard/auth/profile/progress"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2 text-blue-700 font-semibold hover:bg-blue-50 transition-colors"
+                >
+                  <LayoutDashboard className="h-4 w-4" />
+                  Mi Portal
+                </Link>
+                <Button
+                  className="flex flex-row items-center mx-4 my-2 px-3 py-2 text-blue-950 font-semibold bg-white rounded-md hover:bg-blue-100 border border-gray-200"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    instance.logoutRedirect({ postLogoutRedirectUri: "/home" });
+                  }}
+                >
+                  <LogOutIcon size={20} />
+                  <span className="pl-1">Salir</span>
+                </Button>
+              </>
+            ) : (
+              <div className="px-4 py-2">
+                <Button asChild className="w-full bg-[#2145CC] hover:bg-purple-700 text-white">
+                  <Link href="/dashboard/auth" onClick={() => setMenuOpen(false)}>Mi Portal</Link>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       )}

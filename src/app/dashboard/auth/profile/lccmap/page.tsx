@@ -100,6 +100,17 @@ export default function Page() {
               semesters={updatedPrograma}
               subjectCache={cacheSubject}
             />
+            {/* Leyenda de conexiones */}
+            <div className="flex flex-wrap gap-4 mt-3 px-1 text-sm text-gray-600 dark:text-gray-400">
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-6 h-0.5 bg-blue-500 rounded" style={{ boxShadow: "0 0 4px #3b82f6" }} />
+                <span>Materias requeridas para llegar aquí</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-6 h-0.5 bg-green-500 rounded" style={{ boxShadow: "0 0 4px #22c55e" }} />
+                <span>Materias que puedes tomar después</span>
+              </span>
+            </div>
           </div>
         </div>
       </SubjectShowContext.Provider>

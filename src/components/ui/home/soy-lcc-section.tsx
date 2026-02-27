@@ -23,7 +23,7 @@ interface SoyLCCSectionProps {
 }
 export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
   return (
-    <section className="bg-gray-100 py-20" id="news">
+    <section className="bg-white py-20" id="news">
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
           <div>
@@ -31,7 +31,7 @@ export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
               SoyLCC
             </span>
           </div>
-          <p className="text-gray-700 mt-2">
+          <p className="text-gray-600 mt-2">
             Un espacio para compartir consejos y experiencias de parte de
             egresados de nuestra comunidad.
           </p>
@@ -41,7 +41,7 @@ export function SoyLCCSection({ soyLCCVideos }: SoyLCCSectionProps) {
             <CarouselContent>
               {soyLCCVideos.map((video, i) => (
                 <CarouselItem key={i} className="md:basis-1/3 h-300">
-                  <Card className="rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+                  <Card className="rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
                     <CardHeader>
                       <a
                         href={video.redirect}

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function HomeFooter() {
   return (
-    <footer className="bg-gray-900 text-gray-400 py-8 px-4 md:px-6">
+    <footer className="bg-gray-900 text-gray-400 py-8 px-4 md:px-6 border-t-4 border-[#2145CC]">
       <div className="container mx-auto flex flex-col md:flex-row items-center gap-6">
         {/* Columna izquierda */}
         <div className="flex items-center justify-center md:justify-start flex-1">
@@ -47,7 +47,7 @@ export function HomeFooter() {
 
         {/* Columna derecha */}
         <div className="flex items-center justify-center md:justify-end flex-1">
-          <span className="text-lg font-semibold">© 2025 LCC</span>
+          <span className="text-lg font-semibold">© 2026 LCC</span>
         </div>
       </div>
     </footer>

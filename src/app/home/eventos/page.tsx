@@ -10,19 +10,22 @@ export const metadata: Metadata = {
 export default async function EventosPage() {
   const all_events = await getAllEvents();
   return (
-    <div className="container mx-auto px-4 py-5">
-      <div className="mb-8 text-center">
-        <div className="">
+    <div>
+      {/* Header de la página */}
+      <div className="bg-gradient-to-br from-blue-50 via-white to-white border-b border-gray-100">
+        <div className="container mx-auto px-4 py-10 text-center">
           <span className="bg-[#CC2146] rounded-lg text-3xl font-bold text-slate-50 px-4 py-1">
             Todos los eventos
           </span>
+          <p className="text-gray-600 mt-3 max-w-xl mx-auto">
+            Entérate de todos los eventos que publicamos, organizados
+            por la universidad y por la comunidad de ciencias de la computación.
+          </p>
         </div>
-        <p className="text-gray-700 mt-2">
-          Enterate de todos los eventos que publicamos que fueron organizados
-          por la universidad y por la comunidad de ciencias de la computación.
-        </p>
       </div>
-      <div className="container">
+
+      {/* Contenido */}
+      <div className="container mx-auto px-4 py-8">
         <AllEventsTable events={all_events} />
       </div>
     </div>
