@@ -19,6 +19,7 @@ import {
   useSubjectInteraction,
   shouldShowDialog
 } from "@/hooks/useSubjectInteraction";
+import { StudentInfoContext } from "@/app/dashboard/auth/profile/StudentInfoContext";
 
 interface SubjectNodeProps {
   data: {
@@ -32,10 +33,11 @@ interface SubjectNodeProps {
 function SubjectNodeComponent({ data }: SubjectNodeProps) {
   const { subject, subjectKey, subjectCache, isVisible } = data;
   const { selectedSubject } = useContext(SubjectShowContext)!;
+  const student = useContext(StudentInfoContext);
 
   // Hook personalizado para manejar la interacción
   const { isHovered, handleClick, handleMouseEnter, handleMouseLeave } =
-    useSubjectInteraction(subjectKey, subject);
+    useSubjectInteraction(subjectKey, subject, subjectCache);
 
   const isSelected = selectedSubject === subjectKey;
   // Calcular la opacidad final
@@ -65,10 +67,15 @@ function SubjectNodeComponent({ data }: SubjectNodeProps) {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <Handle type="target" position={Position.Left} style={{ opacity: 0 }} />
-        <Handle type="source" position={Position.Right} style={{ opacity: 0 }} />
-        <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
-        <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
+        {/* Puertos de conexión genéricos ancla (Las flechas se desplazarán visualmente con CSS offsets desde SmartRoutingEdge) */}
+        <Handle id="t-left" type="target" position={Position.Left} style={{ opacity: 0 }} />
+        <Handle id="s-left" type="source" position={Position.Left} style={{ opacity: 0 }} />
+        <Handle id="t-right" type="target" position={Position.Right} style={{ opacity: 0 }} />
+        <Handle id="s-right" type="source" position={Position.Right} style={{ opacity: 0 }} />
+        <Handle id="t-top" type="target" position={Position.Top} style={{ opacity: 0 }} />
+        <Handle id="s-top" type="source" position={Position.Top} style={{ opacity: 0 }} />
+        <Handle id="t-bottom" type="target" position={Position.Bottom} style={{ opacity: 0 }} />
+        <Handle id="s-bottom" type="source" position={Position.Bottom} style={{ opacity: 0 }} />
 
         {shouldShowDialog(subject?.subjectKey) ? (
           <DialogTrigger asChild>
@@ -93,6 +100,7 @@ function SubjectNodeComponent({ data }: SubjectNodeProps) {
           subject={subject}
           subjectKey={subjectKey}
           subjectCache={subjectCache}
+          student={student ?? null}
         />
       </DialogContent>
     </Dialog>

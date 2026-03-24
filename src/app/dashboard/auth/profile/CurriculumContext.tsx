@@ -41,6 +41,7 @@ export function CurriculumProvider({ children }: { children: React.ReactNode }) 
       const selectivas = (map.selectiveSubjects || "").split("-").map(normalizeSubjectKey);
       const integradoras = (map.integratorSubjects || "").split("-").map(normalizeSubjectKey);
       const especializantes = (map.specialistSubjects || "").split("-").map(normalizeSubjectKey);
+      const optativas = (map.Optativas || "").split("-").filter(k => k.trim()).map(normalizeSubjectKey);
 
       const { creditedSubjects, enrolledSubjects, droppedSubjects, failedSubjects } = student;
       const enrolledKeys = extractSubjectsKeys(enrolledSubjects);
@@ -72,7 +73,7 @@ export function CurriculumProvider({ children }: { children: React.ReactNode }) 
       const replaceSubjectKey = (subjectKey: string, assignedSubjects: Set<string>) => {
         // Normalizar el key antes de cualquier comparación
         const normalizedKey = normalizeSubjectKey(subjectKey);
-        
+
         if (normalizedKey === "Selec") {
           return getStudentSubject(selectivas, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || normalizedKey;
         }
@@ -81,6 +82,10 @@ export function CurriculumProvider({ children }: { children: React.ReactNode }) 
         }
         if (normalizedKey === "Esp") {
           return getStudentSubject(especializantes, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || normalizedKey;
+        }
+        // Plan 2252: placeholder OPT para materias optativas/vocacionales
+        if (normalizedKey === "OPT") {
+          return getStudentSubject(optativas, enrolledKeys, creditedKeys, droppedKeys, failedKeys, assignedSubjects, globalAssignedSubjects) || normalizedKey;
         }
         return normalizedKey;
       };
@@ -97,9 +102,45 @@ export function CurriculumProvider({ children }: { children: React.ReactNode }) 
         }).join("-");
       });
 
-      setUpdatedPrograma(updatedProgram);
+      let finalProgram = updatedProgram;
+      
+      // En el plan 2252, inyectar Servicio Social (22118) junto a Prácticas Profesionales ANTES de pedir a Firebase
+      if (student.studyPlan === "2252") {
+        let modified = false;
+        const programWithServicio = updatedProgram.map(sem => {
+          const subjects = sem.split("-");
+          // Las prácticas en plan 2252 suelen ser 22262, pero aseguramos buscando "22262" en el mapa o simplemente verificando 
+          // Ya que no tenemos el nombre todavía, buscamos la clave numérica de las prácticas (si no se sabe, lo inyectamos al final del 7mo u 8vo)
+          // Pero asumiéndolo temporalmente por la clave conocida o buscando en el map original
+          const hasPracticas = subjects.some(k => 
+            map.semesters.some(origSem => origSem.includes(k) && origSem.includes("22262")) || k === "22262"
+          );
+          
+          if (hasPracticas && !subjects.includes("22118")) {
+            modified = true;
+            return sem + "-22118";
+          }
+          return sem;
+        });
 
-      cacheSubjectInfo(updatedProgram).then((cache) => {
+        if (modified) {
+          finalProgram = programWithServicio;
+        } else {
+          // Fallback: si por alguna razón no detecta el ID 22262 (prácticas), inyectar en el 8vo semestre, o al final
+          const len = updatedProgram.length;
+          if (len >= 8) {
+             const subjects = updatedProgram[7].split("-");
+             if (!subjects.includes("22118")) {
+                 finalProgram[7] = updatedProgram[7] + "-22118";
+                 modified = true;
+             }
+          }
+        }
+      }
+
+      setUpdatedPrograma(finalProgram);
+
+      cacheSubjectInfo(finalProgram).then((cache) => {
         setCacheSubject(cache);
       });
     });

@@ -9,7 +9,7 @@ import { useCurriculum } from "../CurriculumContext";
 
 export default function Page() {
   const student = useContext(StudentInfoContext);
-  const {curriculumMap} = useCurriculum();
+  const { curriculumMap } = useCurriculum();
 
   useEffect(() => {
     document.title = "Mi Progreso | LCCHUB";
@@ -34,20 +34,20 @@ export default function Page() {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex flex-col items-start gap-3">
               <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto">
                 <Progress
                   className="w-24 md:w-32"
                   value={
-                    (student.approvedCredits / curriculumMap.totalCredits) * 100
+                    (student.approvedCredits / Number(curriculumMap.totalCredits)) * 100
                   }
                 />
-                
+
                 <div className="text-right">
                   <div className="text-xl md:text-2xl font-bold">
                     {Math.trunc(
-                      (student.approvedCredits / curriculumMap.totalCredits) * 100
+                      (student.approvedCredits / Number(curriculumMap.totalCredits)) * 100
                     )}
                     %
                   </div>
@@ -56,39 +56,39 @@ export default function Page() {
                   </p>
                 </div>
               </div>
-              
-              <a 
-                href="https://buhos.uson.mx/web/apps/portalAlumnos/index.php" 
+
+              <a
+                href="https://buhos.uson.mx/web/apps/portalAlumnos/index.php"
                 target="_blank"
                 className="w-full md:w-auto"
               >
                 <Badge className={
-                  (student?.approvedCredits / curriculumMap.totalCredits) * 100 >= 70
+                  (student?.approvedCredits / Number(curriculumMap.totalCredits)) * 100 >= 70
                     ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset w-full md:w-auto justify-center"
                     : "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset w-full md:w-auto justify-center"
                 }>
-                  {(student?.approvedCredits / curriculumMap.totalCredits) * 100 >= 70
+                  {(student?.approvedCredits / Number(curriculumMap.totalCredits)) * 100 >= 70
                     ? "Ya puedes hacer el servicio"
                     : "Aún no puedes hacer el servicio"}
                 </Badge>
               </a>
-              
+
               {student?.studyPlan == "2252" && (
                 <Badge className={
                   student?.approvedCredits >= 192
                     ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset w-full md:w-auto justify-center"
                     : "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset w-full md:w-auto justify-center"
                 }>
-                  {student?.approvedCredits >= 192 
+                  {student?.approvedCredits >= 192
                     ? "Ya puedes hacer las prácticas profesionales"
                     : "Aún no puedes hacer las prácticas profesionales"}
                 </Badge>
               )}
             </div>
           </section>
-          
+
           <Separator className="my-4 md:my-6" />
-          
+
           <section className="grid gap-4 md:gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -102,11 +102,11 @@ export default function Page() {
                   {student.approvedCredits}
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  de {curriculumMap.totalCredits} requeridos
+                  de {Number(curriculumMap.totalCredits)} requeridos
                 </p>
               </CardContent>
             </Card>
-            
+
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
@@ -116,14 +116,14 @@ export default function Page() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {curriculumMap.totalCredits - student.approvedCredits}
+                  {Number(curriculumMap.totalCredits) - student.approvedCredits}
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   para graduarse
                 </p>
               </CardContent>
             </Card>
-            
+
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Promedio</CardTitle>
@@ -136,7 +136,7 @@ export default function Page() {
                 </p>
               </CardContent>
             </Card>
-            
+
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Promedio</CardTitle>
@@ -149,7 +149,7 @@ export default function Page() {
                 </p>
               </CardContent>
             </Card>
-            
+
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
@@ -164,7 +164,7 @@ export default function Page() {
                 <p className="text-xs text-gray-500 dark:text-gray-400">de 4</p>
               </CardContent>
             </Card>
-            
+
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">

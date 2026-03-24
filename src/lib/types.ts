@@ -142,26 +142,27 @@ export type Opcion = {
 };
 
 export type CurriculumMap = {
-  basicCredits: number;
-  commonCredits: number;
-  electiveCredits: number;
+  basicCredits: number | string;
+  commonCredits: number | string;
+  electiveCredits: number | string;
   integratorSubjects: string;
   map: number;
-  obligatoryCredits: number;
-  professionalCredits: number;
+  obligatoryCredits: number | string;
+  professionalCredits: number | string;
   selectiveSubjects: string;
   semesters: string[];
-  specialistCredits: number;
-  integratorCredits: number;
-  totalCredits: number;
+  specialistCredits: number | string;
+  integratorCredits: number | string;
+  totalCredits: number | string;
   specialistSubjects: string;
   Optativas: string;
-  vocationalCredits: number;
+  vocationalCredits: number | string;
 };
 
 type SubjectShowContext = {
   showAll: boolean;
   showSubject: Map<string, boolean>;
+  setShowSubject?: (subjectMap: Map<string, boolean>) => void;
   setShowAll?: (showAll: boolean) => void;
   filterOption: string;
   setFilterOption: (filterOption: string) => void;

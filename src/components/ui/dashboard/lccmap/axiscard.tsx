@@ -4,7 +4,7 @@ export function AxisCard({
   color,
 }: {
   title: string;
-  credits: number;
+  credits: number | string;
   color: string;
 }) {
   return (
@@ -13,7 +13,7 @@ export function AxisCard({
       style={{ backgroundColor: color }}
     >
       <h3 className="text-sm md:text-xl font-medium">Eje {title}</h3>
-      <p className="text-2xl md:text-4xl font-bold text-black">{credits}</p>
+      <p className="text-2xl md:text-4xl font-bold text-black">{Number(credits)}</p>
       <p className="text-xs md:text-base text-gray-500">Créditos</p>
     </div>
   );

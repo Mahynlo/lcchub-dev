@@ -4,12 +4,11 @@ import { useCurriculum } from "../CurriculumContext";
 import { useContext, useState, useEffect } from "react";
 import { StudentInfoContext } from "../StudentInfoContext";
 import { SubjectShowContext } from "@/lib/types";
-import CurriculumMapSection from "@/components/ui/dashboard/lccmap/curriculum-map";
-import CurriculumConnections from "@/components/ui/dashboard/lccmap/curriculum-connections";
 import CurriculumFlow from "@/components/ui/dashboard/lccmap/curriculum-flow";
 import { AxisCard } from "@/components/ui/dashboard/lccmap/axiscard";
 import { ComboboxPopover } from "@/components/ui/dashboard/lccmap/combobox-popover";
 import { SubjectSearch } from "@/components/ui/dashboard/lccmap/subject-search";
+import { ElectivesList } from "@/components/ui/dashboard/lccmap/electives-list";
 
 export default function Page() {
   const { curriculumMap, updatedPrograma, subjectCache: cacheSubject } = useCurriculum();
@@ -32,6 +31,7 @@ export default function Page() {
         value={{
           showAll,
           showSubject,
+          setShowSubject,
           setShowAll,
           filterOption,
           setFilterOption,
@@ -47,7 +47,7 @@ export default function Page() {
                 serializadas.
               </p>
               <h2 className="text-xl font-bold">Total de créditos</h2>
-              <p className="text-4xl font-bold">{curriculumMap.totalCredits}</p>
+              <p className="text-4xl font-bold">{Number(curriculumMap.totalCredits)}</p>
             </div>
             <div className="grid gap-3 md:gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
               <AxisCard
@@ -112,6 +112,7 @@ export default function Page() {
               </span>
             </div>
           </div>
+          <ElectivesList student={student} curriculumMap={curriculumMap} />
         </div>
       </SubjectShowContext.Provider>
     )

@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { SubjectShowContext, Subject } from "@/lib/types";
 import { Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { normalizeSubjectKey } from "@/lib/utils/subjectKey";
 
 interface SubjectSearchProps {
   subjectCache: Map<string, Subject>;
@@ -12,7 +13,7 @@ export function SubjectSearch({ subjectCache }: SubjectSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSubjects, setFilteredSubjects] = useState<Array<{ key: string; subject: Subject }>>([]);
   const [showResults, setShowResults] = useState(false);
-  const { showAll, showSubject, setShowAll, setFilterOption, setSelectedSubject } =
+  const { showAll, showSubject, setShowSubject, setShowAll, setFilterOption, setSelectedSubject } =
     useContext(SubjectShowContext)!;
 
   // Filtrar materias basado en la búsqueda
@@ -42,24 +43,30 @@ export function SubjectSearch({ subjectCache }: SubjectSearchProps) {
     setSearchQuery(`${subjectKey} - ${subject.subjectName}`);
     setShowResults(false);
     setShowAll && setShowAll(false);
-    
+
+    // Crear un nuevo Map para evitar mutar el estado directamente (buena práctica de React)
+    const newShowSubject = new Map<string, boolean>();
+
     // Limpiar todas las materias visibles antes de procesar la nueva búsqueda
     Array.from(subjectCache.keys()).forEach(key => {
-      showSubject.set(key, false);
+      newShowSubject.set(key, false);
     });
-    
+
     // Función recursiva para procesar requisitos
     const processRequirements = (key: string, visited: Set<string> = new Set()) => {
       if (visited.has(key)) return;
       visited.add(key);
-      
+
       const subj = subjectCache.get(key);
       if (!subj) return;
-      
-      showSubject.set(key, true);
-      
+
+      newShowSubject.set(key, true);
+
       if (subj.requirements && !subj.requirements.toLowerCase().includes("creditos")) {
-        const requirements = subj.requirements.split("-").filter(req => req.trim() !== "");
+        const requirements = subj.requirements
+          .split("-")
+          .map(r => normalizeSubjectKey(r))
+          .filter(req => req.trim() !== "");
         requirements.forEach(reqKey => {
           if (subjectCache.has(reqKey)) {
             processRequirements(reqKey, visited);
@@ -67,19 +74,22 @@ export function SubjectSearch({ subjectCache }: SubjectSearchProps) {
         });
       }
     };
-    
+
     // Función recursiva para procesar liberaciones
     const processReleases = (key: string, visited: Set<string> = new Set()) => {
       if (visited.has(key)) return;
       visited.add(key);
-      
+
       const subj = subjectCache.get(key);
       if (!subj) return;
-      
-      showSubject.set(key, true);
-      
+
+      newShowSubject.set(key, true);
+
       if (subj.releases) {
-        const releases = subj.releases.split("-").filter(rel => rel.trim() !== "");
+        const releases = subj.releases
+          .split("-")
+          .map(r => normalizeSubjectKey(r))
+          .filter(rel => rel.trim() !== "");
         releases.forEach(relKey => {
           if (subjectCache.has(relKey)) {
             processReleases(relKey, visited);
@@ -87,11 +97,14 @@ export function SubjectSearch({ subjectCache }: SubjectSearchProps) {
         });
       }
     };
-    
+
     // Procesar toda la cadena de seriación
     processRequirements(subjectKey);
     processReleases(subjectKey);
-    
+
+    // Actualizar el estado de manera inmutable
+    setShowSubject && setShowSubject(newShowSubject);
+
     // Activar la materia seleccionada para mostrar las flechas
     setSelectedSubject && setSelectedSubject(subjectKey);
     setFilterOption && setFilterOption("search");
@@ -129,7 +142,7 @@ export function SubjectSearch({ subjectCache }: SubjectSearchProps) {
             <X className="h-4 w-4" />
           </Button>
         )}
-        
+
         {/* Resultados de búsqueda */}
         {showResults && filteredSubjects.length > 0 && (
           <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-[250px] md:max-h-[300px] overflow-y-auto">

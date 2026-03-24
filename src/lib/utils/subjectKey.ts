@@ -16,12 +16,12 @@
  */
 export function normalizeSubjectKey(key: string): string {
   const cleaned = key.trim();
-  
+
   // Si es un número, asegurarse que tenga 4 dígitos con padding de ceros
   if (/^\d+$/.test(cleaned)) {
     return cleaned.padStart(4, '0');
   }
-  
+
   return cleaned;
 }
 
@@ -44,9 +44,9 @@ export function normalizeSubjectKey(key: string): string {
  */
 export function isValidSubjectKey(key: string): boolean {
   const cleaned = key.trim();
-  
+
   // Formato: 4 dígitos o palabras especiales o letras mayúsculas
-  return /^\d{4}$/.test(cleaned) || 
-         /^[A-Z]+$/.test(cleaned) ||
-         ['Selec', 'Intg', 'Esp', 'Avi'].includes(cleaned);
+  return /^\d{4,}$/.test(cleaned) ||
+    /^[A-Z]+$/.test(cleaned) ||
+    ['Selec', 'Intg', 'Esp', 'Avi', 'OPT'].includes(cleaned);
 }

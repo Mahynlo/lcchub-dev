@@ -19,13 +19,13 @@ import { SubjectShowContext } from "@/lib/types";
 import { Subject } from "@/lib/types";
 import { normalizeSubjectKey } from "@/lib/utils/subjectKey";
 import { getSubjectCardColor } from "@/lib/utils/subjectColors";
-import { 
-  SubjectDialogContent, 
-  getSubjectDialogTitle 
+import {
+  SubjectDialogContent,
+  getSubjectDialogTitle
 } from "./SubjectDialogContent";
-import { 
-  useSubjectInteraction, 
-  shouldShowDialog 
+import {
+  useSubjectInteraction,
+  shouldShowDialog
 } from "@/hooks/useSubjectInteraction";
 
 export default function SubjectCard({
@@ -39,7 +39,7 @@ export default function SubjectCard({
   const subject = subjectCache.get(subjectKey);
 
   // Hook personalizado para manejar la interacción
-  const { handleClick, handleMouseLeave } = useSubjectInteraction(subjectKey, subject);
+  const { handleClick, handleMouseLeave } = useSubjectInteraction(subjectKey, subject, subjectCache);
 
   return (
     <Dialog>
@@ -82,7 +82,7 @@ export default function SubjectCard({
             {getSubjectDialogTitle(subjectKey, subject)}
           </DialogTitle>
         </DialogHeader>
-        <SubjectDialogContent 
+        <SubjectDialogContent
           subject={subject!}
           subjectKey={subjectKey}
           subjectCache={subjectCache}
